@@ -1,0 +1,62 @@
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import DataTable from '../components/DataTable'
+import { Modal, ConfirmDialog, PageHeader, FField } from '../components/UI'
+import { paisesApi } from '../services/api'
+
+const empty = { pais: '', sigla: '', ddi: '', moeda: '' }
+
+export default function PaisesPage() {
+  const [data, setData]       = useState([])
+  const [loading, setLoading] = useState(true)
+  const [form, setForm]       = useState(empty)
+  const [editing, setEditing] = useState(false)
+  const [open, setOpen]       = useState(false)
+  const [confirm, setConfirm] = useState(null)
+
+  const load = async () => { setLoading(true); setData(await paisesApi.getAll()); setLoading(false) }
+  useEffect(() => { load() }, [])
+
+  const upd = (k, v) => setForm(p => ({ ...p, [k]: v }))
+
+  const save = async () => {
+    try {
+      editing ? await paisesApi.update(form.codPais, form) : await paisesApi.create(form)
+      toast.success(editing ? 'País atualizado!' : 'País criado!')
+      setOpen(false); load()
+    } catch { toast.error('Erro ao salvar.') }
+  }
+
+  const del = async () => {
+    try { await paisesApi.delete(confirm.codPais); toast.success('Excluído.'); setConfirm(null); load() }
+    catch { toast.error('Erro ao excluir.') }
+  }
+
+  const cols = [
+    { key: 'codPais', label: 'Cód.', mono: true },
+    { key: 'pais',    label: 'País' },
+    { key: 'sigla',   label: 'Sigla' },
+    { key: 'ddi',     label: 'DDI' },
+    { key: 'moeda',   label: 'Moeda' },
+  ]
+
+  return (
+    <div>
+      <PageHeader title="Países" sub="Cadastro de países e moedas" label="Novo País"
+        onNew={() => { setForm(empty); setEditing(false); setOpen(true) }} />
+      <DataTable columns={cols} data={data} loading={loading}
+        onEdit={r => { setForm(r); setEditing(true); setOpen(true) }}
+        onDelete={r => setConfirm(r)} />
+      <Modal open={open} title={editing ? 'Editar País' : 'Novo País'} editing={editing}
+        onClose={() => setOpen(false)} onSave={save}>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+          <FField label="País"  required value={form.pais}   onChange={v => upd('pais', v)} />
+          <FField label="Sigla" required value={form.sigla}  onChange={v => upd('sigla', v)} />
+          <FField label="DDI"            value={form.ddi}    onChange={v => upd('ddi', v)} />
+          <FField label="Moeda"          value={form.moeda}  onChange={v => upd('moeda', v)} />
+        </div>
+      </Modal>
+      <ConfirmDialog open={!!confirm} name={confirm?.pais} onClose={() => setConfirm(null)} onConfirm={del} />
+    </div>
+  )
+}
