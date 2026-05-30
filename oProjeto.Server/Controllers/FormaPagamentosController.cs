@@ -21,7 +21,7 @@ namespace oProjeto.Server.Controllers
             return r is null ? NotFound() : Ok(r);
         }
         [HttpPost]
-        async Task<IActionResult> Create(FormaPagamentos body)
+        public async Task<IActionResult> Create(FormaPagamentos body)
         {
             db.FormaPagamentos.Add(body);
             await db.SaveChangesAsync();

@@ -9,6 +9,7 @@ namespace oProjeto.Server.Models
         [Key] public int CodCidade { get; set; }
         public string? Cidade { get; set; }  
         public int CodEstado { get; set; }
+        public bool Ativo { get; set; }
 
         [ForeignKey(nameof(CodEstado))] public Estados? Estado { get; set; }
         public ICollection<Fornecedores> Fornecedores { get; set; } = [];

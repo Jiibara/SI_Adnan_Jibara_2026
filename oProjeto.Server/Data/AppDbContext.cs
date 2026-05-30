@@ -19,6 +19,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<ContasPagar> ContasPagar { get; set; } 
     public DbSet<FormaPagamentos> FormaPagamentos { get; set; } 
     public DbSet<CondicaoPagamentos> CondicaoPagamentos { get; set; }
+    public DbSet<Parcelas> Parcelas { get; set; }
     protected override void OnModelCreating(ModelBuilder mb)
     {
         mb.Entity<Paises>()
@@ -58,6 +59,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         mb.Entity<FormaPagamentos>()
             .Property(f => f.FormaPagamento).HasColumnName("FormaPagamento");
         mb.Entity<CondicaoPagamentos>()
-            .Property(c => c.CondicaoPagamento).HasColumnName("CondicaoPagamento"); 
+            .Property(c => c.CondicaoPagamento).HasColumnName("CondicaoPagamento");
+        mb.Entity<Parcelas>()
+            .Property(n => n.NumeroParcela).HasColumnName("NumeroParcela");
     }
 }

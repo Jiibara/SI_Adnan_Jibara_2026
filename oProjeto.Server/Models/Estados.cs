@@ -11,7 +11,7 @@ namespace oProjeto.Server.Models
         public string? UF { get; set; }
         public string? Estado { get; set; }  
         public int CodPais { get; set; }
-
+        public bool Ativo { get; set; }
         [ForeignKey(nameof(CodPais))] public Paises? Pais { get; set; }
         public ICollection<Cidades> Cidades { get; set; } = [];
         public ICollection<Veiculos> Veiculos { get; set; } = [];

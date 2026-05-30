@@ -9,10 +9,12 @@ namespace oProjeto.Server.Models
     {
         [Key] public int CodCondicao { get; set; }
         public string? CondicaoPagamento { get; set; }
+        public int? NumeroParcelas { get; set; }
         public decimal? PercentualJuros { get; set; }
         public decimal? PercentualMultas { get; set; }
         public decimal? PercentualDesconto { get; set; }
         public bool Ativo { get; set; }
+        public ICollection<Parcelas> Parcelas { get; set; } = new List<Parcelas>();
 
     }
 }

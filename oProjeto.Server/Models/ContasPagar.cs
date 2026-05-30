@@ -12,7 +12,7 @@ namespace oProjeto.Server.Models
         public int Modelo { get; set; }
         public int CodForn { get; set; }
         public int NumeroParcela { get; set; }
-
+        public bool Ativo { get; set; }
         public decimal? ValorParcela { get; set; }
         public DateOnly? VencimentoParcela { get; set; }
 

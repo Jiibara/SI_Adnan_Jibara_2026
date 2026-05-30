@@ -13,7 +13,7 @@ namespace oProjeto.Server.Models
         public decimal PesoLiq { get; set; }
         public decimal Saldo { get; set; }
         public decimal CustoMedio { get; set; }
-
+        public bool Ativo { get; set; }
         [ForeignKey(nameof(NcmSh))] public NcmShs? NcmShs { get; set; }
         public ICollection<ProdNfes> ProdNfes { get; set; } = [];
     }

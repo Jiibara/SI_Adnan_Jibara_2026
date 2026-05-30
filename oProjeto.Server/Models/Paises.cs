@@ -11,5 +11,6 @@ public class Paises
     public string Sigla { get; set; }
     public string DDI { get; set; }
     public string Moeda { get; set; }
+    public bool Ativo { get; set; }
 
 }

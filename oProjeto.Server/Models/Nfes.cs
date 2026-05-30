@@ -35,6 +35,7 @@ public class Nfes
     public decimal? PesoBruto { get; set; }
     public decimal? PesoLiq { get; set; }
     public string? InfComp { get; set; }
+    public bool Ativo { get; set; }
 
     [ForeignKey(nameof(CodForn))] public Fornecedores? Fornecedor { get; set; }
     [ForeignKey(nameof(CodTransp))] public Transportadores? Transportador { get; set; }

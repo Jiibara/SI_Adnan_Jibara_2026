@@ -11,7 +11,8 @@ namespace oProjeto.Server.Models
         public string? Endereco { get; set; }
         public int CodCidade { get; set; }
         public string? Transportador { get; set; }
-        public string? InscEst { get; set; }
+        public string? RgInscEst { get; set; }
+        public bool Ativo { get; set; }
 
         [ForeignKey(nameof(CodCidade))] public Cidades? Cidade { get; set; }
         public ICollection<Nfes> Nfes { get; set; } = [];

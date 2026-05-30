@@ -43,4 +43,19 @@ export const contasPagarApi = {
   delete:  (n, s, m, cf, np)         => api.delete(`/ContasPagar/${n}/${s}/${m}/${cf}/${np}`),
 }
 
+export const formaPagamentosApi = {
+  getAll: async () => (await api.get('/FormaPagamentos')).data,
+  get:    async (id) => (await api.get(`/FormaPagamentos/${id}`)).data,
+  create: async (d)  => (await api.post('/FormaPagamentos', d)).data,
+  update: async (id, d) => await api.put(`/FormaPagamentos/${id}`, d),
+  delete: async (id) => await api.delete(`/FormaPagamentos/${id}`)
+}
+
+export const condicoesApi = {
+  getAll: async () => (await api.get('/CondicaoPagamentos')).data,
+  create: async (d) => (await api.post('/CondicaoPagamentos', d)).data,
+  update: async (id, d) => await api.put(`/CondicaoPagamentos/${id}`, d),
+  delete: async (id) => await api.delete(`/CondicaoPagamentos/${id}`)
+}
+
 export default api

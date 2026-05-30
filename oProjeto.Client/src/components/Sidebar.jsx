@@ -6,27 +6,25 @@ const nav = [
       { to: '/estados', label: 'Estados' },
       { to: '/cidades', label: 'Cidades' },
   ]},
-  { group: 'Cadastros', items: [
+  { group: 'Parceiros', items: [
     { to: '/fornecedores', label: 'Fornecedores' },
+    { to: '/produtos', label: 'Produtos' },
     { to: '/transportadores', label: 'Transportadores' },
     { to: '/veiculos', label: 'Veículos' },
   ]},
-  { group: 'Fiscal', items: [
-    { to: '/ncm', label: 'NCM/SH' },
-    { to: '/produtos', label: 'Produtos' },
-  ]},
   { group: 'Notas Fiscais', items: [
     { to: '/nfe', label: 'NFe' },
-    { to: '/prodnfe', label: 'Produtos da NFe' },
   ]},
   { group: 'Financeiro', items: [
     { to: '/contaspagar', label: 'Contas a Pagar' },
+    { to: '/formapagamento', label: 'Forma de Pagamento' },
+    { to: '/condicaoPagamento', label: 'Condição de Pagamento'},
   ]},
 ]
 
 const styles = {
   aside: {
-    width: 230, background: '#fff', borderRight: '1px solid #e2e6ed',
+    width: 170, background: '#fff', borderRight: '1px solid #e2e6ed',
     position: 'fixed', height: '100vh', display: 'flex',
     flexDirection: 'column', overflowY: 'auto', zIndex: 40,
   },

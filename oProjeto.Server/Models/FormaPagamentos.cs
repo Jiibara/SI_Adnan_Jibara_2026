@@ -8,5 +8,7 @@ namespace oProjeto.Server.Models
     {
         [Key] public int CodFormaPagamento { get; set; }
         public string? FormaPagamento { get; set; }
+        //public string? Descricao { get; set; }
+        public bool Ativo { get; set; }
     }
 }
