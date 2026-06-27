@@ -16,6 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `categorias`
+--
+
+DROP TABLE IF EXISTS `categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categorias` (
+  `codCategoria` int NOT NULL AUTO_INCREMENT,
+  `categoria` varchar(20) NOT NULL,
+  `ativo` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`codCategoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categorias`
+--
+
+LOCK TABLES `categorias` WRITE;
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` VALUES (1,'Bebidas',1);
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `cidades`
 --
 
@@ -25,6 +50,7 @@ DROP TABLE IF EXISTS `cidades`;
 CREATE TABLE `cidades` (
   `codCidade` int NOT NULL AUTO_INCREMENT,
   `cidade` varchar(40) DEFAULT NULL,
+  `ddd` varchar(4) DEFAULT NULL,
   `codEstado` int DEFAULT NULL,
   `ativo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codCidade`),
@@ -39,8 +65,53 @@ CREATE TABLE `cidades` (
 
 LOCK TABLES `cidades` WRITE;
 /*!40000 ALTER TABLE `cidades` DISABLE KEYS */;
-INSERT INTO `cidades` VALUES (3,'Foz do Iguaçu',1,1),(4,'Rio de Janeiro',2,0);
+INSERT INTO `cidades` VALUES (3,'Foz do Iguaçu','(45)',1,1),(4,'Rio de Janeiro',NULL,2,0);
 /*!40000 ALTER TABLE `cidades` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clientes`
+--
+
+DROP TABLE IF EXISTS `clientes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clientes` (
+  `codCliente` int NOT NULL AUTO_INCREMENT,
+  `cliente` varchar(50) NOT NULL,
+  `apelido` varchar(50) NOT NULL,
+  `endereco` varchar(50) DEFAULT NULL,
+  `bairro` varchar(25) DEFAULT NULL,
+  `numero` int DEFAULT NULL,
+  `complemento` varchar(25) DEFAULT NULL,
+  `cep` varchar(8) DEFAULT NULL,
+  `codCidade` int DEFAULT NULL,
+  `fone` varchar(15) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `codCondicao` int DEFAULT NULL,
+  `cpfcnpj` varchar(14) DEFAULT NULL,
+  `RgInscEst` varchar(13) DEFAULT NULL,
+  `tipoPessoa` char(2) NOT NULL DEFAULT 'PF',
+  `dataNascimento` date DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `limiteCredito` int DEFAULT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`codCliente`),
+  KEY `fk_cliente_cidade` (`codCidade`),
+  KEY `fk_cliente_condicao` (`codCondicao`),
+  CONSTRAINT `fk_cliente_cidade` FOREIGN KEY (`codCidade`) REFERENCES `cidades` (`codCidade`),
+  CONSTRAINT `fk_cliente_condicao` FOREIGN KEY (`codCondicao`) REFERENCES `condicaopagamentos` (`codCondicao`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clientes`
+--
+
+LOCK TABLES `clientes` WRITE;
+/*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'CLIENTE NOVO','ALEMAO','RUA DOS CLIENTESS','CETRO',999,'EM FRENTE A CRECHE','23652214',4,'452211698875','EMAIL@CLIENTE,COM',4,'44512398759','7784452365','F','1989-08-22','F',5000,1);
+/*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -53,13 +124,13 @@ DROP TABLE IF EXISTS `condicaopagamentos`;
 CREATE TABLE `condicaopagamentos` (
   `codCondicao` int NOT NULL AUTO_INCREMENT,
   `condicaoPagamento` varchar(10) NOT NULL,
+  `numeroParcelas` int DEFAULT NULL,
   `percentualJuros` decimal(10,2) DEFAULT '0.00',
   `percentualMultas` decimal(10,2) DEFAULT '0.00',
   `percentualDesconto` decimal(10,2) DEFAULT '0.00',
   `ativo` tinyint(1) DEFAULT NULL,
-  `numeroParcelas` int DEFAULT NULL,
   PRIMARY KEY (`codCondicao`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +139,7 @@ CREATE TABLE `condicaopagamentos` (
 
 LOCK TABLES `condicaopagamentos` WRITE;
 /*!40000 ALTER TABLE `condicaopagamentos` DISABLE KEYS */;
-INSERT INTO `condicaopagamentos` VALUES (1,'parcelado',0.00,0.08,0.13,1,0),(3,'testee',0.06,0.18,0.15,1,4);
+INSERT INTO `condicaopagamentos` VALUES (1,'parcelado',0,0.00,0.08,0.13,1),(3,'testee',4,0.06,0.18,0.15,1),(4,'SUPERTESTE',5,0.27,0.35,0.01,1);
 /*!40000 ALTER TABLE `condicaopagamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,19 +240,26 @@ DROP TABLE IF EXISTS `fornecedores`;
 CREATE TABLE `fornecedores` (
   `codForn` int NOT NULL AUTO_INCREMENT,
   `fornecedor` varchar(50) DEFAULT NULL,
+  `nomeFantasia` varchar(50) DEFAULT NULL,
   `endereco` varchar(50) DEFAULT NULL,
   `bairro` varchar(25) DEFAULT NULL,
-  `codCidade` int DEFAULT NULL,
+  `numero` int DEFAULT NULL,
+  `complemento` varchar(25) DEFAULT NULL,
   `cep` varchar(8) DEFAULT NULL,
   `fone` varchar(15) DEFAULT NULL,
   `email` varchar(30) DEFAULT NULL,
+  `site` varchar(50) DEFAULT NULL,
   `RgInscEst` varchar(13) DEFAULT NULL,
   `InscEstSubTrib` varchar(13) DEFAULT NULL,
   `cpfcnpj` varchar(14) DEFAULT NULL,
-  `ativo` tinyint(1) DEFAULT NULL,
   `tipoPessoa` char(2) NOT NULL DEFAULT 'PJ',
+  `codCidade` int DEFAULT NULL,
+  `codCondicao` int DEFAULT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codForn`),
   KEY `codCidade` (`codCidade`),
+  KEY `fk_forn_condicao` (`codCondicao`),
+  CONSTRAINT `fk_forn_condicao` FOREIGN KEY (`codCondicao`) REFERENCES `condicaopagamentos` (`codCondicao`),
   CONSTRAINT `fornecedores_ibfk_1` FOREIGN KEY (`codCidade`) REFERENCES `cidades` (`codCidade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -192,8 +270,81 @@ CREATE TABLE `fornecedores` (
 
 LOCK TABLES `fornecedores` WRITE;
 /*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
-INSERT INTO `fornecedores` VALUES (1,'Fornecedor de batatas','Rua das batatas n474','Centro',4,'85857726','(45) 99685471','batatas@email.com','6775111761',NULL,'27710127000150',1,'PJ');
+INSERT INTO `fornecedores` VALUES (1,'Fornecedor de batatas','batateiro','Rua das batatas n474','Centro',0,'perto da loja de roupas','85857726','(45) 99685471','batatas@email.com','sitedasbatatas.com','6775111761',NULL,'27710127000150','PJ',4,1,1);
 /*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `funcionarios`
+--
+
+DROP TABLE IF EXISTS `funcionarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `funcionarios` (
+  `codFunc` int NOT NULL AUTO_INCREMENT,
+  `funcionario` varchar(50) NOT NULL,
+  `apelido` varchar(50) NOT NULL,
+  `endereco` varchar(50) DEFAULT NULL,
+  `bairro` varchar(25) DEFAULT NULL,
+  `numero` int DEFAULT NULL,
+  `complemento` varchar(25) DEFAULT NULL,
+  `cep` varchar(8) DEFAULT NULL,
+  `codCidade` int DEFAULT NULL,
+  `fone` varchar(15) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `cpfcnpj` varchar(14) DEFAULT NULL,
+  `RgInscEst` varchar(13) DEFAULT NULL,
+  `tipoPessoa` char(2) NOT NULL DEFAULT 'PF',
+  `dataNascimento` date DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `dataAdmissao` date NOT NULL,
+  `dataDemissao` date DEFAULT NULL,
+  `salario` decimal(10,2) NOT NULL,
+  `codFuncao` int DEFAULT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`codFunc`),
+  KEY `fk_func_cidade` (`codCidade`),
+  KEY `fk_func_funcao` (`codFuncao`),
+  CONSTRAINT `fk_func_cidade` FOREIGN KEY (`codCidade`) REFERENCES `cidades` (`codCidade`),
+  CONSTRAINT `fk_func_funcao` FOREIGN KEY (`codFuncao`) REFERENCES `funcoes` (`codFuncao`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funcionarios`
+--
+
+LOCK TABLES `funcionarios` WRITE;
+/*!40000 ALTER TABLE `funcionarios` DISABLE KEYS */;
+INSERT INTO `funcionarios` VALUES (1,'Novo Funcionario','careca','RUA DOS FUNCIONARIOS','CENTRO',566,'APTO 405','21013365',4,'45 996554471','email@FUNCIONARIO.COM','45298761865','221365907','F','2000-05-23','M','2026-06-19',NULL,4000.00,1,1);
+/*!40000 ALTER TABLE `funcionarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `funcoes`
+--
+
+DROP TABLE IF EXISTS `funcoes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `funcoes` (
+  `codFuncao` int NOT NULL AUTO_INCREMENT,
+  `funcao` varchar(20) NOT NULL,
+  `salarioBase` decimal(10,2) NOT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`codFuncao`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `funcoes`
+--
+
+LOCK TABLES `funcoes` WRITE;
+/*!40000 ALTER TABLE `funcoes` DISABLE KEYS */;
+INSERT INTO `funcoes` VALUES (1,'Testador',20000.00,1);
+/*!40000 ALTER TABLE `funcoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -207,10 +358,10 @@ CREATE TABLE `logs` (
   `CodLog` int NOT NULL AUTO_INCREMENT,
   `Entidade` varchar(20) NOT NULL,
   `Acao` varchar(20) NOT NULL,
-  `Descricao` varchar(150) NOT NULL,
+  `Descricao` varchar(255) NOT NULL,
   `CriadoEm` datetime NOT NULL,
   PRIMARY KEY (`CodLog`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,8 +370,33 @@ CREATE TABLE `logs` (
 
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
-INSERT INTO `logs` VALUES (1,'Países','CRIOU','Criou País: Estados Unidos da America','2026-05-30 14:09:33'),(2,'Países','EDITOU','Editou País: Estados Unidos da America','2026-05-30 14:15:51'),(3,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas','2026-06-03 14:44:38'),(4,'Transportadores','CRIOU','Criou Transportador: Transportador Fisico','2026-06-03 15:02:53'),(5,'CondicaoPagamentos','CRIOU','Criou Condição: parcelado','2026-06-09 17:10:02'),(6,'CondicaoPagamentos','CRIOU','Criou Condição: testando','2026-06-09 21:03:39'),(7,'CondicaoPagamentos','EDITOU','Editou Condição: testando','2026-06-09 21:04:46'),(8,'CondicaoPagamentos','EXCLUIU','Excluiu Condição: testando','2026-06-09 21:06:24'),(9,'CondicaoPagamentos','CRIOU','Criou Condição: testee','2026-06-09 21:07:08'),(10,'Países','EDITOU','Editou País: França. Moeda: EUR (Era Euro)','2026-06-13 14:08:15'),(11,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:13:17'),(12,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:13:58'),(13,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:15:37'),(14,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 7 (Era 1)','2026-06-13 14:19:19'),(15,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 6 (Era 7)','2026-06-13 14:21:08'),(16,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 7 (Era 6). Ativo: Não (Era Sim)','2026-06-13 14:23:22'),(17,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 1 (Era 7). Ativo: Sim (Era Não)','2026-06-13 14:23:58'),(18,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: Libano (Era Brasil)','2026-06-13 14:25:14'),(19,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:34:49'),(20,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: Brasil (Era Libano)','2026-06-13 14:35:28'),(21,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:35:34'),(22,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:37:35'),(23,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:41:55'),(24,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:46:37'),(25,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro. Estado: Paraná (Era Rio de Janeiro)','2026-06-13 14:47:10'),(26,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro. Estado: Rio de Janeiro (Era Paraná)','2026-06-13 14:47:27'),(27,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas. Cidade: Rio de Janeiro (Era Foz do Iguaçu)','2026-06-13 14:52:36');
+INSERT INTO `logs` VALUES (1,'Países','CRIOU','Criou País: Estados Unidos da America','2026-05-30 14:09:33'),(2,'Países','EDITOU','Editou País: Estados Unidos da America','2026-05-30 14:15:51'),(3,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas','2026-06-03 14:44:38'),(4,'Transportadores','CRIOU','Criou Transportador: Transportador Fisico','2026-06-03 15:02:53'),(5,'CondicaoPagamentos','CRIOU','Criou Condição: parcelado','2026-06-09 17:10:02'),(6,'CondicaoPagamentos','CRIOU','Criou Condição: testando','2026-06-09 21:03:39'),(7,'CondicaoPagamentos','EDITOU','Editou Condição: testando','2026-06-09 21:04:46'),(8,'CondicaoPagamentos','EXCLUIU','Excluiu Condição: testando','2026-06-09 21:06:24'),(9,'CondicaoPagamentos','CRIOU','Criou Condição: testee','2026-06-09 21:07:08'),(10,'Países','EDITOU','Editou País: França. Moeda: EUR (Era Euro)','2026-06-13 14:08:15'),(11,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:13:17'),(12,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:13:58'),(13,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ)','2026-06-13 14:15:37'),(14,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 7 (Era 1)','2026-06-13 14:19:19'),(15,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 6 (Era 7)','2026-06-13 14:21:08'),(16,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 7 (Era 6). Ativo: Não (Era Sim)','2026-06-13 14:23:22'),(17,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: 1 (Era 7). Ativo: Sim (Era Não)','2026-06-13 14:23:58'),(18,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: Libano (Era Brasil)','2026-06-13 14:25:14'),(19,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:34:49'),(20,'Estados','EDITOU','Editou Estado: Rio de Janeiro (RJ). País: Brasil (Era Libano)','2026-06-13 14:35:28'),(21,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:35:34'),(22,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:37:35'),(23,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:41:55'),(24,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro','2026-06-13 14:46:37'),(25,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro. Estado: Paraná (Era Rio de Janeiro)','2026-06-13 14:47:10'),(26,'Cidades','EDITOU','Editou Cidade: Rio de Janeiro. Estado: Rio de Janeiro (Era Paraná)','2026-06-13 14:47:27'),(27,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas. Cidade: Rio de Janeiro (Era Foz do Iguaçu)','2026-06-13 14:52:36'),(28,'Marcas','CRIOU','Criou Marca: Mercedes-Benz','2026-06-18 16:01:03'),(29,'Categorias','CRIOU','Criou Categoria: Bebidas','2026-06-18 16:09:22'),(30,'Funcoes','CRIOU','Criou Função: Testador','2026-06-18 16:40:12'),(31,'Funcoes','EDITOU','Editou Função: Testador. Salário Base: $20,000.00 (Era $20.89)','2026-06-18 16:40:30'),(32,'CondicaoPagamentos','CRIOU','Criou Condição: SUPERTESTE','2026-06-18 16:43:40'),(33,'Veículos','EDITOU','Editou Veículo: . Modelo: A 250 (Era ). Marca: Mercedes-Benz (Era )','2026-06-19 14:55:07'),(34,'Funcionarios','CRIOU','Criou Funcionário: Novo Funcionario','2026-06-19 16:09:26'),(35,'Clientes','CRIOU','Criou Cliente: CLIENTE NOVO','2026-06-19 16:16:42'),(36,'Funcionarios','CRIOU','Criou Funcionário: aa','2026-06-19 16:41:21'),(37,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario','2026-06-19 16:56:45'),(38,'Funcionarios','EXCLUIU','Excluiu Funcionário: aa','2026-06-19 16:56:59'),(39,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario. Nascimento: 5/23/2000 (Era 5/22/2000)','2026-06-19 17:13:48'),(40,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario','2026-06-19 17:17:24'),(41,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario','2026-06-19 17:18:10'),(42,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario','2026-06-19 17:18:35'),(43,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario','2026-06-19 17:20:13'),(44,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario. Demissão:  (Era 1/1/0001)','2026-06-19 17:37:22'),(45,'Clientes','EDITOU','Editou Cliente: CLIENTE NOVO. Nascimento: 8/4/2004 (Era 6/23/1898). Cidade: Rio de Janeiro (Era Foz do Iguaçu)','2026-06-19 17:38:42'),(46,'Clientes','EDITOU','Editou Cliente: CLIENTE NOVO. Nascimento: 8/22/1989 (Era 8/4/2004)','2026-06-19 17:41:40'),(47,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas','2026-06-19 17:45:50'),(48,'Produtos','EDITOU','Editou Produto: teys. Categoria: 1 (Era 0). Marca: 1 (Era 0)','2026-06-19 17:46:18'),(49,'Produtos','EDITOU','Editou Produto: teys','2026-06-19 17:47:19'),(50,'Países','EDITOU','Editou País: Brasil. Sigla: BRq (Era BR)','2026-06-23 14:36:44'),(51,'Países','EDITOU','Editou País: Brasil. Sigla: BR (Era BRq)','2026-06-23 14:37:36'),(52,'Cidades','EDITOU','Editou Cidade: Foz do Iguaçu. DDD: \'(45) (Era )\'','2026-06-23 14:41:03'),(53,'Fornecedores','EDITOU','Editou Fornecedor: Fornecedor de batatas. Complemento: perto da loja de roupas (Era )','2026-06-23 14:45:18'),(54,'Clientes','EDITOU','Editou Cliente: CLIENTE NOVO. Endereço: RUA DOS CLIENTESS (Era RUA DOS CLIENTES)','2026-06-23 14:46:12'),(55,'Transportadores','EDITOU','Editou Transportador: Transportador Fisico','2026-06-23 14:48:34'),(56,'Marcas','CRIOU','Criou Marca: Honda','2026-06-23 14:48:57'),(57,'Veículos','EDITOU','Editou Veículo: ETO 7383. Modelo: Civic G10 (Era ). Marca: Honda (Era )','2026-06-23 14:49:16'),(58,'Transportadores','EDITOU','Editou Transportador: Transportador Fisico. RG/Insc. Est.: 7898474 (Era 569328471)','2026-06-23 14:49:37'),(59,'Transportadores','EDITOU','Editou Transportador: Transportador Fisico. Número: 55 (Era 0)','2026-06-23 14:50:17'),(60,'Produtos','EDITOU','Editou Produto: teys','2026-06-23 16:51:09'),(61,'Produtos','EDITOU','Editou Produto: teys. Marca: 2 (Era 1)','2026-06-23 16:51:17'),(62,'Funcionarios','EDITOU','Editou Funcionário: Novo Funcionario. Tipo Pessoa: F (Era PF)','2026-06-26 17:07:41');
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `marcas`
+--
+
+DROP TABLE IF EXISTS `marcas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `marcas` (
+  `codMarca` int NOT NULL AUTO_INCREMENT,
+  `marca` varchar(20) NOT NULL,
+  `ativo` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`codMarca`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `marcas`
+--
+
+LOCK TABLES `marcas` WRITE;
+/*!40000 ALTER TABLE `marcas` DISABLE KEYS */;
+INSERT INTO `marcas` VALUES (1,'Mercedes-Benz',1),(2,'Honda',1);
+/*!40000 ALTER TABLE `marcas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -345,18 +521,16 @@ DROP TABLE IF EXISTS `parcelas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `parcelas` (
-  `codParcela` int NOT NULL AUTO_INCREMENT,
   `codCondicao` int NOT NULL,
   `numeroParcela` int NOT NULL,
   `percentual` decimal(5,2) NOT NULL,
   `dias` int NOT NULL,
   `codFormaPagamento` int DEFAULT NULL,
-  PRIMARY KEY (`codParcela`),
-  KEY `codCondicao` (`codCondicao`),
+  PRIMARY KEY (`codCondicao`,`numeroParcela`),
   KEY `codFormaPagamento` (`codFormaPagamento`),
   CONSTRAINT `parcelas_ibfk_1` FOREIGN KEY (`codCondicao`) REFERENCES `condicaopagamentos` (`codCondicao`),
   CONSTRAINT `parcelas_ibfk_2` FOREIGN KEY (`codFormaPagamento`) REFERENCES `formapagamentos` (`codFormaPagamento`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +539,7 @@ CREATE TABLE `parcelas` (
 
 LOCK TABLES `parcelas` WRITE;
 /*!40000 ALTER TABLE `parcelas` DISABLE KEYS */;
-INSERT INTO `parcelas` VALUES (1,3,0,25.00,30,1),(2,3,0,25.00,60,1),(3,3,0,25.00,90,2),(4,3,0,25.00,120,1);
+INSERT INTO `parcelas` VALUES (3,1,25.00,30,1),(3,2,25.00,60,1),(3,3,25.00,90,2),(3,4,25.00,120,1),(4,1,10.00,30,1),(4,2,10.00,60,1),(4,3,10.00,90,1),(4,4,30.00,120,1),(4,5,40.00,150,2);
 /*!40000 ALTER TABLE `parcelas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,15 +591,23 @@ DROP TABLE IF EXISTS `produtos`;
 CREATE TABLE `produtos` (
   `codProd` int NOT NULL AUTO_INCREMENT,
   `produto` varchar(25) DEFAULT NULL,
-  `ncmSh` varchar(10) DEFAULT NULL,
   `unidade` varchar(4) DEFAULT NULL,
+  `ncmSh` varchar(10) DEFAULT NULL,
   `pesoBruto` decimal(10,2) DEFAULT NULL,
   `pesoLiq` decimal(10,2) DEFAULT NULL,
   `saldo` decimal(10,2) DEFAULT NULL,
+  `precoCompra` decimal(10,2) DEFAULT '0.00',
+  `precoVenda` decimal(10,2) DEFAULT '0.00',
   `custoMedio` decimal(10,2) DEFAULT NULL,
+  `codCategoria` int DEFAULT NULL,
+  `codMarca` int DEFAULT NULL,
   `ativo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codProd`),
   KEY `NCMSHPROD` (`ncmSh`),
+  KEY `fk_prod_categoria` (`codCategoria`),
+  KEY `fk_prod_marca` (`codMarca`),
+  CONSTRAINT `fk_prod_categoria` FOREIGN KEY (`codCategoria`) REFERENCES `categorias` (`codCategoria`),
+  CONSTRAINT `fk_prod_marca` FOREIGN KEY (`codMarca`) REFERENCES `marcas` (`codMarca`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`ncmSh`) REFERENCES `ncmshs` (`ncmSh`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -436,7 +618,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,'Batata','19022000','KG',500.00,500.00,0.00,12.00,1),(2,'teys','19022000','da',77.00,444.00,145.00,88.00,1);
+INSERT INTO `produtos` VALUES (1,'Batata','KG','19022000',500.00,500.00,0.00,0.00,0.00,12.00,NULL,NULL,1),(2,'teys','da','19022000',77.00,444.00,145.00,0.00,0.00,88.00,1,2,1);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -449,15 +631,26 @@ DROP TABLE IF EXISTS `transportadores`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transportadores` (
   `codTransp` int NOT NULL AUTO_INCREMENT,
-  `CpfCnpj` varchar(13) DEFAULT NULL,
-  `endereco` varchar(50) DEFAULT NULL,
-  `codCidade` int DEFAULT NULL,
   `transportador` varchar(50) DEFAULT NULL,
+  `nomeFantasia` varchar(100) DEFAULT NULL,
+  `endereco` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) DEFAULT NULL,
+  `numero` int DEFAULT NULL,
+  `complemento` varchar(25) DEFAULT NULL,
+  `cep` varchar(8) DEFAULT NULL,
+  `fone` varchar(15) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `site` varchar(50) DEFAULT NULL,
   `RgInscEst` varchar(14) DEFAULT NULL,
-  `ativo` tinyint(1) DEFAULT NULL,
+  `CpfCnpj` varchar(13) DEFAULT NULL,
   `tipoPessoa` char(2) NOT NULL DEFAULT 'PJ',
+  `codCidade` int DEFAULT NULL,
+  `codVeic` int DEFAULT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codTransp`),
   KEY `codCidade` (`codCidade`),
+  KEY `fk_transp_veic` (`codVeic`),
+  CONSTRAINT `fk_transp_veic` FOREIGN KEY (`codVeic`) REFERENCES `veiculos` (`codVeic`),
   CONSTRAINT `transportadores_ibfk_1` FOREIGN KEY (`codCidade`) REFERENCES `cidades` (`codCidade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -468,7 +661,7 @@ CREATE TABLE `transportadores` (
 
 LOCK TABLES `transportadores` WRITE;
 /*!40000 ALTER TABLE `transportadores` DISABLE KEYS */;
-INSERT INTO `transportadores` VALUES (1,'78952148763','Rua das batatas n225',3,'Transporte de batatas','465184231',1,'PJ'),(2,'15355952054','Rua doce de Leite',4,'Transportador Fisico','132423935',1,'PF');
+INSERT INTO `transportadores` VALUES (1,'Transporte de batatas',NULL,'Rua das batatas n225',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'465184231','78952148763','PJ',3,NULL,1),(2,'Transportador Fisico','Transportinho','Rua doce de Leite','jardim europa',55,'apartamento 701','45896632','995572236','fisicotransp@email.com','www.transpfisico.com','7898474','15355952054','PF',4,1,1);
 /*!40000 ALTER TABLE `transportadores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,12 +675,16 @@ DROP TABLE IF EXISTS `veiculos`;
 CREATE TABLE `veiculos` (
   `codVeic` int NOT NULL AUTO_INCREMENT,
   `placaVeic` varchar(11) DEFAULT NULL,
-  `codEstado` int DEFAULT NULL,
-  `codANTT` varchar(8) DEFAULT NULL,
-  `ativo` tinyint(1) DEFAULT NULL,
   `placaMercoSul` varchar(7) DEFAULT NULL,
+  `modelo` varchar(20) DEFAULT NULL,
+  `codANTT` varchar(8) DEFAULT NULL,
+  `codEstado` int DEFAULT NULL,
+  `codMarca` int DEFAULT NULL,
+  `ativo` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`codVeic`),
   KEY `codEstado` (`codEstado`),
+  KEY `fk_veic_marca` (`codMarca`),
+  CONSTRAINT `fk_veic_marca` FOREIGN KEY (`codMarca`) REFERENCES `marcas` (`codMarca`),
   CONSTRAINT `veiculos_ibfk_1` FOREIGN KEY (`codEstado`) REFERENCES `estados` (`codEstado`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -498,7 +695,7 @@ CREATE TABLE `veiculos` (
 
 LOCK TABLES `veiculos` WRITE;
 /*!40000 ALTER TABLE `veiculos` DISABLE KEYS */;
-INSERT INTO `veiculos` VALUES (1,'ETO 7383',1,'458624',1,NULL),(2,'AAA 1111',1,'888888',1,NULL),(3,NULL,2,'21859687',1,'FKR8D47');
+INSERT INTO `veiculos` VALUES (1,'ETO 7383',NULL,'Civic G10','458624',1,2,1),(2,'AAA 1111',NULL,NULL,'888888',1,NULL,1),(3,NULL,'FKR8D47','A 250','21859687',2,1,1);
 /*!40000 ALTER TABLE `veiculos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -511,4 +708,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-13 15:45:26
+-- Dump completed on 2026-06-27 15:03:49
