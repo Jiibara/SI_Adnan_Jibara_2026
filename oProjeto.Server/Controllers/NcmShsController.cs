@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
 using oProjeto.Server.Models;
 
-namespace oProjeto.Server.Controllers
+/*namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
     public class NcmShsController(AppDbContext db) : ControllerBase
@@ -49,3 +49,4 @@ namespace oProjeto.Server.Controllers
         }
     }
 }
+*/

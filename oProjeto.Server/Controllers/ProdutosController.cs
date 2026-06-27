@@ -2,49 +2,45 @@
 using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
 using oProjeto.Server.Models;
+using oProjeto.Server.Repository;
 
 namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class ProdutosController(AppDbContext db) : ControllerBase
+    public class ProdutosController(ProdutoRepository repo) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await db.Produtos.Include(p => p.NcmShs).OrderBy(p => p.Produto).ToListAsync());
+            Ok(await repo.GetAllAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var r = await db.Produtos.Include(p => p.NcmShs).FirstOrDefaultAsync(p => p.CodProd == id);
+            var r = await repo.GetByIdAsync(id);
             return r is null ? NotFound() : Ok(r);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Produtos body)
         {
-            db.Produtos.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = body.CodProd }, body);
+            var created = await repo.CreateAsync(body);
+            return CreatedAtAction(nameof(Get), new { id = created.CodProd }, created);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Produtos body)
         {
-            if (id != body.CodProd) 
-                return BadRequest();
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (id != body.CodProd) return BadRequest();
+            await repo.UpdateAsync(body);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var r = await db.Produtos.FindAsync(id);
-            if (r is null) 
-                return NotFound();
-            db.Produtos.Remove(r);
-            await db.SaveChangesAsync();
+            var r = await repo.GetByIdAsync(id);
+            if (r is null) return NotFound();
+            await repo.DeleteAsync(id);
             return NoContent();
         }
     }

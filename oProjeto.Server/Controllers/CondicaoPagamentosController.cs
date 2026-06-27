@@ -2,49 +2,45 @@
 using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
 using oProjeto.Server.Models;
+using oProjeto.Server.Repository;
 
 namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class CondicaoPagamentosController(AppDbContext db) : ControllerBase
+    public class CondicaoPagamentosController(CondicaoPagamentoRepository repo) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await db.CondicaoPagamentos.OrderBy(c => c.CondicaoPagamento).ToListAsync());
+            Ok(await repo.GetAllAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var r = await db.CondicaoPagamentos.FindAsync(id);
+            var r = await repo.GetByIdAsync(id);
             return r is null ? NotFound() : Ok(r);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CondicaoPagamentos body)
         {
-            db.CondicaoPagamentos.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = body.CodCondicao}, body);
+            var created = await repo.CreateAsync(body);
+            return CreatedAtAction(nameof(Get), new { id = created.CodCondicao }, created);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, CondicaoPagamentos body)
         {
-            if (id != body.CodCondicao)
-                return BadRequest();
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (id != body.CodCondicao) return BadRequest();
+            await repo.UpdateAsync(body);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var r = await db.CondicaoPagamentos.FindAsync(id);
-            if (r is null)
-                return NotFound();
-            db.CondicaoPagamentos.Remove(r);
-            await db.SaveChangesAsync();
+            var r = await repo.GetByIdAsync(id);
+            if (r is null) return NotFound();
+            await repo.DeleteAsync(id);
             return NoContent();
         }
     }

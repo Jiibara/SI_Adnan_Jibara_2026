@@ -1,50 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using oProjeto.Data;
 using oProjeto.Server.Models;
+using oProjeto.Server.Repository;
 
 namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class FornecedoresController(AppDbContext db) : ControllerBase
+    public class FornecedoresController(FornecedorRepository repo) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await db.Fornecedores.Include(f => f.Cidade).OrderBy(f => f.Fornecedor).ToListAsync());
+            Ok(await repo.GetAllAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var r = await db.Fornecedores.Include(f => f.Cidade).FirstOrDefaultAsync(f => f.CodForn == id);
+            var r = await repo.GetByIdAsync(id);
             return r is null ? NotFound() : Ok(r);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Fornecedores body)
         {
-            db.Fornecedores.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = body.CodForn }, body);
+            var created = await repo.CreateAsync(body);
+            return CreatedAtAction(nameof(Get), new { id = created.CodForn }, created);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Fornecedores body)
         {
-            if (id != body.CodForn) 
-                return BadRequest();
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (id != body.CodForn) return BadRequest();
+            await repo.UpdateAsync(body);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var r = await db.Fornecedores.FindAsync(id);
-            if (r is null) 
-                return NotFound();
-            db.Fornecedores.Remove(r);
-            await db.SaveChangesAsync();
+            var r = await repo.GetByIdAsync(id);
+            if (r is null) return NotFound();
+            await repo.DeleteAsync(id);
             return NoContent();
         }
     }

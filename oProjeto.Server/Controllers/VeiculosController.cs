@@ -1,49 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using oProjeto.Data;
+using oProjeto.Server.Models;
+using oProjeto.Server.Repository;
 
 namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class VeiculosController(AppDbContext db) : ControllerBase
+    public class VeiculosController(VeiculoRepository repo) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await db.Veiculos.Include(v => v.Estado).OrderBy(v => v.PlacaVeic).ToListAsync());
+            Ok(await repo.GetAllAsync());
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var r = await db.Veiculos.Include(v => v.Estado).FirstOrDefaultAsync(v => v.CodVeic == id);
+            var r = await repo.GetByIdAsync(id);
             return r is null ? NotFound() : Ok(r);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Veiculos body)
         {
-            db.Veiculos.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = body.CodVeic }, body);
+            var created = await repo.CreateAsync(body);
+            return CreatedAtAction(nameof(Get), new { id = created.CodVeic }, created);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Veiculos body)
         {
-            if (id != body.CodVeic) 
-                return BadRequest();
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (id != body.CodVeic) return BadRequest();
+            await repo.UpdateAsync(body);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var r = await db.Veiculos.FindAsync(id);
-            if (r is null) 
-                return NotFound();
-            db.Veiculos.Remove(r);
-            await db.SaveChangesAsync();
+            var r = await repo.GetByIdAsync(id);
+            if (r is null) return NotFound();
+            await repo.DeleteAsync(id);
             return NoContent();
         }
     }

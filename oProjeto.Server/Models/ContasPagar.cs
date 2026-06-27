@@ -4,7 +4,6 @@ using oProjeto.Server.Models;
 
 namespace oProjeto.Server.Models
 {
-    [Table("ContasPagar")]
     public class ContasPagar
     {
         public int Numero { get; set; }
@@ -15,10 +14,7 @@ namespace oProjeto.Server.Models
         public bool Ativo { get; set; }
         public decimal? ValorParcela { get; set; }
         public DateOnly? VencimentoParcela { get; set; }
-
-        [ForeignKey(nameof(CodForn))]
         public Fornecedores? Fornecedor { get; set; }
-
         public Nfes? Nfe { get; set; }
     }
 }

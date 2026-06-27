@@ -8,12 +8,18 @@ import FornecedoresPage from './pages/Parceiros/FornecedoresPage'
 import TransportadoresPage from './pages/Parceiros/TransportadoresPage'
 import VeiculosPage from './pages/Parceiros/VeiculosPage'
 import NcmPage from './pages/Fiscal/NcmPage'
-import ProdutosPage from './pages/Fiscal/ProdutosPage'
+import ProdutosPage from './pages/Produtos/ProdutosPage'
 import NfePage from './pages/Fiscal/NfePage'
 import ProdNfePage from './pages/Fiscal/ProdNfePage'
 import ContasPagarPage from './pages/Financeiro/ContasPagarPage'
 import FormaPagamentoPage from './pages/Financeiro/FormaPagamentoPage'
 import CondicaoPagamentoPage from './pages/Financeiro/CondicaoPagamentoPage'
+import LogsPage from './pages/Registros/LogsPage'
+import MarcasPage from './pages/Produtos/MarcasPage'
+import CategoriasPage from './pages/Produtos/CatrgoriasPage'
+import FuncoesPage from './pages/Funcionarios/FuncoesPage'
+import FuncionariosPage from './pages/Funcionarios/FuncionariosPage'
+import ClientesPage from './pages/Parceiros/ClientesPage'
 
 export default function App() {
   return (
@@ -34,6 +40,13 @@ export default function App() {
           <Route path="/prodnfe" element={<ProdNfePage />} />
           <Route path="/contaspagar" element={<ContasPagarPage />} />
           <Route path="/formapagamento" element={<FormaPagamentoPage />} />
+          <Route path="/condicaoPagamentos" element={<CondicaoPagamentoPage />} />
+          <Route path="/logs" element={<LogsPage/>} />
+          <Route path="/marcas" element={<MarcasPage/>} />
+          <Route path="/categorias" element={<CategoriasPage/>} />    
+          <Route path="/funcoes" element={<FuncoesPage/>} />   
+          <Route path='/funcionarios' element={<FuncionariosPage/>} />
+          <Route path='/clientes' element={<ClientesPage/>} />   
         </Routes>
       </main>
       <Toaster position="bottom-right" toastOptions={{

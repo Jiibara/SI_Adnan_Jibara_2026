@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
 using oProjeto.Server.Models;
 
-namespace oProjeto.Server.Controllers
+/*namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
     public class ProdNFeController(AppDbContext db) : ControllerBase
@@ -58,4 +58,4 @@ namespace oProjeto.Server.Controllers
             return NoContent();
         }
     }
-}
+}*/

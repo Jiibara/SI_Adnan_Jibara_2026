@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
-import { transportadoresApi, cidadesApi } from '@/services/api'
+import { transportadoresApi, cidadesApi, veiculosApi } from '@/services/api'
 
 const lbl = { fontSize:11, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'1.2px', fontFamily:'JetBrains Mono, monospace', display:'block', marginBottom:5 }
 const inp = { background:'#f8f9fb', border:'1px solid #e2e6ed', borderRadius:8, padding:'9px 12px', fontSize:13, color:'#0f172a', fontFamily:'Outfit, sans-serif', outline:'none', width:'100%', boxSizing:'border-box', transition:'border-color .15s' }
@@ -26,18 +26,24 @@ const Overlay = ({ children, onClose, zIndex = 60 }) => (
 export default function TransportadoresPage() {
   const { data, loading, load } = useCrud(transportadoresApi)
   const [cidades, setCidades]         = useState([])
+  const [veiculos, setVeiculos]       = useState([]) 
   const [form, setForm]               = useState({ tipoPessoa:'PJ', ativo:true })
   const [editing, setEditing]         = useState(false)
   const [open, setOpen]               = useState(false)
   const [confirm, setConfirm]         = useState(null)
-  const [openCidades, setOpenCidades] = useState(false)
+  
+  // Modais de pesquisa
+  const [openCidades, setOpenCidades]   = useState(false)
+  const [openVeiculos, setOpenVeiculos] = useState(false) // Novo state para o modal de veículos
 
-  useEffect(() => { cidadesApi.getAll().then(setCidades) }, [])
+  useEffect(() => { 
+    cidadesApi.getAll().then(setCidades)
+    veiculosApi.getAll().then(setVeiculos) // Busca veículos no carregamento
+  }, [])
 
   const upd = (k, v) => setForm(p => ({ ...p, [k]: v }))
 
-  const setTipoPessoa = tipo =>
-    setForm(p => ({ ...p, tipoPessoa:tipo, cpfCnpj:'', RgInscEst:'' }))
+const setTipoPessoa = tipo => setForm(p => ({ ...p, tipoPessoa: tipo }))
 
   const save = async () => {
     try {
@@ -54,6 +60,7 @@ export default function TransportadoresPage() {
   const cols = [
     { key:'codTransp',     label:'Cód.',         mono:true },
     { key:'transportador', label:'Transportador' },
+    { key:'tipoPessoa',    label:'Tipo'},
     { key:'cpfCnpj',       label:'CPF/CNPJ',     mono:true },
     { key:'cidade',        label:'Cidade',        render: r => r.cidade?.cidade ?? '' },
     { key:'ativo',         label:'Ativo',         render: r => r.ativo ? 'Sim' : 'Não' },
@@ -65,8 +72,14 @@ export default function TransportadoresPage() {
     { key:'estado',    label:'Estado', render: r => `${r.estado?.uf ?? ''} - ${r.estado?.estado ?? ''}` },
   ]
 
+  // Controles Cidade
   const cidadeSelecionada = cidades.find(c => c.codCidade === form.codCidade)?.cidade ?? ''
   const selectCidade = r => { setForm(f => ({ ...f, codCidade: r.codCidade })); setOpenCidades(false) }
+
+  // Controles Veículo
+  const veiculoSelecionado = veiculos.find(v => v.codVeic === form.codVeic)
+  const veiculoLabel = veiculoSelecionado ? `${veiculoSelecionado.placa ?? ''} - ${veiculoSelecionado.modelo ?? ''}` : ''
+  const selectVeiculo = r => { setForm(f => ({ ...f, codVeic: r.codVeic })); setOpenVeiculos(false) }
 
   const isPF = form.tipoPessoa === 'PF'
 
@@ -85,7 +98,7 @@ export default function TransportadoresPage() {
         <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
 
           {/* Tipo Pessoa + Ativo */}
-          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', gap:12 }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', flexWrap:'wrap', gap:12 }}>
             <div>
               <label style={lbl}>Tipo Pessoa</label>
               <div style={{ display:'flex', gap:8 }}>
@@ -100,28 +113,65 @@ export default function TransportadoresPage() {
             </label>
           </div>
 
-          {/* Transportador */}
-          <FField label="Transportador" required value={form.transportador ?? ''} onChange={v => upd('transportador', v)} />
-
-          {/* CPF/CNPJ + RG/Insc. Estadual */}
-          <div style={{ display:'flex', gap:12 }}>
-            <div style={{ flex:'1 1 180px' }}>
-              <FField label={isPF ? 'CPF' : 'CNPJ'} value={form.cpfCnpj ?? ''} onChange={v => upd('cpfCnpj', v)} />
+          {/* Nome/Razão Social + Fantasia/Apelido alternável */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 320px' }}>
+              <FField label={isPF ? 'Transportador' : 'Transportador'} required value={form.transportador ?? ''} onChange={v => upd('transportador', v)} />
             </div>
-            <div style={{ flex:'1 1 180px' }}>
-              <FField label={isPF ? 'RG' : 'Insc. Estadual'} value={form.RgInscEst ?? ''} onChange={v => upd('RgInscEst', v)} />
+            <div style={{ flex:'1 1 320px' }}>
+              <FField label={isPF ? 'Apelido' : 'Nome Fantasia'} value={form.nomeFantasia ?? ''} onChange={v => upd('nomeFantasia', v)} />
             </div>
           </div>
 
-          {/* Endereço */}
-          <FField label="Endereço" value={form.endereco ?? ''} onChange={v => upd('endereco', v)} />
+          {/* CPF/CNPJ + RG/Insc. Estadual */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 320px' }}>
+              <FField label={isPF ? 'CPF' : 'CNPJ'} value={form.cpfCnpj ?? ''} onChange={v => upd('cpfCnpj', v)} />
+            </div>
+            <div style={{ flex:'1 1 320px' }}>
+              <FField label={isPF ? 'RG' : 'Insc. Estadual'} value={form.rgInscEst ?? form.RgInscEst ?? ''} onChange={v => upd('rgInscEst', v)} />
+            </div>
+          </div>
 
-          {/* Cidade */}
-          <div>
-            <label style={lbl}>Cidade</label>
+          {/* Endereço + Número + Complemento */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 320px' }}><FField label="Endereço" value={form.endereco ?? ''} onChange={v => upd('endereco', v)} /></div>
+            <div style={{ flex:'0 0 100px' }}><FField label="Número" type="number" value={form.numero ?? ''} onChange={v => upd('numero', Number(v))} /></div>
+            <div style={{ flex:'1 1 200px' }}><FField label="Complemento" value={form.complemento ?? ''} onChange={v => upd('complemento', v)} /></div>
+          </div>
+
+          {/* Bairro + CEP + Cidade */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 220px' }}><FField label="Bairro" value={form.bairro ?? ''} onChange={v => upd('bairro', v)} /></div>
+            <div style={{ flex:'0 0 140px' }}><FField label="CEP" value={form.cep ?? ''} onChange={v => upd('cep', v)} /></div>
+            
+            <div style={{ flex:'1 1 220px' }}>
+              <label style={lbl}>Cidade</label>
+              <div style={{ display:'flex', gap:8 }}>
+                <input type="text" readOnly value={cidadeSelecionada} style={{ ...inp, flex:1 }} />
+                <button type="button" onClick={() => setOpenCidades(true)}
+                  style={{ padding:'0 14px', height:37, border:'1px solid #e2e6ed', borderRadius:8, cursor:'pointer', fontWeight:600, fontSize:13, background:'#f8f9fb', whiteSpace:'nowrap', fontFamily:'Outfit, sans-serif', color:'#0f172a' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor='#2563eb'; e.currentTarget.style.color='#2563eb' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor='#e2e6ed'; e.currentTarget.style.color='#0f172a' }}>
+                  Pesquisar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Contatos (Telefone + Email + Site) */}
+          <div style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
+            <div style={{ flex:'1 1 180px' }}><FField label="Telefone" value={form.fone ?? ''} onChange={v => upd('fone', v)} /></div>
+            <div style={{ flex:'1 1 250px' }}><FField label="Email" value={form.email ?? ''} onChange={v => upd('email', v)} /></div>
+            <div style={{ flex:'1 1 250px' }}><FField label="Site" value={form.site ?? ''} onChange={v => upd('site', v)} /></div>
+          </div>
+
+          {/* Veículo Padrão Modal */}
+          <div style={{ width:'100%', maxWidth:700 }}>
+            <label style={lbl}>Veículo</label>
             <div style={{ display:'flex', gap:8 }}>
-              <input type="text" readOnly value={cidadeSelecionada} style={{ ...inp, flex:1 }} />
-              <button type="button" onClick={() => setOpenCidades(true)}
+              <input type="text" readOnly value={veiculoLabel} style={{ ...inp, flex:1 }} />
+              <button type="button" onClick={() => setOpenVeiculos(true)}
                 style={{ padding:'0 14px', height:37, border:'1px solid #e2e6ed', borderRadius:8, cursor:'pointer', fontWeight:600, fontSize:13, background:'#f8f9fb', whiteSpace:'nowrap', fontFamily:'Outfit, sans-serif', color:'#0f172a' }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor='#2563eb'; e.currentTarget.style.color='#2563eb' }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor='#e2e6ed'; e.currentTarget.style.color='#0f172a' }}>
@@ -133,9 +183,10 @@ export default function TransportadoresPage() {
         </div>
       </Modal>
 
+      {/* MODAL DE PESQUISA - CIDADES */}
       {openCidades && (
         <Overlay onClose={() => setOpenCidades(false)}>
-          <div style={{ background:'#fff', borderRadius:12, width:'100%', maxWidth:600, maxHeight:'90vh', display:'flex', flexDirection:'column', boxShadow:'0 20px 60px rgba(0,0,0,.15)', animation:'slideUp .2s ease' }}>
+          <div style={{ background:'#fff', borderRadius:12, width:'100%', maxWidth:600, maxHeight:'90vh', display:'flex', flexDirection:'column', boxShadow:'0 20px 60px rgba(0,0,0,.15)' }}>
 
             <div style={{ padding:'18px 24px', borderBottom:'1px solid #e2e6ed', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
               <div style={{ fontWeight:700, fontSize:15, color:'#0f172a' }}>Consulta de Cidades</div>
@@ -165,9 +216,53 @@ export default function TransportadoresPage() {
                         ))}
                         <td style={{ padding:'11px 14px', textAlign:'right' }}>
                           <button onClick={() => selectCidade(row)}
-                            style={{ padding:'4px 12px', border:'none', borderRadius:6, background:'#2563eb', color:'#fff', cursor:'pointer', fontSize:12, fontWeight:600 }}
-                            onMouseEnter={e => e.currentTarget.style.opacity='.85'}
-                            onMouseLeave={e => e.currentTarget.style.opacity='1'}>
+                            style={{ padding:'4px 12px', border:'none', borderRadius:6, background:'#2563eb', color:'#fff', cursor:'pointer', fontSize:12, fontWeight:600 }}>
+                            Selecionar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </Overlay>
+      )}
+
+      {/* MODAL DE PESQUISA - VEÍCULOS */}
+      {openVeiculos && (
+        <Overlay onClose={() => setOpenVeiculos(false)}>
+          <div style={{ background:'#fff', borderRadius:12, width:'100%', maxWidth:600, maxHeight:'90vh', display:'flex', flexDirection:'column', boxShadow:'0 20px 60px rgba(0,0,0,.15)' }}>
+
+            <div style={{ padding:'18px 24px', borderBottom:'1px solid #e2e6ed', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+              <div style={{ fontWeight:700, fontSize:15, color:'#0f172a' }}>Consulta de Veículos</div>
+              <button onClick={() => setOpenVeiculos(false)} style={{ background:'none', border:'none', cursor:'pointer', fontSize:20, color:'#94a3b8' }}>✕</button>
+            </div>
+
+            <div style={{ padding:'20px 24px', overflowY:'auto', flex:1 }}>
+              <div style={{ background:'#fff', border:'1px solid #e2e6ed', borderRadius:10, overflow:'hidden', boxShadow:'0 1px 3px rgba(0,0,0,.06)' }}>
+                <table style={{ width:'100%', borderCollapse:'collapse', fontSize:13 }}>
+                  <thead>
+                    <tr style={{ borderBottom:'1px solid #e2e6ed', background:'#f8f9fb' }}>
+                      <th style={{ padding:'10px 14px', textAlign:'left', fontSize:11, fontWeight:600, textTransform:'uppercase', letterSpacing:'1.2px', color:'#94a3b8' }}>Cód.</th>
+                      <th style={{ padding:'10px 14px', textAlign:'left', fontSize:11, fontWeight:600, textTransform:'uppercase', letterSpacing:'1.2px', color:'#94a3b8' }}>Placa</th>
+                      <th style={{ padding:'10px 14px', textAlign:'left', fontSize:11, fontWeight:600, textTransform:'uppercase', letterSpacing:'1.2px', color:'#94a3b8' }}>Modelo</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {veiculos.map((row, i) => (
+                      <tr key={i} style={{ borderBottom:'1px solid #f1f4f8' }}
+                        onMouseEnter={e => e.currentTarget.style.background='#f8f9fb'}
+                        onMouseLeave={e => e.currentTarget.style.background='transparent'}>
+                        <td style={{ padding:'11px 14px', color:'#0f172a', fontFamily: 'JetBrains Mono, monospace' }}>{row.codVeic}</td>
+                        <td style={{ padding:'11px 14px', color:'#0f172a' }}>{row.placaVeic ?? ''} {row.placaMercoSul ?? ''}</td>
+                        <td style={{ padding:'11px 14px', color:'#0f172a' }}>{row.modelo ?? ''}</td>
+                        <td style={{ padding:'11px 14px', textAlign:'right' }}>
+                          <button onClick={() => selectVeiculo(row)}
+                            style={{ padding:'4px 12px', border:'none', borderRadius:6, background:'#2563eb', color:'#fff', cursor:'pointer', fontSize:12, fontWeight:600 }}>
                             Selecionar
                           </button>
                         </td>

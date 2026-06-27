@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
 
-namespace oProjeto.Server.Controllers
+/*namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
     public class NfesController(AppDbContext db) : ControllerBase
@@ -55,4 +55,4 @@ namespace oProjeto.Server.Controllers
             return NoContent();
         }
     }
-}
+}*/

@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "HS3qBy0tygwT6XvAd+gKu+Zcsgfq4wT5pISbYPFNQP4=",
+  "Source": "oProjeto.Server",
+  "BasePath": "_content/oProjeto.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

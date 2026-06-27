@@ -202,18 +202,20 @@ export function PageHeader({ title, sub, onNew, label = 'Novo' }) {
         <h1 style={{ fontSize: 20, fontWeight: 700, color: '#0f172a' }}>{title}</h1>
         <p style={{ fontSize: 13, color: '#94a3b8', marginTop: 2 }}>{sub}</p>
       </div>
-      <button
-        onClick={onNew}
-        style={{
-          padding: '9px 20px', background: '#2563eb', color: '#fff', border: 'none',
-          borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer',
-          display: 'flex', alignItems: 'center', gap: 6, transition: 'opacity .15s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.opacity = '.85'}
-        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-      >
-        ＋ {label}
-      </button>
+      {onNew && (
+        <button
+          onClick={onNew}
+          style={{
+            padding: '9px 20px', background: '#2563eb', color: '#fff', border: 'none',
+            borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: 6, transition: 'opacity .15s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '.85'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        >
+          ＋ {label}
+        </button>
+      )}
     </div>
   )
 }

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "nGh6vP8hfuE=",
+  "dgSpecHash": "cL31ILv/Pxk=",
   "success": true,
   "projectFilePath": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\oProjeto.Server.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\adnan\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\adnan\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\adnan\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\8.0.27\\microsoft.aspnetcore.spaproxy.8.0.27.nupkg.sha512",
     "C:\\Users\\adnan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

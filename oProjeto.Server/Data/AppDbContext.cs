@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 
 namespace oProjeto.Data;
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+/*public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
     public DbSet<Estados> Estados { get; set; }
     public DbSet<Cidades> Cidades { get; set; }
@@ -63,4 +63,4 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         mb.Entity<Parcelas>()
             .Property(n => n.NumeroParcela).HasColumnName("NumeroParcela");
     }
-}
+}*/

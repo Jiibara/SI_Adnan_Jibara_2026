@@ -2,16 +2,17 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-[Table("Veiculos")]
 public class Veiculos
 {
-    [Key] public int CodVeic { get; set; }
+    public int CodVeic { get; set; }
     public string? PlacaVeic { get; set; }
     public string? PlacaMercoSul { get; set; }
-    public int CodEstado { get; set; }
+    public string? Modelo { get; set; }
     public string? CodANTT { get; set; }
+    public int CodEstado { get; set; }
+    public int? CodMarca { get; set; } 
     public bool Ativo { get; set; }
-
-    [ForeignKey(nameof(CodEstado))] public Estados? Estado { get; set; }
-    public ICollection<Nfes> Nfes { get; set; } = [];
+   public Estados? Estado { get; set; }
+    public Marcas? Marca { get; set; }
 }
+

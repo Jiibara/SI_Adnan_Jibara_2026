@@ -1,7 +1,5 @@
 ﻿using oProjeto.Server.Models;
 using System.ComponentModel.DataAnnotations.Schema;
-
-[Table("Nfes")]
 public class Nfes
 {
     public int Numero { get; set; }
@@ -36,9 +34,7 @@ public class Nfes
     public decimal? PesoLiq { get; set; }
     public string? InfComp { get; set; }
     public bool Ativo { get; set; }
-
-    [ForeignKey(nameof(CodForn))] public Fornecedores? Fornecedor { get; set; }
-    [ForeignKey(nameof(CodTransp))] public Transportadores? Transportador { get; set; }
-    [ForeignKey(nameof(CodVeic))] public Veiculos? Veiculo { get; set; }
-    public ICollection<ProdNfes> ProdNfes { get; set; } = [];
+    public Fornecedores? Fornecedor { get; set; }
+    public Transportadores? Transportador { get; set; }
+    public Veiculos? Veiculo { get; set; }
 }

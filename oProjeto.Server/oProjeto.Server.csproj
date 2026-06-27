@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <!-- React -->
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.*-*" />
 
     <!-- Entity Framework + MySQL -->

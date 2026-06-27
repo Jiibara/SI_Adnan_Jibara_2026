@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using oProjeto.Data;
-using System;
+using oProjeto.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +18,26 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseMySql(conn, ServerVersion.AutoDetect(conn)));
+
+/*builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseMySql(conn, ServerVersion.AutoDetect(conn)));*/
+
+// Repositorios
+builder.Services.AddScoped<LogRepository>();
+builder.Services.AddScoped<PaisRepository>();
+builder.Services.AddScoped<EstadoRepository>();
+builder.Services.AddScoped<CidadeRepository>();
+builder.Services.AddScoped<FornecedorRepository>();
+builder.Services.AddScoped<TransportadorRepository>();
+builder.Services.AddScoped<VeiculoRepository>();
+builder.Services.AddScoped<FormaPagamentoRepository>();
+builder.Services.AddScoped<ProdutoRepository>();
+builder.Services.AddScoped<CondicaoPagamentoRepository>();
+builder.Services.AddScoped<MarcaRepository>();
+builder.Services.AddScoped<CategoriaRepository>();
+builder.Services.AddScoped<ClienteRepository>();
+builder.Services.AddScoped<FuncionarioRepository>();
+builder.Services.AddScoped<FuncaoRepository>();
 
 builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(p =>

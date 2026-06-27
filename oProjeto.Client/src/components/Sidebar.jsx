@@ -1,24 +1,37 @@
+import { lazy } from 'react'
 import { NavLink } from 'react-router-dom'
 
 const nav = [
   { group: 'Localização', items: [
       { to: '/paises', label: 'Países' },
       { to: '/estados', label: 'Estados' },
-      { to: '/cidades', label: 'Cidades' },
+      { to: '/cidades', label: 'Cidades' }, 
   ]},
   { group: 'Parceiros', items: [
-    { to: '/fornecedores', label: 'Fornecedores' },
-    { to: '/produtos', label: 'Produtos' },
-    { to: '/transportadores', label: 'Transportadores' },
-    { to: '/veiculos', label: 'Veículos' },
+    { to: '/fornecedores', label: 'Fornecedores' }, 
+    { to: '/clientes', label: 'Clientes'}, 
+    { to: '/transportadores', label: 'Transportadores' }, 
+    { to: '/veiculos', label: 'Veículos' }, 
   ]},
-  { group: 'Notas Fiscais', items: [
-    { to: '/nfe', label: 'NFe' },
+  { group: 'Funcionarios', items: [
+     { to: '/funcionarios', label: 'Funcionarios'},
+     { to: '/funcoes', label: 'Funções'},
   ]},
+  { group: 'Produtos', items: [
+     { to: '/produtos', label: 'Produtos' }, 
+     { to: '/categorias', label: 'Categorias'},
+     { to: '/marcas', label: 'Marcas'},
+  ]},
+ // { group: 'Notas Fiscais', items: [
+    // { to: '/nfe', label: 'NFe' },
+  //]},
   { group: 'Financeiro', items: [
-    { to: '/contaspagar', label: 'Contas a Pagar' },
+    //{ to: '/contaspagar', label: 'Contas a Pagar' },
     { to: '/formapagamento', label: 'Forma de Pagamento' },
-    { to: '/condicaoPagamento', label: 'Condição de Pagamento'},
+    { to: '/condicaoPagamentos', label: 'Condição de Pagamento'},
+  ]},
+    { group: 'Registro', items: [
+    { to: '/logs', label: 'Registros' },
   ]},
 ]
 

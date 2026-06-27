@@ -43,6 +43,7 @@ export default function CidadesPage() {
   const cols = [
     { key: 'codCidade', label: 'Cód.', mono: true },
     { key: 'cidade', label: 'Cidade' },
+    { key: 'ddd', label: 'DDD'},
     { key: 'estado', label: 'Estado', render: r => `${r.estado?.estado ?? ''} - ${r.estado?.uf ?? ''}` },
     { key: 'ativo', label: 'Ativo', render: r => r.ativo ? 'Sim' : 'Não' },
   ]
@@ -78,6 +79,10 @@ export default function CidadesPage() {
 
             <div style={{ flex: '1 1 auto' }}>
               <FField label="Cidade" required value={form.cidade ?? ''} onChange={v => upd('cidade', v)} />
+            </div>
+
+            <div style={{ flex: '1 0 60px' }}>
+              <FField label="DDD" required value={form.ddd ?? ''} onChange={v => upd('ddd', v)} />
             </div>
 
             <div style={{ flex: '1 1 auto' }}>

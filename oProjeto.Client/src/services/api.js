@@ -20,6 +20,14 @@ export const transportadoresApi = crud('/Transportadores')
 export const veiculosApi        = crud('/Veiculos')
 export const ncmApi             = crud('/NcmShs')
 export const produtosApi        = crud('/Produtos')
+export const formaPagamentosApi = crud('/FormaPagamentos')
+export const condicoesApi = crud('/CondicaoPagamentos')
+export const marcasApi = crud('/Marcas')
+export const categoriasApi = crud('/Categorias')
+export const funcoesApi = crud('/Funcoes')
+export const funcionariosApi = crud('/Funcionarios')
+export const clientesApi = crud('/Clientes')
+
 
 export const nfeApi = {
   getAll:  ()                        => api.get('/Nfes').then(r => r.data),
@@ -43,19 +51,12 @@ export const contasPagarApi = {
   delete:  (n, s, m, cf, np)         => api.delete(`/ContasPagar/${n}/${s}/${m}/${cf}/${np}`),
 }
 
-export const formaPagamentosApi = {
-  getAll: async () => (await api.get('/FormaPagamentos')).data,
-  get:    async (id) => (await api.get(`/FormaPagamentos/${id}`)).data,
-  create: async (d)  => (await api.post('/FormaPagamentos', d)).data,
-  update: async (id, d) => await api.put(`/FormaPagamentos/${id}`, d),
-  delete: async (id) => await api.delete(`/FormaPagamentos/${id}`)
+
+
+export const logsApi = {
+  getAll: async () => (await api.get('/Logs')).data
 }
 
-export const condicoesApi = {
-  getAll: async () => (await api.get('/CondicaoPagamentos')).data,
-  create: async (d) => (await api.post('/CondicaoPagamentos', d)).data,
-  update: async (id, d) => await api.put(`/CondicaoPagamentos/${id}`, d),
-  delete: async (id) => await api.delete(`/CondicaoPagamentos/${id}`)
-}
+
 
 export default api

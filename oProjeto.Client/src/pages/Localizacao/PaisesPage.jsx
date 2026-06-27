@@ -60,7 +60,6 @@ export default function PaisesPage() {
       <Modal open={open} title={editing ? 'Editar País' : 'Novo País'} editing={editing}
         onClose={() => setOpen(false)} onSave={save}>
 
-        {/* Linha 1: Cód. (readonly) + País + Sigla + Ativo */}
         <div style={{ display:'flex', gap:12, alignItems:'flex-end', marginBottom:14 }}>
           <div style={{ flex:'0 0 30px' }}>
             <FField label="Código" value={editing ? String(form.codPais ?? '') : '—'} onChange={() => {}} />
@@ -78,7 +77,6 @@ export default function PaisesPage() {
           </label>
         </div>
 
-        {/* Linha 2: DDI (pequeno) + Moeda (pequeno) */}
         <div style={{ display:'flex', gap:12 }}>
           <div style={{ flex:'0 0 120px' }}>
             <FField label="DDI" value={form.ddi ?? ''} onChange={v => upd('ddi', v)} />
