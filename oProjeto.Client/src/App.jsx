@@ -10,7 +10,7 @@ import VeiculosPage from './pages/Parceiros/VeiculosPage'
 import NcmPage from './pages/Fiscal/NcmPage'
 import ProdutosPage from './pages/Produtos/ProdutosPage'
 import NfePage from './pages/Fiscal/NfePage'
-import ProdNfePage from './pages/Fiscal/ProdNfePage'
+//import ProdNfePage from './pages/Fiscal/ProdNfePage'
 import ContasPagarPage from './pages/Financeiro/ContasPagarPage'
 import FormaPagamentoPage from './pages/Financeiro/FormaPagamentoPage'
 import CondicaoPagamentoPage from './pages/Financeiro/CondicaoPagamentoPage'
@@ -20,6 +20,12 @@ import CategoriasPage from './pages/Produtos/CatrgoriasPage'
 import FuncoesPage from './pages/Funcionarios/FuncoesPage'
 import FuncionariosPage from './pages/Funcionarios/FuncionariosPage'
 import ClientesPage from './pages/Parceiros/ClientesPage'
+import NotasEntradaPage from './pages/Fiscal/NotasEntradaPage'
+import ComprasPage from './pages/Compras/ComprasPage'
+import MovimentoEstoquePage from './pages/Produtos/MovimentoEstoquePage'
+import NotaSaidaPage from './pages/Fiscal/NotasSaidaPage'
+import ContasReceberPage from './pages/Financeiro/ContasReceberPage'
+
 
 export default function App() {
   return (
@@ -37,7 +43,6 @@ export default function App() {
           <Route path="/ncm" element={<NcmPage />} />
           <Route path="/produtos" element={<ProdutosPage />} />
           <Route path="/nfe" element={<NfePage />} />
-          <Route path="/prodnfe" element={<ProdNfePage />} />
           <Route path="/contaspagar" element={<ContasPagarPage />} />
           <Route path="/formapagamento" element={<FormaPagamentoPage />} />
           <Route path="/condicaoPagamentos" element={<CondicaoPagamentoPage />} />
@@ -46,7 +51,13 @@ export default function App() {
           <Route path="/categorias" element={<CategoriasPage/>} />    
           <Route path="/funcoes" element={<FuncoesPage/>} />   
           <Route path='/funcionarios' element={<FuncionariosPage/>} />
-          <Route path='/clientes' element={<ClientesPage/>} />   
+          <Route path='/clientes' element={<ClientesPage/>} />  
+          <Route path='/notasentrada' element={<NotasEntradaPage/>}/>
+          <Route path='/compras' element={<ComprasPage/>}/>
+          <Route path='/movimentosEstoque' element={<MovimentoEstoquePage/>}/>
+          <Route path='/contasPagar' element={<ContasPagarPage/>}/>
+          <Route path='/notassaida' element={<NotaSaidaPage/>}/>
+          <Route path='/contasReceber' element={<ContasReceberPage/>}/>
         </Routes>
       </main>
       <Toaster position="bottom-right" toastOptions={{

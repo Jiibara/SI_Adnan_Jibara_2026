@@ -15,6 +15,7 @@ public class Nfes
     public DateOnly? DataEmit { get; set; }
     public DateOnly? DataEnt { get; set; }
     public TimeOnly? HoraEnt { get; set; }
+
     public decimal? BaseCalcIcms { get; set; }
     public decimal? ValorIcms { get; set; }
     public decimal? BaseCalcIcmsSub { get; set; }
@@ -24,6 +25,7 @@ public class Nfes
     public decimal? Desconto { get; set; }
     public decimal? OutrasDesp { get; set; }
     public decimal? ValorIpi { get; set; }
+
     public int? CodTransp { get; set; }
     public string? FretePorConta { get; set; }
     public int? CodVeic { get; set; }
@@ -37,4 +39,5 @@ public class Nfes
     public Fornecedores? Fornecedor { get; set; }
     public Transportadores? Transportador { get; set; }
     public Veiculos? Veiculo { get; set; }
+    public List<ProdNfes> Itens { get; set; } = new();
 }

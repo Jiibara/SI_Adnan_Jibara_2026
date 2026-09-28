@@ -10,6 +10,7 @@ export default function PaisesPage() {
   const [data, setData]       = useState([])
   const [loading, setLoading] = useState(true)
   const [form, setForm]       = useState(empty)
+  const [originalForm, setOriginalForm] = useState(empty)  
   const [editing, setEditing] = useState(false)
   const [open, setOpen]       = useState(false)
   const [confirm, setConfirm] = useState(null)
@@ -48,17 +49,21 @@ export default function PaisesPage() {
     { key:'ativo',   label:'Ativo', render: r => r.ativo ? 'Sim' : 'Não' },
   ]
 
+  const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+
+  const abrirNovo = () => { setForm(empty); setOriginalForm(empty); setEditing(false); setOpen(true) }
+  const abrirEdicao = (r) => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
+
   return (
     <div>
-      <PageHeader title="Países" sub="Consulta de países" label="Novo País"
-        onNew={() => { setForm(empty); setEditing(false); setOpen(true) }} />
+      <PageHeader title="Países" sub="Consulta de países" label="Novo País" onNew={abrirNovo} />
 
       <DataTable columns={cols} data={data} loading={loading}
-        onEdit={r => { setForm(r); setEditing(true); setOpen(true) }}
+        onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)} />
 
       <Modal open={open} title={editing ? 'Editar País' : 'Novo País'} editing={editing}
-        onClose={() => setOpen(false)} onSave={save}>
+        onClose={() => setOpen(false)} onSave={save} isDirty={isDirty}>
 
         <div style={{ display:'flex', gap:12, alignItems:'flex-end', marginBottom:14 }}>
           <div style={{ flex:'0 0 30px' }}>

@@ -3,12 +3,13 @@ import toast from 'react-hot-toast'
 import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
-// Importação de marcasApi adicionada aqui
-import { veiculosApi, estadosApi, marcasApi } from '@/services/api'
+import { veiculosApi, estadosApi, paisesApi, marcasApi } from '@/services/api'
+import { useModalGuard } from '@/hooks/useModalGuard'
 
 const lbl = { fontSize: 11, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1.2px', fontFamily: 'JetBrains Mono, monospace', display: 'block', marginBottom: 5 }
 const inp = { background: '#f8f9fb', border: '1px solid #e2e6ed', borderRadius: 8, padding: '9px 12px', fontSize: 13, color: '#0f172a', fontFamily: 'Outfit, sans-serif', outline: 'none', width: '100%', boxSizing: 'border-box', transition: 'border-color .15s' }
-const btnSearch = { padding: '0 14px', height: 37, border: '1px solid #e2e6ed', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13, background: '#f8f9fb', whiteSpace: 'nowrap', fontFamily: 'Outfit, sans-serif', color: '#0f172a' }
+const fo = e => e.target.style.borderColor = '#2563eb'
+const bl = e => e.target.style.borderColor = '#e2e6ed'
 
 const Overlay = ({ children, onClose, zIndex = 50 }) => (
   <div onClick={e => e.target === e.currentTarget && onClose()}
@@ -17,218 +18,335 @@ const Overlay = ({ children, onClose, zIndex = 50 }) => (
   </div>
 )
 
+const ModalBox = ({ children, maxWidth = 760 }) => (
+  <div style={{ background: '#fff', borderRadius: 12, width: '100%', maxWidth, maxHeight: '90vh', display: 'flex', flexDirection: 'column', boxShadow: '0 20px 60px rgba(0,0,0,.15)', animation: 'slideUp .2s ease' }}>
+    {children}
+  </div>
+)
+
+const ModalHeader = ({ title, badge, onClose }) => (
+  <div style={{ padding: '18px 24px', borderBottom: '1px solid #e2e6ed', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div>
+      <div style={{ fontWeight: 700, fontSize: 15, color: '#0f172a' }}>{title}</div>
+      {badge}
+    </div>
+    <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#94a3b8' }}>✕</button>
+  </div>
+)
+
+const Badge = ({ editing }) => (
+  <span style={{ fontSize: 11, fontFamily: 'JetBrains Mono, monospace', padding: '2px 8px', borderRadius: 100, background: editing ? '#dbeafe' : '#dcfce7', color: editing ? '#1d4ed8' : '#15803d' }}>
+    {editing ? 'ALTERAR' : 'INSERIR'}
+  </span>
+)
+
+const BtnPrimary = ({ onClick, disabled, children, style }) => (
+  <button onClick={onClick} disabled={disabled}
+    style={{ padding: '8px 22px', border: 'none', borderRadius: 8, background: '#2563eb', color: '#fff', cursor: disabled ? 'default' : 'pointer', fontSize: 13, fontWeight: 600, opacity: disabled ? .7 : 1, ...style }}
+    onMouseEnter={e => !disabled && (e.currentTarget.style.opacity = '.85')}
+    onMouseLeave={e => e.currentTarget.style.opacity = disabled ? '.7' : '1'}>
+    {children}
+  </button>
+)
+
+const BtnSecondary = ({ onClick, children }) => (
+  <button onClick={onClick} style={{ padding: '8px 18px', border: '1px solid #e2e6ed', borderRadius: 8, background: 'transparent', cursor: 'pointer', fontSize: 13, color: '#475569' }}>
+    {children}
+  </button>
+)
+
+const BtnPesquisar = ({ onClick }) => (
+  <button type="button" onClick={onClick}
+    style={{ padding: '0 14px', height: 37, border: '1px solid #e2e6ed', borderRadius: 8, cursor: 'pointer', fontWeight: 600, fontSize: 13, background: '#f8f9fb', whiteSpace: 'nowrap', fontFamily: 'Outfit, sans-serif', color: '#0f172a' }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb' }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e6ed'; e.currentTarget.style.color = '#0f172a' }}>
+    Pesquisar
+  </button>
+)
+
+const LookupField = ({ label, value, onSearch, style }) => (
+  <div style={style}>
+    <label style={lbl}>{label}</label>
+    <div style={{ display: 'flex', gap: 8 }}>
+      <input type="text" readOnly value={value} style={{ ...inp, flex: 1 }} />
+      <BtnPesquisar onClick={onSearch} />
+    </div>
+  </div>
+)
+
+const CheckAtivo = ({ checked, onChange }) => (
+  <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', paddingBottom: 8, whiteSpace: 'nowrap', fontSize: 13, fontFamily: 'Outfit, sans-serif', color: '#0f172a' }}>
+    <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} style={{ width: 16, height: 16, cursor: 'pointer' }} />
+    Ativo
+  </label>
+)
+
+const Inp = ({ label, value, onChange, maxLength, placeholder, style }) => (
+  <div style={style}>
+    <label style={lbl}>{label}</label>
+    <input type="text" value={value} maxLength={maxLength} placeholder={placeholder}
+      onChange={e => onChange(e.target.value)} style={inp} onFocus={fo} onBlur={bl} />
+  </div>
+)
+
+const LookupTable = ({ cols, rows, onSelect }) => (
+  <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
+    <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,.06)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+        <thead>
+          <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
+            {cols.map(c => <th key={c.key} style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#94a3b8' }}>{c.label}</th>)}
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={i} style={{ borderBottom: '1px solid #f1f4f8' }}
+              onMouseEnter={e => e.currentTarget.style.background = '#f8f9fb'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+              {cols.map(c => (
+                <td key={c.key} style={{ padding: '11px 14px', color: '#0f172a', fontFamily: c.mono ? 'JetBrains Mono, monospace' : 'inherit' }}>
+                  {c.render ? c.render(row) : String(row[c.key] ?? '')}
+                </td>
+              ))}
+              <td style={{ padding: '11px 14px', textAlign: 'right' }}>
+                <button onClick={() => onSelect(row)}
+                  style={{ padding: '4px 12px', border: 'none', borderRadius: 6, background: '#2563eb', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = '.85'}
+                  onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+                  Selecionar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+)
+
+const InlineForm = ({ title, children }) => (
+  <div style={{ padding: '16px 24px', borderBottom: '1px solid #e2e6ed', background: '#f8faff' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+      <span style={{ fontSize: 13, fontWeight: 700, color: '#0f172a' }}>{title}</span>
+      <Badge editing={false} />
+    </div>
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>{children}</div>
+  </div>
+)
+
+const BtnNovo = ({ onClick, label }) => (
+  <BtnPrimary onClick={onClick} style={{ marginTop: 6, padding: '4px 12px', fontSize: 12 }}>+ {label}</BtnPrimary>
+)
+
+const SaveRow = ({ onCancel, onSave, saving, label }) => (
+  <div style={{ display: 'flex', gap: 8, paddingBottom: 1 }}>
+    <BtnSecondary onClick={onCancel}>Cancelar</BtnSecondary>
+    <BtnPrimary onClick={onSave} disabled={saving}>{saving ? 'Salvando...' : label}</BtnPrimary>
+  </div>
+)
+
+const cols = [
+  { key: 'codVeic',       label: 'Cód.',         mono: true },
+  { key: 'placaVeic',     label: 'Placa',         mono: true },
+  { key: 'placaMercoSul', label: 'Placa MercoSul',mono: true },
+  { key: 'modelo',        label: 'Modelo' },
+  { key: 'marca',         label: 'Marca',         render: r => r.marca?.marca ?? '' },
+  { key: 'codANTT',       label: 'ANTT',          mono: true },
+  { key: 'estado',        label: 'UF',            render: r => r.estado?.uf ?? '' },
+  { key: 'ativo',         label: 'Ativo',         render: r => r.ativo ? 'Sim' : 'Não' },
+]
+const colsEstados = [{ key: 'codEstado', label: 'Cód.', mono: true }, { key: 'estado', label: 'Estado' }, { key: 'uf', label: 'UF' }, { key: 'pais', label: 'País', render: r => r.pais?.pais ?? '' }]
+const colsPaises  = [{ key: 'codPais', label: 'Cód.', mono: true }, { key: 'pais', label: 'País' }, { key: 'sigla', label: 'Sigla' }, { key: 'ddi', label: 'DDI' }]
+const colsMarcas  = [{ key: 'codMarca', label: 'Cód.', mono: true }, { key: 'marca', label: 'Marca' }]
+
+const ESTADO_EMPTY = { estado: '', uf: '', codPais: null, ativo: true }
+const PAIS_EMPTY   = { pais: '', sigla: '', ddi: '', moeda: '', ativo: true }
+const MARCA_EMPTY  = { marca: '', ativo: true }
+
 export default function VeiculosPage() {
   const { data, loading, load } = useCrud(veiculosApi)
-  const [estados, setEstados] = useState([])
-  const [marcas, setMarcas] = useState([])
-  const [form, setForm] = useState({ ativo: true })
+  const [form, setForm]       = useState({ ativo: true })
+  const [originalForm, setOriginalForm] = useState({ ativo: true })
   const [editing, setEditing] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]       = useState(false)
   const [confirm, setConfirm] = useState(null)
 
+  const [estados, setEstados] = useState([])
+  const [paises,  setPaises]  = useState([])
+  const [marcas,  setMarcas]  = useState([])
+
   const [openEstados, setOpenEstados] = useState(false)
-  const [openMarcas, setOpenMarcas] = useState(false)
+  const [openPaises,  setOpenPaises]  = useState(false)
+  const [openMarcas,  setOpenMarcas]  = useState(false)
 
-  useEffect(() => {
-    estadosApi.getAll().then(setEstados)
-    marcasApi.getAll().then(setMarcas) // Busca as marcas no carregamento
-  }, [])
+  const [novoEstado, setNovoEstado] = useState(ESTADO_EMPTY)
+  const [novoPais,   setNovoPais]   = useState(PAIS_EMPTY)
+  const [novaMarca,  setNovaMarca]  = useState(MARCA_EMPTY)
 
-  const upd = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const [showNovoEstado, setShowNovoEstado] = useState(false)
+  const [showNovoPais,   setShowNovoPais]   = useState(false)
+  const [showNovaMarca,  setShowNovaMarca]  = useState(false)
+
+  const [savingEstado, setSavingEstado] = useState(false)
+  const [savingPais,   setSavingPais]   = useState(false)
+  const [savingMarca,  setSavingMarca]  = useState(false)
+
+  const loadEstados = async () => setEstados(await estadosApi.getAll())
+  const loadPaises  = async () => setPaises(await paisesApi.getAll())
+  const loadMarcas  = async () => setMarcas(await marcasApi.getAll())
+
+  useEffect(() => { loadEstados(); loadPaises(); loadMarcas() }, [])
+
+  const upd  = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const updE = (k, v) => setNovoEstado(p => ({ ...p, [k]: v }))
+  const updP = (k, v) => setNovoPais(p => ({ ...p, [k]: v }))
+  const updM = (k, v) => setNovaMarca(p => ({ ...p, [k]: v }))
 
   const save = async () => {
-    try {
-      editing ? await veiculosApi.update(form.codVeic, form) : await veiculosApi.create(form)
-      toast.success('Salvo!'); setOpen(false); load()
-    } catch { toast.error('Erro ao salvar.') }
+    try { editing ? await veiculosApi.update(form.codVeic, form) : await veiculosApi.create(form); toast.success('Salvo!'); setOpen(false); load() }
+    catch { toast.error('Erro ao salvar.') }
   }
-
   const del = async () => {
     try { await veiculosApi.delete(confirm.codVeic); toast.success('Excluído.'); setConfirm(null); load() }
     catch { toast.error('Erro.') }
   }
 
-  const cols = [
-    { key: 'codVeic', label: 'Cód.', mono: true },
-    { key: 'placaVeic', label: 'Placa', mono: true },
-    { key: 'placaMercoSul', label: 'Placa MercoSul', mono: true },
-    { key: 'modelo', label: 'Modelo' },
-    { key: 'marca', label: 'Marca', render: r => r.marca?.marca ?? '' },
-    { key: 'codANTT', label: 'ANTT', mono: true },
-    { key: 'estado', label: 'UF', render: r => r.estado?.uf ?? '' },
-    { key: 'ativo', label: 'Ativo', render: r => r.ativo ? 'Sim' : 'Não' },
-  ]
+  const mkSave = (api, payload, check, errMsg, afterSave, setSaving, setShow, reset) => async () => {
+    if (!check()) { toast.error(errMsg); return }
+    setSaving(true)
+    try { await api.create(payload); toast.success('Cadastrado!'); await afterSave(); setShow(false); reset() }
+    catch { toast.error('Erro ao salvar.') }
+    finally { setSaving(false) }
+  }
 
-  const colsEstados = [
-    { key: 'codEstado', label: 'Cód.', mono: true },
-    { key: 'estado', label: 'Estado' },
-    { key: 'uf', label: 'UF' },
-  ]
+  const saveNovoEstado = mkSave(estadosApi, novoEstado, () => novoEstado.estado.trim(), 'Informe o estado.', loadEstados, setSavingEstado, setShowNovoEstado, () => setNovoEstado(ESTADO_EMPTY))
+  const saveNovoPais   = mkSave(paisesApi,  novoPais,   () => novoPais.pais.trim(),     'Informe o país.',   loadPaises,  setSavingPais,   setShowNovoPais,   () => setNovoPais(PAIS_EMPTY))
+  const saveNovaMarca  = mkSave(marcasApi,  novaMarca,  () => novaMarca.marca.trim(),   'Informe a marca.',  loadMarcas,  setSavingMarca,  setShowNovaMarca,  () => setNovaMarca(MARCA_EMPTY))
 
-  const estadoSelecionado = estados.find(e => e.codEstado === form.codEstado)
-  const estadoLabel = estadoSelecionado ? `${estadoSelecionado.estado} (${estadoSelecionado.uf})` : ''
-  const selectEstado = r => { setForm(f => ({ ...f, codEstado: r.codEstado })); setOpenEstados(false) }
+  const cancelE = () => { setShowNovoEstado(false); setNovoEstado(ESTADO_EMPTY) }
+  const cancelP = () => { setShowNovoPais(false);   setNovoPais(PAIS_EMPTY) }
+  const cancelM = () => { setShowNovaMarca(false);  setNovaMarca(MARCA_EMPTY) }
 
-  const marcaSelecionada = marcas.find(m => m.codMarca === form.codMarca)
-  const marcaLabel = marcaSelecionada ? `${marcaSelecionada.marca ?? ''}` : ''
-  const selectMarca = r => { setForm(f => ({ ...f, codMarca: r.codMarca })); setOpenMarcas(false) }
+  const closeEstados = () => { setOpenEstados(false); cancelE() }
+  const closePaises  = () => { setOpenPaises(false);  cancelP() }
+  const closeMarcas  = () => { setOpenMarcas(false);  cancelM() }
+
+  const estadoSel  = estados.find(e => e.codEstado === form.codEstado)
+  const estadoLabel = estadoSel ? `${estadoSel.estado} (${estadoSel.uf})` : ''
+  const marcaSel   = marcas.find(m => m.codMarca === form.codMarca)
+  const marcaLabel = marcaSel?.marca ?? ''
+  const paisNoEstado = paises.find(p => p.codPais === novoEstado.codPais)?.pais ?? ''
+
+  const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+  const anyLookupOpen = openEstados || openPaises || openMarcas
+  const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
+    isOpen: open,
+    isDirty,
+    onClose: () => setOpen(false),
+    onSave: save,
+    paused: anyLookupOpen,
+  })
+
+  const abrirNovo = () => { const f = { ativo: true }; setForm(f); setOriginalForm(f); setEditing(false); setOpen(true) }
+  const abrirEdicao = (r) => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
 
   return (
     <div>
       <PageHeader title="Veículos" sub="Consulta de Veículos" label="Novo Veículo"
-        onNew={() => { setForm({ ativo: true }); setEditing(false); setOpen(true) }} />
+        onNew={abrirNovo} />
 
       <DataTable columns={cols} data={data} loading={loading}
-        onEdit={r => { setForm(r); setEditing(true); setOpen(true) }}
+        onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)} />
 
-      <Modal wide open={open} title={editing ? 'Editar Veículo' : 'Novo Veículo'} editing={editing}
-        onClose={() => setOpen(false)} onSave={save}>
-
+      <Modal wide open={open} title={editing ? 'Editar Veículo' : 'Novo Veículo'} editing={editing} onClose={attemptClose} onSave={save}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
-          {/* Linha 1: Código (Apenas visual se editando), Modelo do Veículo e Ativo */}
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
-            {editing && (
-              <div style={{ flex: '0 0 90px' }}>
-                <FField label="Código" disabled value={String(form.codVeic ?? '')} onChange={() => { }} />
-              </div>
-            )}
-            <div style={{ flex: '0 0 240px' }}>
-              <FField label="Modelo do Veículo" required value={form.modelo ?? ''} onChange={v => upd('modelo', v)} />
-            </div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', paddingBottom: 8, fontSize: 13, fontFamily: 'Outfit, sans-serif', color: '#0f172a', whiteSpace: 'nowrap' }}>
-              <input type="checkbox" checked={form.ativo ?? true} onChange={e => upd('ativo', e.target.checked)}
-                style={{ width: 16, height: 16, cursor: 'pointer' }} />
-              Ativo
-            </label>
+            {editing && <div style={{ flex: '0 0 90px' }}><FField label="Código" disabled value={String(form.codVeic ?? '')} onChange={() => {}} /></div>}
+            <div style={{ flex: '0 0 240px' }}><FField label="Modelo do Veículo" required value={form.modelo ?? ''} onChange={v => upd('modelo', v)} /></div>
+            <CheckAtivo checked={form.ativo ?? true} onChange={v => upd('ativo', v)} />
           </div>
 
-          {/* Linha 2: Placas e ANTT */}
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
-            <div style={{ flex: '1 1 140px' }}>
-              <FField label="Placa" value={form.placaVeic ?? ''} onChange={v => upd('placaVeic', v)} />
-            </div>
-            <div style={{ flex: '1 1 140px' }}>
-              <FField label="Placa MercoSul" value={form.placaMercoSul ?? ''} onChange={v => upd('placaMercoSul', v)} />
-            </div>
-            <div style={{ flex: '1 1 160px' }}>
-              <FField label="ANTT" value={form.codANTT ?? ''} onChange={v => upd('codANTT', v)} />
-            </div>
+            <div style={{ flex: '1 1 140px' }}><FField label="Placa" value={form.placaVeic ?? ''} onChange={v => upd('placaVeic', v)} /></div>
+            <div style={{ flex: '1 1 140px' }}><FField label="Placa MercoSul" value={form.placaMercoSul ?? ''} onChange={v => upd('placaMercoSul', v)} /></div>
+            <div style={{ flex: '1 1 160px' }}><FField label="ANTT" value={form.codANTT ?? ''} onChange={v => upd('codANTT', v)} /></div>
           </div>
 
-          {/* Linha 3: Modais de Pesquisa (Estado e Marca) */}
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-
-            {/* Estado */}
-            <div style={{ flex: '1 1 280px' }}>
-              <label style={lbl}>Estado</label>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input type="text" readOnly value={estadoLabel} style={{ ...inp, flex: 1 }} />
-                <button type="button" onClick={() => setOpenEstados(true)}
-                  style={btnSearch}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e6ed'; e.currentTarget.style.color = '#0f172a' }}>
-                  Pesquisar
-                </button>
-              </div>
-            </div>
-
-            {/* Marca */}
-            <div style={{ flex: '1 1 280px' }}>
-              <label style={lbl}>Marca</label>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <input type="text" readOnly value={marcaLabel} style={{ ...inp, flex: 1 }} />
-                <button type="button" onClick={() => setOpenMarcas(true)}
-                  style={btnSearch}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e6ed'; e.currentTarget.style.color = '#0f172a' }}>
-                  Pesquisar
-                </button>
-              </div>
-            </div>
-
+            <LookupField label="Estado" value={estadoLabel} onSearch={() => { setShowNovoEstado(false); setOpenEstados(true) }} style={{ flex: '1 1 280px' }} />
+            <LookupField label="Marca"  value={marcaLabel}  onSearch={() => { setShowNovaMarca(false);  setOpenMarcas(true)  }} style={{ flex: '1 1 280px' }} />
           </div>
+
         </div>
       </Modal>
 
-      {/* MODAL DE PESQUISA - ESTADOS */}
+      <ConfirmDialog
+        open={confirming}
+        icon="❓"
+        title="Fechar sem salvar?"
+        message="Tem certeza que quer fechar? Todos dados escritos serão apagados."
+        confirmLabel="Fechar mesmo assim"
+        confirmColor="#dc2626"
+        onClose={cancelClose}
+        onConfirm={confirmClose}
+      />
+
       {openEstados && (
-        <Overlay onClose={() => setOpenEstados(false)} zIndex={60}>
-          <div style={{ background: '#fff', borderRadius: 12, width: '100%', maxWidth: 600, maxHeight: '90vh', display: 'flex', flexDirection: 'column', boxShadow: '0 20px 60px rgba(0,0,0,.15)' }}>
-            <div style={{ padding: '18px 24px', borderBottom: '1px solid #e2e6ed', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ fontWeight: 700, fontSize: 15, color: '#0f172a' }}>Consulta de Estados</div>
-              <button onClick={() => setOpenEstados(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#94a3b8' }}>✕</button>
-            </div>
-            <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-              <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                  <thead>
-                    <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
-                      {colsEstados.map(c => (
-                        <th key={c.key} style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#94a3b8' }}>{c.label}</th>
-                      ))}
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {estados.map((row, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid #f1f4f8' }}>
-                        {colsEstados.map(c => (
-                          <td key={c.key} style={{ padding: '11px 14px', color: '#0f172a', fontFamily: c.mono ? 'JetBrains Mono, monospace' : 'inherit' }}>
-                            {String(row[c.key] ?? '')}
-                          </td>
-                        ))}
-                        <td style={{ padding: '11px 14px', textAlign: 'right' }}>
-                          <button onClick={() => selectEstado(row)} style={{ padding: '4px 12px', border: 'none', borderRadius: 6, background: '#2563eb', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>
-                            Selecionar
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+        <Overlay onClose={closeEstados} zIndex={60}>
+          <ModalBox maxWidth={640}>
+            <ModalHeader title="Consulta de Estados" onClose={closeEstados}
+              badge={!showNovoEstado && <BtnNovo onClick={() => setShowNovoEstado(true)} label="Novo Estado" />} />
+            {showNovoEstado && (
+              <InlineForm title="Novo Estado">
+                <Inp label="Estado *" value={novoEstado.estado} onChange={v => updE('estado', v)} placeholder="" style={{ flex: '1 1 200px' }} />
+                <Inp label="UF *" value={novoEstado.uf} onChange={v => updE('uf', v.toUpperCase())} maxLength={2} placeholder="" style={{ flex: '0 0 72px' }} />
+                <LookupField label="País *" value={paisNoEstado} onSearch={() => { setShowNovoPais(false); setOpenPaises(true) }} />
+                <CheckAtivo checked={novoEstado.ativo} onChange={v => updE('ativo', v)} />
+                <SaveRow onCancel={cancelE} onSave={saveNovoEstado} saving={savingEstado} label="Salvar Estado" />
+              </InlineForm>
+            )}
+            <LookupTable cols={colsEstados} rows={estados} onSelect={r => { upd('codEstado', r.codEstado); closeEstados() }} />
+          </ModalBox>
         </Overlay>
       )}
 
-      {/* MODAL DE PESQUISA - MARCAS */}
+      {openPaises && (
+        <Overlay onClose={closePaises} zIndex={70}>
+          <ModalBox maxWidth={640}>
+            <ModalHeader title="Consulta de Países" onClose={closePaises}
+              badge={!showNovoPais && <BtnNovo onClick={() => setShowNovoPais(true)} label="Novo País" />} />
+            {showNovoPais && (
+              <InlineForm title="Novo País">
+                <Inp label="País *" value={novoPais.pais} onChange={v => updP('pais', v)} placeholder="" style={{ flex: '1 1 200px' }} />
+                <Inp label="Sigla" value={novoPais.sigla} onChange={v => updP('sigla', v.toUpperCase())} maxLength={3} placeholder="" style={{ flex: '0 0 80px' }} />
+                <Inp label="DDI" value={novoPais.ddi} onChange={v => updP('ddi', v)} maxLength={6} placeholder="" style={{ flex: '0 0 80px' }} />
+                <Inp label="Moeda" value={novoPais.moeda} onChange={v => updP('moeda', v)} maxLength={10} placeholder="" style={{ flex: '1 1 120px' }} />
+                <CheckAtivo checked={novoPais.ativo} onChange={v => updP('ativo', v)} />
+                <SaveRow onCancel={cancelP} onSave={saveNovoPais} saving={savingPais} label="Salvar País" />
+              </InlineForm>
+            )}
+            <LookupTable cols={colsPaises} rows={paises} onSelect={r => { updE('codPais', r.codPais); closePaises() }} />
+          </ModalBox>
+        </Overlay>
+      )}
+
       {openMarcas && (
-        <Overlay onClose={() => setOpenMarcas(false)} zIndex={60}>
-          <div style={{ background: '#fff', borderRadius: 12, width: '100%', maxWidth: 600, maxHeight: '90vh', display: 'flex', flexDirection: 'column', boxShadow: '0 20px 60px rgba(0,0,0,.15)' }}>
-            <div style={{ padding: '18px 24px', borderBottom: '1px solid #e2e6ed', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ fontWeight: 700, fontSize: 15, color: '#0f172a' }}>Consulta de Marcas</div>
-              <button onClick={() => setOpenMarcas(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#94a3b8' }}>✕</button>
-            </div>
-            <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-              <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                  <thead>
-                    <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
-                      <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#94a3b8' }}>Cód.</th>
-                      <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#94a3b8' }}>Marca</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {marcas.map((row, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid #f1f4f8' }}>
-                        <td style={{ padding: '11px 14px', color: '#0f172a', fontFamily: 'JetBrains Mono, monospace' }}>{row.codMarca}</td>
-                        <td style={{ padding: '11px 14px', color: '#0f172a' }}>{row.marca ?? ''}</td>
-                        <td style={{ padding: '11px 14px', textAlign: 'right' }}>
-                          <button onClick={() => selectMarca(row)} style={{ padding: '4px 12px', border: 'none', borderRadius: 6, background: '#2563eb', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}>
-                            Selecionar
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+        <Overlay onClose={closeMarcas} zIndex={60}>
+          <ModalBox maxWidth={480}>
+            <ModalHeader title="Consulta de Marcas" onClose={closeMarcas}
+              badge={!showNovaMarca && <BtnNovo onClick={() => setShowNovaMarca(true)} label="Nova Marca" />} />
+            {showNovaMarca && (
+              <InlineForm title="Nova Marca">
+                <Inp label="Marca *" value={novaMarca.marca} onChange={v => updM('marca', v)} placeholder="" style={{ flex: '1 1 200px' }} />
+                <CheckAtivo checked={novaMarca.ativo} onChange={v => updM('ativo', v)} />
+                <SaveRow onCancel={cancelM} onSave={saveNovaMarca} saving={savingMarca} label="Salvar Marca" />
+              </InlineForm>
+            )}
+            <LookupTable cols={colsMarcas} rows={marcas} onSelect={r => { upd('codMarca', r.codMarca); closeMarcas() }} />
+          </ModalBox>
         </Overlay>
       )}
 

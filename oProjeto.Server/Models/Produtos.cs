@@ -12,6 +12,7 @@ namespace oProjeto.Server.Models
         public decimal PesoBruto { get; set; }
         public decimal PesoLiq { get; set; }
         public decimal Saldo { get; set; }
+        public decimal QuantidadeMinima { get; set; }
         public decimal PrecoCompra { get; set; }
         public decimal PrecoVenda { get; set; }
         public decimal CustoMedio { get; set; }

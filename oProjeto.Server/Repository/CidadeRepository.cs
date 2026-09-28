@@ -42,7 +42,7 @@ namespace oProjeto.Server.Repository
             await con.OpenAsync();
             await using var cmd = new MySqlCommand(@"
                 INSERT INTO Cidades (Cidade, DDD, CodEstado, Ativo)
-                VALUES (@cidade, @ddd @codEstado, @ativo);
+                VALUES (@cidade, @ddd, @codEstado, @ativo);
                 SELECT LAST_INSERT_ID();", con);
             cmd.Parameters.AddWithValue("@cidade", body.Cidade);
             cmd.Parameters.AddWithValue("@ddd", body.DDD);

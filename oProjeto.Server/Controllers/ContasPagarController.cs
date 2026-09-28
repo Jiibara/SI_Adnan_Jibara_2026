@@ -1,78 +1,67 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using oProjeto.Data;
 using oProjeto.Server.Models;
+using oProjeto.Server.Repository;
 
-/*namespace oProjeto.Server.Controllers
+namespace oProjeto.Server.Controllers
 {
     [ApiController, Route("api/[controller]")]
-    public class ContasPagarController(AppDbContext db) : ControllerBase
+    public class ContasPagarController(ContaPagarRepository repo) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() =>
-            Ok(await db.ContasPagar
-                .Include(c => c.Fornecedor)
-                .Include(c => c.Nfe)
-                .OrderBy(c => c.VencimentoParcela)
-                .ToListAsync());
+            Ok(await repo.GetAllAsync());
 
-        [HttpGet("{numNfe}/{serie}/{modelo}/{codForn}/{numParcNFe}")]
-        public async Task<IActionResult> Get(int numNfe, int serie, int modelo, int codForn, int numParcNFe)
+        [HttpGet("{numero:int}/{modelo:int}/{serie:int}/{codForn:int}/{numeroParcela:int}")]
+        public async Task<IActionResult> GetById(
+            int numero,
+            int modelo,
+            int serie,
+            int codForn,
+            int numeroParcela)
         {
-            var r = await db.ContasPagar
-                .Include(c => c.Fornecedor)
-                .Include(c => c.Nfe)
-                .FirstOrDefaultAsync(c =>
-                    c.Numero == numNfe &&
-                    c.Serie == serie &&
-                    c.Modelo == modelo &&
-                    c.CodForn == codForn &&
-                    c.NumeroParcela == numParcNFe);
-            return r is null ? NotFound() : Ok(r);
+            var conta = await repo.GetByIdAsync(
+                numero,
+                modelo,
+                serie,
+                codForn,
+                numeroParcela);
+
+            return conta is null ? NotFound() : Ok(conta);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(ContasPagar body)
-        {
-            db.ContasPagar.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new
-            {
-                numNfe = body.Numero,
-                serie = body.Serie,
-                modelo = body.Modelo,
-                codForn = body.CodForn,
-                numParcNFe = body.NumeroParcela
-            }, body);
-        }
+        [HttpGet("nota/{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]
+        public async Task<IActionResult> GetByNota(
+            int numero,
+            int modelo,
+            int serie,
+            int codForn) =>
+            Ok(await repo.GetByNotaAsync(numero, modelo, serie, codForn));
 
-        [HttpPut("{numero}/{serie}/{modelo}/{codForn}/{numeroParcela}")]
-        public async Task<IActionResult> Update(
-            int numNfe, int serie, int modelo, int codForn, int numParcNFe,
+        [HttpPut("pagar/{numero:int}/{modelo:int}/{serie:int}/{codForn:int}/{numeroParcela:int}")]
+        public async Task<IActionResult> Pagar(
+            int numero,
+            int modelo,
+            int serie,
+            int codForn,
+            int numeroParcela,
             ContasPagar body)
         {
-            if (numNfe != body.Numero ||
-                serie != body.Serie ||
-                modelo != body.Modelo ||
-                codForn != body.CodForn ||
-                numParcNFe != body.NumeroParcela)
-                return BadRequest();
+            try
+            {
+                await repo.PagarAsync(
+                    numero,
+                    modelo,
+                    serie,
+                    codForn,
+                    numeroParcela,
+                    body);
 
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{numNfe}/{serie}/{modelo}/{codForn}/{numParcNFe}")]
-        public async Task<IActionResult> Delete(
-            int numNfe, int serie, int modelo, int codForn, int numParcNFe)
-        {
-            var r = await db.ContasPagar.FindAsync(numNfe, serie, modelo, codForn, numParcNFe);
-            if (r is null) 
-                return NotFound();
-            db.ContasPagar.Remove(r);
-            await db.SaveChangesAsync();
-            return NoContent();
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
-}*/
+}

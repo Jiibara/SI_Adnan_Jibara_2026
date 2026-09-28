@@ -2,12 +2,13 @@
 
 namespace oProjeto.Server.Models
 {
-    [Table("ProdNfes")]
     public class ProdNfes
     {
         public int Numero { get; set; }
         public int Serie { get; set; }
         public int Modelo { get; set; }
+        public int CodForn { get; set; }
+
         public int CodProd { get; set; }
         public string? CSOSN { get; set; }
         public string? CFOP { get; set; }
@@ -20,7 +21,7 @@ namespace oProjeto.Server.Models
         public decimal? AliqIpi { get; set; }
         public decimal? BaseCalcIcms { get; set; }
 
-        [ForeignKey(nameof(CodProd))] public Produtos? Produto { get; set; }
+        public Produtos? Produto { get; set; }
         public Nfes? Nfe { get; set; }
     }
 }

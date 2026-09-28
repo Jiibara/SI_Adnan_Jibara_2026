@@ -54,8 +54,8 @@ namespace oProjeto.Server.Repository
             await using var con = Conn();
             await con.OpenAsync();
             await using var cmd = new MySqlCommand(@"
-                INSERT INTO Produtos (Produto, Unidade, PesoBruto, PesoLiq, Saldo, PrecoCompra, PrecoVenda, CustoMedio, CodCategoria, CodMarca, Ativo)
-                VALUES (@produto, @unidade, @pesoBruto, @pesoLiq, @saldo, @precoCompra, @precoVenda, @custoMedio, @codCategoria, @codMarca, @ativo);
+                INSERT INTO Produtos (Produto, Unidade, PesoBruto, PesoLiq, Saldo, QuantidadeMinima, PrecoCompra, PrecoVenda, CustoMedio, CodCategoria, CodMarca, Ativo)
+                VALUES (@produto, @unidade, @pesoBruto, @pesoLiq, @saldo, @quantidadeMinima, @precoCompra, @precoVenda, @custoMedio, @codCategoria, @codMarca, @ativo);
                 SELECT LAST_INSERT_ID();", con);
             Params(cmd, body);
             body.CodProd = Convert.ToInt32(await cmd.ExecuteScalarAsync());
@@ -72,7 +72,7 @@ namespace oProjeto.Server.Repository
             await con.OpenAsync();
             await using var cmd = new MySqlCommand(@"UPDATE Produtos 
                                                      SET Produto = @produto, Unidade = @unidade, PesoBruto = @pesoBruto,
-                                                         PesoLiq = @pesoLiq, Saldo = @saldo, PrecoCompra = @precoCompra, PrecoVenda = @precoVenda, 
+                                                         PesoLiq = @pesoLiq, Saldo = @saldo, QuantidadeMinima = @quantidadeMinima, PrecoCompra = @precoCompra, PrecoVenda = @precoVenda, 
                                                          CustoMedio = @custoMedio, CodCategoria = @codCategoria, CodMarca = @codMarca, Ativo = @ativo
                                                      WHERE CodProd = @id", con);
             cmd.Parameters.AddWithValue("@id", body.CodProd);
@@ -92,6 +92,8 @@ namespace oProjeto.Server.Repository
                 mudancas.Add($"Peso Líq.: {body.PesoLiq} (Era {antes?.PesoLiq})");
             if (antes?.Saldo != body.Saldo) 
                 mudancas.Add($"Saldo: {body.Saldo} (Era {antes?.Saldo})");
+            if (antes?.QuantidadeMinima != body.QuantidadeMinima)
+                mudancas.Add($"Qunatidade Minima: {body.QuantidadeMinima} (Era {antes?.QuantidadeMinima})");
             if (antes?.PrecoCompra != body.PrecoCompra)
                 mudancas.Add($"Preço Compra: {body.PrecoCompra} (Era {antes?.PrecoCompra})");
             if (antes?.PrecoVenda != body.PrecoVenda)
@@ -139,6 +141,7 @@ namespace oProjeto.Server.Repository
             cmd.Parameters.AddWithValue("@pesoBruto", b.PesoBruto);
             cmd.Parameters.AddWithValue("@pesoLiq", b.PesoLiq);
             cmd.Parameters.AddWithValue("@saldo", b.Saldo);
+            cmd.Parameters.AddWithValue("@quantidadeMinima", b.QuantidadeMinima);
             cmd.Parameters.AddWithValue("@precoCompra", b.PrecoCompra);
             cmd.Parameters.AddWithValue("@precoVenda", b.PrecoVenda);
             cmd.Parameters.AddWithValue("@custoMedio", b.CustoMedio);
@@ -156,6 +159,7 @@ namespace oProjeto.Server.Repository
             PesoBruto = rd.IsDBNull(rd.GetOrdinal("PesoBruto")) ? 0 : rd.GetDecimal("PesoBruto"),
             PesoLiq = rd.IsDBNull(rd.GetOrdinal("PesoLiq")) ? 0 : rd.GetDecimal("PesoLiq"),
             Saldo = rd.IsDBNull(rd.GetOrdinal("Saldo")) ? 0 : rd.GetDecimal("Saldo"),
+            QuantidadeMinima = rd.IsDBNull(rd.GetOrdinal("QuantidadeMinima")) ? 0 : rd.GetDecimal("QuantidadeMinima"),
             PrecoCompra = rd.IsDBNull(rd.GetOrdinal("PrecoCompra")) ? 0 : rd.GetDecimal("PrecoCompra"),
             PrecoVenda = rd.IsDBNull(rd.GetOrdinal("PrecoVenda")) ? 0 : rd.GetDecimal("PrecoVenda"),
             CustoMedio = rd.IsDBNull(rd.GetOrdinal("CustoMedio")) ? 0 : rd.GetDecimal("CustoMedio"),

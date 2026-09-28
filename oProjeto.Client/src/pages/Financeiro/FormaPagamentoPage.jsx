@@ -4,6 +4,7 @@ import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { formaPagamentosApi } from '@/services/api'
 import useCrud from '@/hooks/useCrud'
+import { useModalGuard } from '@/hooks/useModalGuard'
 
 const empty = { formaPagamento:'', ativo:true }
 
@@ -11,6 +12,7 @@ export default function FormaPagamentoPage() {
 
   const { data, loading, load } = useCrud(formaPagamentosApi)
   const [form, setForm] = useState(empty)
+  const [originalForm, setOriginalForm] = useState(empty)  
   const [editing, setEditing] = useState(false)
   const [open, setOpen] = useState(false)
   const [confirm, setConfirm] = useState(null)
@@ -35,6 +37,17 @@ export default function FormaPagamentoPage() {
     } catch { toast.error('Erro ao excluir.') }
   }
 
+  const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+  const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
+    isOpen: open,
+    isDirty,
+    onClose: () => setOpen(false),
+    onSave: save,
+  })
+
+  const abrirNovo = () => { setForm(empty); setOriginalForm(empty); setEditing(false); setOpen(true) }
+  const abrirEdicao = (r) => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
+
   const cols = [
     { key:'codFormaPagamento', label:'Cód.', mono:true },
     { key:'formaPagamento', label:'Forma de Pagamento' },
@@ -48,15 +61,15 @@ export default function FormaPagamentoPage() {
         title="Formas de Pagamento"
         sub="Consulta de formas de pagamento"
         label="Nova Forma de Pagamento"
-        onNew={() => { setForm(empty); setEditing(false); setOpen(true) }}
+        onNew={abrirNovo}
       />
 
       <DataTable columns={cols} data={data} loading={loading}
-        onEdit={r => { setForm(r); setEditing(true); setOpen(true) }}
+        onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)}
       />
 
-      <Modal open={open} title={editing ? 'Editar Forma de Pagamento' : 'Nova Forma de Pagamento'} editing={editing} onClose={() => setOpen(false)} onSave={save}>
+      <Modal open={open} title={editing ? 'Editar Forma de Pagamento' : 'Nova Forma de Pagamento'} editing={editing} onClose={attemptClose} onSave={save}>
         <div style={{ display:'flex', gap:12, alignItems:'flex-end', flexWrap:'wrap' }}>
 
           <div style={{ flex:'0 0 30px' }}>
@@ -74,6 +87,17 @@ export default function FormaPagamentoPage() {
 
         </div>
       </Modal>
+
+      <ConfirmDialog
+        open={confirming}
+        icon="❓"
+        title="Fechar sem salvar?"
+        message="Tem certeza que quer fechar? Todos dados escritos serão apagados."
+        confirmLabel="Fechar mesmo assim"
+        confirmColor="#dc2626"
+        onClose={cancelClose}
+        onConfirm={confirmClose}
+      />
 
       <ConfirmDialog open={!!confirm} name={confirm?.formaPagamento} onClose={() => setConfirm(null)} onConfirm={del} />
 

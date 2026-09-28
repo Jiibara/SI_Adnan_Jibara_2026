@@ -104,10 +104,10 @@ C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.oProjeto.Server.props
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.oProjeto.Server.props
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\oProjeto.E9DAEA82.Up2Date
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\oProjeto.Server.dll
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\refint\oProjeto.Server.dll
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\oProjeto.Server.pdb
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\oProjeto.Server.genruntimeconfig.cache
 C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\ref\oProjeto.Server.dll
+C:\Users\adnan\Faculdade\7Periodo\DevSis\oProjeto\oProjeto.Server\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

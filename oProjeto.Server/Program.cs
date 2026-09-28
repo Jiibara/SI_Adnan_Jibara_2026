@@ -38,6 +38,14 @@ builder.Services.AddScoped<CategoriaRepository>();
 builder.Services.AddScoped<ClienteRepository>();
 builder.Services.AddScoped<FuncionarioRepository>();
 builder.Services.AddScoped<FuncaoRepository>();
+builder.Services.AddScoped<NotaEntradaRepository>();
+builder.Services.AddScoped<CompraRepository>();
+builder.Services.AddScoped<MovimentoEstoqueRepository>();
+builder.Services.AddScoped<ContaPagarRepository>();
+builder.Services.AddScoped<NotaSaidaRepository>();
+builder.Services.AddScoped<ContaReceberRepository>();
+
+
 
 builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(p =>

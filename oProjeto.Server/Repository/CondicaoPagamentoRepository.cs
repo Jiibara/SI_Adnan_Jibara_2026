@@ -94,7 +94,6 @@ namespace oProjeto.Server.Repository
                 Params(cmd, body);
                 await cmd.ExecuteNonQueryAsync();
 
-                // deleta e recria as parcelas (chave composta, sem auto_increment)
                 await using var del = new MySqlCommand(
                     "DELETE FROM Parcelas WHERE CodCondicao = @id", con, tx);
                 del.Parameters.AddWithValue("@id", body.CodCondicao);
@@ -148,7 +147,6 @@ namespace oProjeto.Server.Repository
             await using var tx = await con.BeginTransactionAsync();
             try
             {
-                // deleta parcelas primeiro (FK)
                 await using var delParcelas = new MySqlCommand(
                     "DELETE FROM Parcelas WHERE CodCondicao = @id", con, tx);
                 delParcelas.Parameters.AddWithValue("@id", id);

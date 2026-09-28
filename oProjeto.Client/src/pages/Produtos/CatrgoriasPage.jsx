@@ -4,6 +4,7 @@ import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { categoriasApi } from '@/services/api'
 import useCrud from '@/hooks/useCrud'
+import { useModalGuard } from '@/hooks/useModalGuard'
 
 const empty = { categoria:'', ativo:true }
 
@@ -11,6 +12,7 @@ export default function CategoriasPage() {
 
   const { data, loading, load } = useCrud(categoriasApi)
   const [form, setForm] = useState(empty)
+  const [originalForm, setOriginalForm] = useState(empty) 
   const [editing, setEditing] = useState(false)
   const [open, setOpen] = useState(false)
   const [confirm, setConfirm] = useState(null)
@@ -35,6 +37,17 @@ export default function CategoriasPage() {
     } catch { toast.error('Erro ao excluir.') }
   }
 
+  const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+  const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
+    isOpen: open,
+    isDirty,
+    onClose: () => setOpen(false),
+    onSave: save,
+  })
+
+  const abrirNovo = () => { setForm(empty); setOriginalForm(empty); setEditing(false); setOpen(true) }
+  const abrirEdicao = (r) => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
+
   const cols = [
     { key:'codCategoria', label:'Cód.', mono:true },
     { key:'categoria', label:'Categoria' },
@@ -48,15 +61,15 @@ export default function CategoriasPage() {
         title="Categorias"
         sub="Consulta de Categorias"
         label="Nova Categoria"
-        onNew={() => { setForm(empty); setEditing(false); setOpen(true) }}
+        onNew={abrirNovo}
       />
 
       <DataTable columns={cols} data={data} loading={loading}
-        onEdit={r => { setForm(r); setEditing(true); setOpen(true) }}
+        onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)}
       />
 
-      <Modal open={open} title={editing ? 'Editar Categoria' : 'Nova Categoria'} editing={editing} onClose={() => setOpen(false)} onSave={save}>
+      <Modal open={open} title={editing ? 'Editar Categoria' : 'Nova Categoria'} editing={editing} onClose={attemptClose} onSave={save}>
         <div style={{ display:'flex', gap:12, alignItems:'flex-end', flexWrap:'wrap' }}>
 
           <div style={{ flex:'0 0 30px' }}>
@@ -74,6 +87,17 @@ export default function CategoriasPage() {
 
         </div>
       </Modal>
+
+      <ConfirmDialog
+        open={confirming}
+        icon="❓"
+        title="Fechar sem salvar?"
+        message="Tem certeza que quer fechar? Todos dados escritos serão apagados."
+        confirmLabel="Fechar mesmo assim"
+        confirmColor="#dc2626"
+        onClose={cancelClose}
+        onConfirm={confirmClose}
+      />
 
       <ConfirmDialog open={!!confirm} name={confirm?.categoria} onClose={() => setConfirm(null)} onConfirm={del} />
 

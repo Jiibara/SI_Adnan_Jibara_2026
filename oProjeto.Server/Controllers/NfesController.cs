@@ -1,58 +1,68 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using oProjeto.Data;
+using oProjeto.Server.Models;
+using oProjeto.Server.Repositories;
+using oProjeto.Server.Repository;
 
-/*namespace oProjeto.Server.Controllers
+namespace oProjeto.Server.Controllers
 {
-    [ApiController, Route("api/[controller]")]
-    public class NfesController(AppDbContext db) : ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class NfeController(NfeRepository repo) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await db.Nfes
-                .Include(n => n.Fornecedor)
-                .Include(n => n.Transportador)
-                .Include(n => n.Veiculo)
-                .OrderByDescending(n => n.DataEmit)
-                .ToListAsync());
-
-        [HttpGet("{numNfe}/{serie}/{modelo}")]
-        public async Task<IActionResult> Get(int numNfe, int serie, int modelo)
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            var r = await db.Nfes
-                .Include(n => n.Fornecedor)
-                .Include(n => n.ProdNfes).ThenInclude(p => p.Produto)
-                .FirstOrDefaultAsync(n => n.Numero == numNfe && n.Serie == serie && n.Modelo == modelo);
-            return r is null ? NotFound() : Ok(r);
+            try
+            {
+                var nfes = await repo.GetAllAsync();
+                return Ok(nfes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message,
+                    stackTrace = ex.StackTrace
+                });
+            }
+        }
+
+        [HttpGet("{numero}/{serie}/{modelo}/{codForn}")]
+        public async Task<IActionResult> GetById(int numero, int serie, int modelo, int codForn)
+        {
+            var nfe = await repo.GetByIdAsync(numero, serie, modelo, codForn);
+            if (nfe == null) return NotFound();
+
+            return Ok(nfe);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Nfes body)
+        public async Task<IActionResult> Create([FromBody] Nfes body)
         {
-            db.Nfes.Add(body);
-            await db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { body.Numero, body.Serie, body.Modelo }, body);
+            var created = await repo.CreateAsync(body);
+            return CreatedAtAction(nameof(GetById), new { numero = created.Numero, serie = created.Serie, modelo = created.Modelo }, created);
         }
 
-        [HttpPut("{numNfe}/{serie}/{modelo}")]
-        public async Task<IActionResult> Update(int numNfe, int serie, int modelo, Nfes body)
+        [HttpPut("{numero}/{serie}/{modelo}")]
+        public async Task<IActionResult> Update(int numero, int serie, int modelo, [FromBody] Nfes body)
         {
-            if (numNfe != body.Numero || serie != body.Serie || modelo != body.Modelo) 
-                return BadRequest();
-            db.Entry(body).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            if (numero != body.Numero || serie != body.Serie || modelo != body.Modelo)
+                return BadRequest("Chaves primárias divergentes.");
+
+            await repo.UpdateAsync(body);
             return NoContent();
         }
 
-        [HttpDelete("{numNfe}/{serie}/{modelo}")]
-        public async Task<IActionResult> Delete(int numNfe, int serie, int modelo)
+        [HttpDelete("{numero}/{serie}/{modelo}/{codForn}")]
+        public async Task<IActionResult> Delete(int numero, int serie, int modelo, int codForn)
         {
-            var r = await db.Nfes.FindAsync(numNfe, serie, modelo);
-            if (r is null) 
-                return NotFound();
-            db.Nfes.Remove(r);
-            await db.SaveChangesAsync();
+            var nfe = await repo.GetByIdAsync(numero, serie, modelo, codForn);
+            if (nfe == null) return NotFound();
+
+            await repo.DeleteAsync(numero, serie, modelo, codForn);
             return NoContent();
         }
     }
-}*/
+}

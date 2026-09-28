@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+/*import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
@@ -87,4 +87,4 @@ export default function ProdNfePage() {
         onClose={() => setConfirm(null)} onConfirm={del} />
     </div>
   )
-}
+}*/

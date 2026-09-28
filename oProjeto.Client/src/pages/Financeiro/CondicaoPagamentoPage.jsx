@@ -4,6 +4,7 @@ import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
 import { ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { condicoesApi, formaPagamentosApi } from '@/services/api'
+import { useModalGuard } from '@/hooks/useModalGuard'
 
 const lbl = { fontSize:11, color:'#94a3b8', textTransform:'uppercase', letterSpacing:'1.2px', fontFamily:'JetBrains Mono, monospace', display:'block', marginBottom:5 }
 const inp = { background:'#f8f9fb', border:'1px solid #e2e6ed', borderRadius:8, padding:'9px 12px', fontSize:13, color:'#0f172a', fontFamily:'Outfit, sans-serif', outline:'none', width:'100%', boxSizing:'border-box', transition:'border-color .15s', appearance:'none' }
@@ -23,13 +24,13 @@ const ModalBox = ({ children, maxWidth = 860 }) => (
   </div>
 )
 
-const ModalHeader = ({ title, badge, onClose }) => (
-  <div style={{ padding:'18px 24px', borderBottom:'1px solid #e2e6ed', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-    <div>
-      <div style={{ fontWeight:700, fontSize:15, color:'#0f172a' }}>{title}</div>
+const ModalHeader = ({ title, badge, onClose, vertical = false }) => (
+  <div style={{ padding:'18px 24px', borderBottom:'1px solid #e2e6ed', display:'flex', alignItems: vertical ? 'flex-start' : 'center', justifyContent:'space-between' }}>
+    <div style={{ display: 'flex', flexDirection: vertical ? 'column' : 'row', alignItems: vertical ? 'flex-start' : 'center', gap: vertical ? 10 : 12 }}>
+      <div style={{ fontWeight:700, fontSize:15, color:'#0f172a', fontFamily:'Outfit, sans-serif' }}>{title}</div>
       {badge}
     </div>
-    <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', fontSize:20, color:'#94a3b8' }}>✕</button>
+    <button onClick={onClose} style={{ background:'none', border:'none', cursor:'pointer', fontSize:20, color:'#94a3b8', marginTop: vertical ? 2 : 0 }}>✕</button>
   </div>
 )
 
@@ -40,12 +41,69 @@ export default function CondicoesPagamentoPage() {
   const { data, loading, load } = useCrud(condicoesApi)
   const [formaPagamentos, setFormaPagamentos] = useState([])
   const [form, setForm]                       = useState(empty)
+  const [originalForm, setOriginalForm]       = useState(empty) 
   const [editing, setEditing]                 = useState(false)
   const [open, setOpen]                       = useState(false)
   const [confirm, setConfirm]                 = useState(null)
   const [numParcelasInput, setNumParcelasInput] = useState('1')
 
+  const [openFormas, setOpenFormas]           = useState(false)
+  const [parcelaFormaIdx, setParcelaFormaIdx] = useState(null)
+  const [showNovaForma, setShowNovaForma]     = useState(false)
+  const [savingForma, setSavingForma]         = useState(false)
+  const [novaForma, setNovaForma]             = useState({ formaPagamento: '', ativo: true })
+
+  const carregarFormasPagamento = async () => {
+    try {
+      const fps = await formaPagamentosApi.getAll()
+      setFormaPagamentos(fps)
+    } catch {
+      toast.error('Erro ao carregar formas de pagamento.')
+    }
+  }
+
   const upd = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const updF = (k, v) => setNovaForma(p => ({ ...p, [k]: v })) 
+
+  const closeFormas = () => {
+    setOpenFormas(false)
+    setParcelaFormaIdx(null)
+    setShowNovaForma(false)
+    setNovaForma({ formaPagamento: '', ativo: true })
+  }
+
+  const openFormasModal = async (index) => {
+    setParcelaFormaIdx(index)
+    await carregarFormasPagamento()
+    setOpenFormas(true)
+  }
+
+  const cancelF = () => {
+    setShowNovaForma(false)
+    setNovaForma({ formaPagamento: '', ativo: true })
+  }
+
+  const saveNovaForma = async () => {
+    if (!novaForma.formaPagamento.trim()) return toast.error('Preencha a descrição da forma de pagamento.')
+    setSavingForma(true)
+    try {
+      const nova = await formaPagamentosApi.create(novaForma)
+      const fps = await formaPagamentosApi.getAll()
+      setFormaPagamentos(fps)
+
+      const codFinal = nova?.codFormaPagamento || fps.find(f => f.formaPagamento.toLowerCase() === novaForma.formaPagamento.toLowerCase().trim())?.codFormaPagamento
+      if (codFinal && parcelaFormaIdx !== null) {
+        updParcela(parcelaFormaIdx, 'codFormaPagamento', String(codFinal))
+      }
+
+      toast.success('Forma de pagamento adicionada!')
+      closeFormas()
+    } catch {
+      toast.error('Erro ao criar forma de pagamento.')
+    } finally {
+      setSavingForma(false)
+    }
+  }
 
   const gerarParcelas = n => {
     const qtd = parseInt(n) || 0
@@ -64,13 +122,11 @@ export default function CondicoesPagamentoPage() {
     })
   }
 
-  // Atualiza só o campo editado — sem redistribuir automaticamente
   const updParcela = (i, k, v) => setForm(p => ({
     ...p,
     parcelas: p.parcelas.map((x, idx) => idx === i ? { ...x, [k]: v } : x)
   }))
 
-  // Valida se dias estão em ordem crescente
   const diasForaDeOrdem = (form.parcelas ?? []).some((p, i, arr) =>
     i > 0 && parseInt(p.dias) <= parseInt(arr[i - 1].dias)
   )
@@ -102,10 +158,9 @@ export default function CondicoesPagamentoPage() {
   }
 
   const openModal = async (r = null) => {
-    const fps = await formaPagamentosApi.getAll()
-    setFormaPagamentos(fps.filter(f => f.ativo))
+    await carregarFormasPagamento()
     if (r) {
-      setForm({
+      const f = {
         ...r,
         parcelas: (r.parcelas ?? []).map((p, i) => ({
           parcela:           p.numeroParcela ?? i + 1,
@@ -113,17 +168,28 @@ export default function CondicoesPagamentoPage() {
           dias:              p.dias ?? (i + 1) * 30,
           codFormaPagamento: String(p.codFormaPagamento ?? ''),
         }))
-      })
+      }
+      setForm(f)
+      setOriginalForm(f)
       setNumParcelasInput(String(r.numeroParcelas ?? ''))
       setEditing(true)
     } else {
-      setForm(empty); setNumParcelasInput('1'); setEditing(false)
+      setForm(empty); setOriginalForm(empty); setNumParcelasInput('1'); setEditing(false)
     }
     setOpen(true)
   }
 
+  const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+  const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
+    isOpen: open,
+    isDirty,
+    onClose: () => setOpen(false),
+    onSave: save,
+    paused: openFormas,
+  })
+
   const cols = [
-    { key:'codCondicao',         label:'Cód.',       mono:true },
+    { key:'codCondicao',         label:'Cód.',      mono:true },
     { key:'condicaoPagamento',   label:'Condição de Pagamento' },
     { key:'numeroParcelas',      label:'Parcelas' },
     { key:'percentualDesconto',  label:'Desconto %' },
@@ -141,11 +207,11 @@ export default function CondicoesPagamentoPage() {
         onEdit={r => openModal(r)} onDelete={r => setConfirm(r)} />
 
       {open && (
-        <Overlay onClose={() => setOpen(false)}>
+        <Overlay onClose={attemptClose}>
           <ModalBox>
             <ModalHeader
               title={editing ? 'Editar Condição de Pagamento' : 'Nova Condição de Pagamento'}
-              onClose={() => setOpen(false)}
+              onClose={attemptClose}
               badge={
                 <span style={{ fontSize:11, fontFamily:'JetBrains Mono, monospace', padding:'2px 8px', borderRadius:100, background: editing ? '#dbeafe':'#dcfce7', color: editing ? '#1d4ed8':'#15803d' }}>
                   {editing ? 'ALTERAR' : 'INSERIR'}
@@ -155,7 +221,6 @@ export default function CondicoesPagamentoPage() {
 
             <div style={{ padding:24, flex:1, overflowY:'auto', display:'flex', flexDirection:'column', gap:20 }}>
 
-              {/* Linha 1: Código + Condição + Parcelas + Ativo */}
               <div style={{ display:'flex', gap:12, alignItems:'flex-end', flexWrap:'wrap' }}>
                 <div style={{ flex:'0 0 70px' }}>
                   <FField label="Código" value={editing ? String(form.codCondicao ?? '') : '—'} onChange={() => {}} />
@@ -177,7 +242,6 @@ export default function CondicoesPagamentoPage() {
                 </div>
               </div>
 
-              {/* Linha 2: Desconto + Multa + Juros */}
               <div style={{ display:'flex', gap:12, alignItems:'flex-end', flexWrap:'wrap' }}>
                 {[['Desconto %','percentualDesconto'],['Multa %','percentualMultas'],['Juros %','percentualJuros']].map(([label, key]) => (
                   <div key={key} style={{ flex:'1 1 130px', maxWidth:160 }}>
@@ -189,7 +253,6 @@ export default function CondicoesPagamentoPage() {
                 ))}
               </div>
 
-              {/* Tabela de Parcelas */}
               {(form.parcelas ?? []).length > 0 && (
                 <div style={{ display:'flex', flexDirection:'column', marginTop:8 }}>
                   <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
@@ -220,6 +283,8 @@ export default function CondicoesPagamentoPage() {
                       <tbody>
                         {form.parcelas.map((p, i) => {
                           const diasInvalido = i > 0 && parseInt(p.dias) <= parseInt(form.parcelas[i - 1].dias)
+                          const nomeFormaAtual = formaPagamentos.find(f => String(f.codFormaPagamento) === String(p.codFormaPagamento))?.formaPagamento || ''
+                          
                           return (
                             <tr key={i} style={{ borderBottom:'1px solid #f1f4f8' }}
                               onMouseEnter={e => e.currentTarget.style.background='#f8f9fb'}
@@ -243,14 +308,35 @@ export default function CondicoesPagamentoPage() {
                               </td>
 
                               <td style={{ padding:'6px 14px' }}>
-                                <select value={String(p.codFormaPagamento ?? '')}
-                                  onChange={e => updParcela(i, 'codFormaPagamento', e.target.value)}
-                                  style={inp} onFocus={focusInp} onBlur={blurInp}>
-                                  <option value="">Selecione...</option>
-                                  {formaPagamentos.map(f => (
-                                    <option key={f.codFormaPagamento} value={String(f.codFormaPagamento)}>{f.formaPagamento}</option>
-                                  ))}
-                                </select>
+                                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                  <input 
+                                    type="text" 
+                                    readOnly 
+                                    value={nomeFormaAtual} 
+                                    placeholder=""
+                                    style={{ ...inp, flex: 1, minWidth: 200, cursor: 'default' }} 
+                                  />
+                                  <button 
+                                    type="button" 
+                                    onClick={() => openFormasModal(i)}
+                                    style={{ 
+                                      background: '#fff', 
+                                      border: '1px solid #e2e6ed', 
+                                      borderRadius: 8, 
+                                      padding: '9px 18px', 
+                                      cursor: 'pointer', 
+                                      fontSize: 13,
+                                      fontWeight: 600,
+                                      color: '#0f172a',
+                                      whiteSpace: 'nowrap',
+                                      transition: 'background .15s'
+                                    }}
+                                    onMouseEnter={e => e.currentTarget.style.background = '#f8f9fb'}
+                                    onMouseLeave={e => e.currentTarget.style.background = '#fff'}
+                                  >
+                                    Pesquisar
+                                  </button>
+                                </div>
                               </td>
 
                             </tr>
@@ -265,8 +351,145 @@ export default function CondicoesPagamentoPage() {
             </div>
 
             <div style={{ padding:'14px 24px', borderTop:'1px solid #e2e6ed', display:'flex', justifyContent:'flex-end', gap:10 }}>
-              <button onClick={() => setOpen(false)} style={{ padding:'8px 18px', border:'1px solid #e2e6ed', borderRadius:8, background:'transparent', cursor:'pointer', fontSize:13, color:'#475569' }}>Cancelar</button>
+              <button onClick={attemptClose} style={{ padding:'8px 18px', border:'1px solid #e2e6ed', borderRadius:8, background:'transparent', cursor:'pointer', fontSize:13, color:'#475569' }}>Cancelar</button>
               <button onClick={save} style={{ padding:'8px 22px', border:'none', borderRadius:8, background:'#2563eb', color:'#fff', cursor:'pointer', fontSize:13, fontWeight:600 }}>Salvar</button>
+            </div>
+          </ModalBox>
+        </Overlay>
+      )}
+
+      <ConfirmDialog
+        open={confirming}
+        icon="❓"
+        title="Fechar sem salvar?"
+        message="Tem certeza que quer fechar? Todos dados escritos serão apagados."
+        confirmLabel="Fechar mesmo assim"
+        confirmColor="#dc2626"
+        onClose={cancelClose}
+        onConfirm={confirmClose}
+      />
+
+      {/*Formas de Pagamento*/}
+      {openFormas && (
+        <Overlay onClose={closeFormas} zIndex={70}>
+          <ModalBox maxWidth={580}>
+            <ModalHeader 
+              title="Consulta de Formas de Pagamento" 
+              onClose={closeFormas}
+              vertical={true} 
+              badge={!showNovaForma && (
+                <button 
+                  onClick={() => setShowNovaForma(true)} 
+                  style={{ 
+                    background: '#2563eb', 
+                    color: '#fff', 
+                    border: 'none', 
+                    borderRadius: 8, 
+                    padding: '8px 16px', 
+                    fontSize: 13, 
+                    fontWeight: 600, 
+                    cursor: 'pointer',
+                    transition: 'opacity 0.15s'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
+                  onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                >
+                  + Nova Forma
+                </button>
+              )} 
+            />
+
+            <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 20, flex: 1, overflowY: 'auto' }}>
+              
+              {showNovaForma && (
+                <div style={{ background: '#f8f9fb', border: '1px solid #e2e6ed', borderRadius: 10, padding: 18, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: 13, color: '#0f172a', fontFamily: 'Outfit, sans-serif' }}>Nova Forma de Pagamento</div>
+                    <span style={{ fontSize: 10, fontFamily: 'JetBrains Mono, monospace', padding: '2px 6px', borderRadius: 100, background: '#dcfce7', color: '#15803d', fontWeight: 600 }}>
+                      INSERIR
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+                    <div style={{ flex: '1 1 200px' }}>
+                      <label style={lbl}>Forma *</label>
+                      <input 
+                        type="text" 
+                        value={novaForma.formaPagamento} 
+                        onChange={e => updF('formaPagamento', e.target.value)} 
+                        style={inp} 
+                        onFocus={focusInp} 
+                        onBlur={blurInp} 
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', height: 38, marginBottom: 2 }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontSize: 13, fontFamily: 'Outfit, sans-serif', color: '#0f172a' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={novaForma.ativo} 
+                          onChange={e => updF('ativo', e.target.checked)} 
+                          style={{ width: 16, height: 16, cursor: 'pointer' }} 
+                        />
+                        Ativo
+                      </label>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
+                      <button 
+                        onClick={cancelF} 
+                        style={{ padding: '8px 14px', border: '1px solid #e2e6ed', borderRadius: 8, background: '#fff', cursor: 'pointer', fontSize: 13, color: '#475569' }}
+                      >
+                        Cancelar
+                      </button>
+                      <button 
+                        onClick={saveNovaForma} 
+                        disabled={savingForma}
+                        style={{ padding: '8px 18px', border: 'none', borderRadius: 8, background: '#2563eb', color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+                      >
+                        {savingForma ? 'Salvando...' : 'Salvar Forma'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div style={{ border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,.04)' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                  <thead>
+                    <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
+                      <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', color: '#94a3b8', width: 80 }}>Cód.</th>
+                      <th style={{ padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', color: '#94a3b8' }}>Forma de Pagamento</th>
+                      <th style={{ padding: '10px 14px', width: 110 }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {formaPagamentos.filter(f => f.ativo).map(f => (
+                      <tr key={f.codFormaPagamento} style={{ borderBottom: '1px solid #f1f4f8' }}
+                        onMouseEnter={e => e.currentTarget.style.background = '#f8f9fb'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                        <td style={{ padding: '10px 14px', color: '#94a3b8', fontFamily: 'JetBrains Mono, monospace' }}>{f.codFormaPagamento}</td>
+                        <td style={{ padding: '10px 14px', color: '#0f172a', fontWeight: 500 }}>{f.formaPagamento}</td>
+                        <td style={{ padding: '6px 14px', textAlign: 'right' }}>
+                          <button 
+                            type="button"
+                            onClick={() => {
+                              if (parcelaFormaIdx !== null) {
+                                updParcela(parcelaFormaIdx, 'codFormaPagamento', String(f.codFormaPagamento))
+                              }
+                              closeFormas()
+                            }}
+                            style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}
+                          >
+                            Selecionar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
             </div>
           </ModalBox>
         </Overlay>
