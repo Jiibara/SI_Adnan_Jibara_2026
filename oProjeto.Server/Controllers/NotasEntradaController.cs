@@ -15,8 +15,8 @@ namespace oProjeto.Server.Controllers
         public async Task<IActionResult> GetByFornecedor(int codForn) =>
             Ok(await repo.GetByFornecedorAsync(codForn));
 
-        [HttpGet("{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]
-        public async Task<IActionResult> Get(int numero, int modelo, int serie, int codForn)
+        [HttpGet("{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Get(string numero, string modelo, string serie, int codForn)
         {
             var r = await repo.GetByIdAsync(numero, modelo, serie, codForn);
             return r is null ? NotFound() : Ok(r);
@@ -31,8 +31,8 @@ namespace oProjeto.Server.Controllers
                 created);
         }
 
-        [HttpPut("{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]
-        public async Task<IActionResult> Update(int numero, int modelo, int serie, int codForn, NotasEntradas body)
+        [HttpPut("{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Update(string numero, string modelo, string serie, int codForn, NotasEntradas body)
         {
             if (numero != body.Numero || modelo != body.Modelo || serie != body.Serie || codForn != body.CodForn)
                 return BadRequest();
@@ -51,8 +51,8 @@ namespace oProjeto.Server.Controllers
             }
         }
 
-        [HttpPut("confirmar/{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]
-        public async Task<IActionResult> Confirmar(int numero, int modelo, int serie, int codForn)
+        [HttpPut("confirmar/{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Confirmar(string numero, string modelo, string serie, int codForn)
         {
             try
             {
@@ -65,8 +65,8 @@ namespace oProjeto.Server.Controllers
             }
         }
 
-        [HttpDelete("{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]
-        public async Task<IActionResult> Delete(int numero, int modelo, int serie, int codForn)
+        [HttpDelete("{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Delete(string numero, string modelo, string serie, int codForn)
         {
             var r = await repo.GetByIdAsync(numero, modelo, serie, codForn);
             if (r is null) return NotFound();
@@ -80,6 +80,56 @@ namespace oProjeto.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        /*[HttpPut("cancelar/{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Cancelar(string numero, string modelo, string serie, int codForn, NotasEntradas body)
+        {
+            if (string.IsNullOrWhiteSpace(body.MotivoCancelamento))
+                return BadRequest("Informe o motivo do cancelamento.");
+
+            try
+            {
+                await repo.CancelarAsync(numero, modelo, serie, codForn, body.MotivoCancelamento.Trim());
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }*/
+
+        [HttpPut("cancelar/{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Cancelar(
+            string numero,
+            string modelo,
+            string serie,
+            int codForn,
+            CancelarNotaRequest body)
+        {
+            if (string.IsNullOrWhiteSpace(body.MotivoCancelamento))
+                return BadRequest("Informe o motivo do cancelamento.");
+
+            try
+            {
+                await repo.CancelarAsync(
+                    numero,
+                    modelo,
+                    serie,
+                    codForn,
+                    body.MotivoCancelamento.Trim());
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public class CancelarNotaRequest
+        {
+            public string? MotivoCancelamento { get; set; }
         }
     }
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function DataTable({ columns, data, onEdit, onDelete, loading }) {
+export default function DataTable({ columns, data, onEdit, onDelete, loading, deleteLabel = 'Excluir', canDelete }) {
   const [search, setSearch] = useState('')
 
   const filtered = (data || []).filter(row =>
@@ -74,24 +74,28 @@ export default function DataTable({ columns, data, onEdit, onDelete, loading }) 
                   ))}
                   <td style={{ padding:'11px 14px' }}>
                     <div style={{ display:'flex', gap:6, justifyContent:'flex-end' }}>
-                      <button onClick={() => onEdit(row)} style={{
-                        padding:'4px 10px', border:'1px solid #e2e6ed', borderRadius:6,
-                        background:'transparent', cursor:'pointer', fontSize:12, color:'#475569',
-                        transition:'all .15s',
-                      }}
-                        onMouseEnter={e => { e.target.style.borderColor='#2563eb'; e.target.style.color='#2563eb'; e.target.style.background='#dbeafe' }}
-                        onMouseLeave={e => { e.target.style.borderColor='#e2e6ed'; e.target.style.color='#475569'; e.target.style.background='transparent' }}>
-                         Editar
-                      </button>
-                      <button onClick={() => onDelete(row)} style={{
-                        padding:'4px 10px', border:'1px solid #e2e6ed', borderRadius:6,
-                        background:'transparent', cursor:'pointer', fontSize:12, color:'#475569',
-                        transition:'all .15s',
-                      }}
-                        onMouseEnter={e => { e.target.style.borderColor='#dc2626'; e.target.style.color='#dc2626'; e.target.style.background='#fee2e2' }}
-                        onMouseLeave={e => { e.target.style.borderColor='#e2e6ed'; e.target.style.color='#475569'; e.target.style.background='transparent' }}>
-                         Excluir
-                      </button>
+                      {onEdit && (
+                        <button onClick={() => onEdit(row)} style={{
+                          padding:'4px 10px', border:'1px solid #e2e6ed', borderRadius:6,
+                          background:'transparent', cursor:'pointer', fontSize:12, color:'#475569',
+                          transition:'all .15s',
+                        }}
+                          onMouseEnter={e => { e.target.style.borderColor='#2563eb'; e.target.style.color='#2563eb'; e.target.style.background='#dbeafe' }}
+                          onMouseLeave={e => { e.target.style.borderColor='#e2e6ed'; e.target.style.color='#475569'; e.target.style.background='transparent' }}>
+                           Editar
+                        </button>
+                      )}
+                      {onDelete && (!canDelete || canDelete(row)) && (
+                        <button onClick={() => onDelete(row)} style={{
+                          padding:'4px 10px', border:'1px solid #e2e6ed', borderRadius:6,
+                          background:'transparent', cursor:'pointer', fontSize:12, color:'#475569',
+                          transition:'all .15s',
+                        }}
+                          onMouseEnter={e => { e.target.style.borderColor='#dc2626'; e.target.style.color='#dc2626'; e.target.style.background='#fee2e2' }}
+                          onMouseLeave={e => { e.target.style.borderColor='#e2e6ed'; e.target.style.color='#475569'; e.target.style.background='transparent' }}>
+                           {deleteLabel}
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

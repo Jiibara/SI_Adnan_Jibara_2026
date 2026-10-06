@@ -5,7 +5,7 @@ const api = axios.create({ baseURL: '/api' })
 function crud(path) {
   return {
     getAll:  ()           => api.get(path).then(r => r.data),
-    getOne:  (id)         => api.get(`${path}/${id}`).then(r => r.data),
+    getOne:  (id)         => api.get(`${path}/${id}`).then(r => r.data),  //linha 8
     create:  (body)       => api.post(path, body).then(r => r.data),
     update:  (id, body)   => api.put(`${path}/${id}`, body),
     delete:  (id)         => api.delete(`${path}/${id}`),

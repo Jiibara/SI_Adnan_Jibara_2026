@@ -3,32 +3,136 @@
   "WorkspaceRootPath": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\contareceberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\contareceberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\contapagarrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\contapagarrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\notassaidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\notassaidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\notasentradacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\notasentradacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\nferepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\nferepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\nfescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\nfescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\movimentoestoquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\movimentoestoquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\notasentradas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\notasentradas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\notaentradarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\notaentradarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\comprascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\comprascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtosnotaentrada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtosnotaentrada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\comprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\comprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\movimentosestoquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\movimentosestoquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\contasrecebercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\contasrecebercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\contasreceber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\contasreceber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\contaspagarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\contaspagarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\contapagarrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\contapagarrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\compras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\compras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\notassaidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\notassaidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\funcoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\funcoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\cidaderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\cidaderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\prodnfecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\prodnfecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\notasaidarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\notasaidarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\contareceberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\contareceberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtosnotasaida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtosnotasaida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtoscompras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtoscompras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\prodnfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\prodnfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\nfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\nfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\movimentosestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\movimentosestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\contasreceber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\contasreceber.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\contaspagar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\contaspagar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\notasaidarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\notasaidarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\condicaopagamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\condicaopagamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\fornecedorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\fornecedorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\logrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\logrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,24 +159,8 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\paisrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\notaentradarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\notaentradarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\nferepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\nferepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\movimentoestoquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\movimentoestoquerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\marcarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\marcarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\logrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\logrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\funcionariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -81,10 +169,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\funcaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\funcaorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\fornecedorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\fornecedorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\formapagamentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -99,20 +183,8 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\condicaopagamentorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\comprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\comprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\clienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\clienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\cidaderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\cidaderepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\repository\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\repository\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\veiculos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -123,24 +195,8 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\transportadores.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtosnotasaida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtosnotasaida.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtosnotaentrada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtosnotaentrada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtoscompras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtoscompras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\produtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\produtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\prodnfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\prodnfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\parcelas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -151,36 +207,12 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\paises.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\notassaidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\notassaidas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\notasentradas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\notasentradas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\nfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\nfes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\ncmshs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\ncmshs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\movimentosestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\movimentosestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\marcas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\marcas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\funcoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\funcoes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\funcionarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -197,14 +229,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\estados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\estados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\condicaopagamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\condicaopagamentos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\compras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\models\\compras.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\models\\clientes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -235,24 +259,8 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\paisescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\notassaidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\notassaidacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\notasentradacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\notasentradacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\nfescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\nfescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\ncmshscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\ncmshscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\movimentosestoquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\movimentosestoquecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\marcascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -287,20 +295,12 @@
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\condicaopagamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\comprascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\comprascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\clientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\cidadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\cidadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\categoriascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\categoriascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -313,10 +313,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\controllers\\prodnfecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|solutionrelative:oprojeto.server\\controllers\\prodnfecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C3852585-F6EC-401A-88CF-2AA6DF39ED03}|oProjeto.Server\\oProjeto.Server.csproj|c:\\users\\adnan\\faculdade\\7periodo\\devsis\\oprojeto\\oprojeto.server\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -334,7 +330,436 @@
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NotasSaidaController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasSaidaController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NotasSaidaController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasSaidaController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\NotasSaidaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-24T20:10:10.439Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MovimentoEstoqueRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
+              "ViewState": "AgIAABwBAAAAAAAAAAAawC4BAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T19:16:53.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NfesController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NfesController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NfesController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NfesController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\NfesController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAkAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T00:57:03.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NfeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NfeRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NfeRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NfeRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\NfeRepository.cs",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAAAPIAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-05T00:10:18.485Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CompraRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CompraRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CompraRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CompraRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\CompraRepository.cs",
+              "ViewState": "AgIAAIkAAAAAAAAAAAAswBAAAABlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T18:31:53.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ContaPagarRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaPagarRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ContaPagarRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaPagarRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\ContaPagarRepository.cs",
+              "ViewState": "AgIAADMBAAAAAAAAAAAQwOQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-23T18:05:06.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NotasEntradas.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasEntradas.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\NotasEntradas.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasEntradas.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\NotasEntradas.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvyEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T22:24:51.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NotasEntradaController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasEntradaController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NotasEntradaController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasEntradaController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\NotasEntradaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T22:30:41.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ProdutosNotaEntrada.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T22:46:50.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "NotaEntradaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T22:37:03.51Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ComprasController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ComprasController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ComprasController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ComprasController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\ComprasController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAlwA4AAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T18:34:08.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MovimentosEstoqueController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T19:18:03.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ContasReceberController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasReceberController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ContasReceberController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasReceberController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\ContasReceberController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-24T19:44:40.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ContasPagarController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasPagarController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ContasPagarController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasPagarController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\ContasPagarController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-17T00:36:26.41Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Compras.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Compras.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Compras.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Compras.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\Compras.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T18:26:42.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "NotasSaidas.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasSaidas.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\NotasSaidas.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasSaidas.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\NotasSaidas.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-15T19:53:05.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Funcoes.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Funcoes.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Funcoes.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Funcoes.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\Funcoes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T01:55:26.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CidadeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CidadeRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CidadeRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CidadeRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\CidadeRepository.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAmwIkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T01:06:17.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CategoriaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CategoriaRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CategoriaRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CategoriaRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\CategoriaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-18T01:25:52.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ProdNfeController.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ProdNfeController.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ProdNfeController.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ProdNfeController.cs",
+              "RelativeToolTip": "oProjeto.Server\\Controllers\\ProdNfeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T00:39:44.228Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "NotaSaidaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
+              "ViewState": "AgIAAF0BAAAAAAAAAAAawIQBAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-24T18:26:18.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ContaReceberRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaReceberRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ContaReceberRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaReceberRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\ContaReceberRepository.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAhwGgAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-24T19:26:59.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ProdutosNotaSaida.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-15T19:54:56.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ProdutosCompras.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosCompras.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosCompras.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosCompras.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosCompras.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-16T18:28:24.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ProdNfes.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdNfes.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdNfes.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdNfes.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ProdNfes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T00:08:59.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Nfes.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Nfes.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Nfes.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Nfes.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\Nfes.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAowAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T18:05:13.164Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "MovimentosEstoque.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\MovimentosEstoque.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\MovimentosEstoque.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\MovimentosEstoque.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\MovimentosEstoque.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-18T19:17:35.066Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ContasReceber.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasReceber.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ContasReceber.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasReceber.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ContasReceber.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAqwAgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-24T19:10:23.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ContasPagar.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasPagar.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ContasPagar.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasPagar.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\ContasPagar.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T17:59:52.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "CondicaoPagamentos.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\CondicaoPagamentos.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\CondicaoPagamentos.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\CondicaoPagamentos.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\CondicaoPagamentos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-17T00:31:12.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "FornecedorRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FornecedorRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\FornecedorRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FornecedorRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\FornecedorRepository.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAmwGMAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T17:30:37.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Logs.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Logs.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Logs.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Logs.cs",
+              "RelativeToolTip": "oProjeto.Server\\Models\\Logs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T00:36:13.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "LogRepository.cs",
+              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\LogRepository.cs",
+              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\LogRepository.cs",
+              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\LogRepository.cs",
+              "RelativeToolTip": "oProjeto.Server\\Repository\\LogRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T17:02:33.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Program.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Program.cs",
@@ -346,85 +771,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ContaPagarRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaPagarRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ContaPagarRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaPagarRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\ContaPagarRepository.cs",
-              "ViewState": "AgIAAKEBAAAAAAAAAAAAALIBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-23T18:05:06.058Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ContasPagar.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasPagar.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ContasPagar.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasPagar.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ContasPagar.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T17:59:52.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ContasPagarController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasPagarController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ContasPagarController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasPagarController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\ContasPagarController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAEAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:36:26.41Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ContasReceber.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasReceber.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ContasReceber.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ContasReceber.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ContasReceber.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAA3wAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-24T19:10:23.18Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ContaReceberRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaReceberRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ContaReceberRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ContaReceberRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\ContaReceberRepository.cs",
-              "ViewState": "AgIAAF8BAAAAAAAAAAAuwIEBAABYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-24T19:26:59.425Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ContasReceberController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasReceberController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ContasReceberController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ContasReceberController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\ContasReceberController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-24T19:44:40.609Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 34,
               "Title": "VeiculoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\VeiculoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\VeiculoRepository.cs",
@@ -436,7 +783,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 35,
               "Title": "TransportadorRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\TransportadorRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\TransportadorRepository.cs",
@@ -448,20 +795,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NotaSaidaRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\NotaSaidaRepository.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAiwIYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-24T18:26:18.2Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 36,
               "Title": "ProdutoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ProdutoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ProdutoRepository.cs",
@@ -473,7 +807,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 37,
               "Title": "ParcelaRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ParcelaRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ParcelaRepository.cs",
@@ -485,7 +819,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 38,
               "Title": "PaisRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\PaisRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\PaisRepository.cs",
@@ -497,43 +831,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "NotaEntradaRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\NotaEntradaRepository.cs",
-              "ViewState": "AgIAAHQAAAAAAAAAAAAmwI0AAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T22:37:03.51Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "NfeRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NfeRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\NfeRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\NfeRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\NfeRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAP8AAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-05T00:10:18.485Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "MovimentoEstoqueRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\MovimentoEstoqueRepository.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAiwG0AAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T19:16:53.542Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 39,
               "Title": "MarcaRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\MarcaRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\MarcaRepository.cs",
@@ -545,19 +843,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "LogRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\LogRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\LogRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\LogRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\LogRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-30T17:02:33.223Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 40,
               "Title": "FuncionarioRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FuncionarioRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\FuncionarioRepository.cs",
@@ -569,7 +855,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 41,
               "Title": "FuncaoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FuncaoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\FuncaoRepository.cs",
@@ -581,19 +867,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "FornecedorRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FornecedorRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\FornecedorRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FornecedorRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\FornecedorRepository.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAmwGMAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-30T17:30:37.032Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 42,
               "Title": "FormaPagamentoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\FormaPagamentoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\FormaPagamentoRepository.cs",
@@ -605,7 +879,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 43,
               "Title": "EstadoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\EstadoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\EstadoRepository.cs",
@@ -617,7 +891,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 44,
               "Title": "CondicaoPagamentoRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CondicaoPagamentoRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CondicaoPagamentoRepository.cs",
@@ -629,19 +903,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "CompraRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CompraRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CompraRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CompraRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\CompraRepository.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAmwIsAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-16T18:31:53.271Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 45,
               "Title": "ClienteRepository.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\ClienteRepository.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\ClienteRepository.cs",
@@ -653,31 +915,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "CidadeRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CidadeRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CidadeRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CidadeRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\CidadeRepository.cs",
-              "ViewState": "AgIAAG4AAAAAAAAAAADwv4kAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T01:06:17.261Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "CategoriaRepository.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CategoriaRepository.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Repository\\CategoriaRepository.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Repository\\CategoriaRepository.cs",
-              "RelativeToolTip": "oProjeto.Server\\Repository\\CategoriaRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T01:25:52.265Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 46,
               "Title": "Veiculos.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Veiculos.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Veiculos.cs",
@@ -689,7 +927,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 47,
               "Title": "Transportadores.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Transportadores.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Transportadores.cs",
@@ -701,43 +939,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "ProdutosNotaSaida.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosNotaSaida.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-15T19:54:56.207Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "ProdutosNotaEntrada.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosNotaEntrada.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T22:46:50.756Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "ProdutosCompras.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosCompras.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdutosCompras.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdutosCompras.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ProdutosCompras.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-16T18:28:24.892Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 48,
               "Title": "Produtos.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Produtos.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Produtos.cs",
@@ -749,19 +951,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "ProdNfes.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdNfes.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\ProdNfes.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\ProdNfes.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\ProdNfes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-18T00:08:59.007Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 49,
               "Title": "Parcelas.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Parcelas.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Parcelas.cs",
@@ -773,7 +963,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 50,
               "Title": "Paises.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Paises.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Paises.cs",
@@ -785,43 +975,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "NotasSaidas.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasSaidas.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\NotasSaidas.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasSaidas.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\NotasSaidas.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-15T19:53:05.111Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "NotasEntradas.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasEntradas.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\NotasEntradas.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NotasEntradas.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\NotasEntradas.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T22:24:51.328Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
-              "Title": "Nfes.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Nfes.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Nfes.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Nfes.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\Nfes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T18:05:13.164Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 51,
               "Title": "NcmShs.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\NcmShs.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\NcmShs.cs",
@@ -833,19 +987,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
-              "Title": "MovimentosEstoque.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\MovimentosEstoque.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\MovimentosEstoque.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\MovimentosEstoque.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\MovimentosEstoque.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T19:17:35.066Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 52,
               "Title": "Marcas.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Marcas.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Marcas.cs",
@@ -857,31 +999,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "Logs.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Logs.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Logs.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Logs.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\Logs.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-30T00:36:13.584Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "Funcoes.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Funcoes.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Funcoes.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Funcoes.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\Funcoes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T01:55:26.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 53,
               "Title": "Funcionarios.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Funcionarios.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Funcionarios.cs",
@@ -893,7 +1011,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 54,
               "Title": "Fornecedores.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Fornecedores.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Fornecedores.cs",
@@ -905,7 +1023,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 55,
               "Title": "FormaPagamentos.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\FormaPagamentos.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\FormaPagamentos.cs",
@@ -917,7 +1035,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 56,
               "Title": "Estados.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Estados.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Estados.cs",
@@ -929,31 +1047,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "CondicaoPagamentos.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\CondicaoPagamentos.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\CondicaoPagamentos.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\CondicaoPagamentos.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\CondicaoPagamentos.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T00:31:12.165Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
-              "Title": "Compras.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Compras.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Compras.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Compras.cs",
-              "RelativeToolTip": "oProjeto.Server\\Models\\Compras.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-16T18:26:42.642Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 57,
               "Title": "Clientes.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Clientes.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Clientes.cs",
@@ -965,7 +1059,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 58,
               "Title": "Cidades.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Cidades.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Cidades.cs",
@@ -977,7 +1071,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 59,
               "Title": "Categorias.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Models\\Categorias.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Models\\Categorias.cs",
@@ -989,7 +1083,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 60,
               "Title": "VeiculosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\VeiculosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\VeiculosController.cs",
@@ -1001,7 +1095,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 61,
               "Title": "TransportadoresController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\TransportadoresController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\TransportadoresController.cs",
@@ -1013,7 +1107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 62,
               "Title": "ProdutosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ProdutosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ProdutosController.cs",
@@ -1025,7 +1119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 63,
               "Title": "PaisesController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\PaisesController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\PaisesController.cs",
@@ -1037,31 +1131,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "NotasEntradaController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasEntradaController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NotasEntradaController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasEntradaController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\NotasEntradaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-11T22:30:41.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
-              "Title": "NfesController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NfesController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NfesController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NfesController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\NfesController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwBYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-10T00:57:03.135Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 64,
               "Title": "NcmShsController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NcmShsController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NcmShsController.cs",
@@ -1073,19 +1143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
-              "Title": "MovimentosEstoqueController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\MovimentosEstoqueController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-18T19:18:03.55Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 65,
               "Title": "MarcasController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\MarcasController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\MarcasController.cs",
@@ -1097,19 +1155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "NotasSaidaController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasSaidaController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\NotasSaidaController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\NotasSaidaController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\NotasSaidaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-24T20:10:10.439Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 66,
               "Title": "LogsController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\LogsController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\LogsController.cs",
@@ -1121,7 +1167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "FuncoesController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\FuncoesController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\FuncoesController.cs",
@@ -1133,7 +1179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "FuncionariosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\FuncionariosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\FuncionariosController.cs",
@@ -1145,7 +1191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "FormaPagamentosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\FormaPagamentosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\FormaPagamentosController.cs",
@@ -1157,7 +1203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "FornecedoresController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\FornecedoresController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\FornecedoresController.cs",
@@ -1169,7 +1215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 71,
               "Title": "EstadosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\EstadosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\EstadosController.cs",
@@ -1181,7 +1227,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 72,
               "Title": "CondicaoPagamentosController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\CondicaoPagamentosController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\CondicaoPagamentosController.cs",
@@ -1193,19 +1239,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
-              "Title": "ComprasController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ComprasController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ComprasController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ComprasController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\ComprasController.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAkwAcAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-16T18:34:08.88Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "ClientesController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ClientesController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ClientesController.cs",
@@ -1217,7 +1251,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "CidadesController.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\CidadesController.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\CidadesController.cs",
@@ -1226,18 +1260,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-18T18:12:28.206Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 74,
-              "Title": "CategoriasController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\CategoriasController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\CategoriasController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\CategoriasController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\CategoriasController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T01:30:30.298Z"
             },
             {
               "$type": "Document",
@@ -1278,18 +1300,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 78,
-              "Title": "ProdNfeController.cs",
-              "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ProdNfeController.cs",
-              "RelativeDocumentMoniker": "oProjeto.Server\\Controllers\\ProdNfeController.cs",
-              "ToolTip": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Controllers\\ProdNfeController.cs",
-              "RelativeToolTip": "oProjeto.Server\\Controllers\\ProdNfeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-18T00:39:44.228Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 79,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\adnan\\Faculdade\\7Periodo\\DevSis\\oProjeto\\oProjeto.Server\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "oProjeto.Server\\Data\\AppDbContext.cs",

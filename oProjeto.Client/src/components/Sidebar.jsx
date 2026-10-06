@@ -19,7 +19,7 @@ const nav = [
   { to: '/compras', label: 'Compras' },
 
   { to: '/nfe', label: 'NFe' },
-  { to: '/notasentrada', label: ' NOta de Entrada'},
+  { to: '/notasentrada', label: ' Nota de Entrada'},
   { to: '/contasPagar', label: 'Contas a Pagar'},
   { to: 'notassaida', label:'Notas de Saida'},
   { to: 'contasReceber', label:'Contas a Receber'},

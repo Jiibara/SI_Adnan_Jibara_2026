@@ -38,11 +38,14 @@ export default function CategoriasPage() {
   }
 
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
+  const descartar = () => setForm(originalForm)
+
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open,
     isDirty,
     onClose: () => setOpen(false),
     onSave: save,
+    onDiscard: descartar,
   })
 
   const abrirNovo = () => { setForm(empty); setOriginalForm(empty); setEditing(false); setOpen(true) }
@@ -69,7 +72,7 @@ export default function CategoriasPage() {
         onDelete={r => setConfirm(r)}
       />
 
-      <Modal open={open} title={editing ? 'Editar Categoria' : 'Nova Categoria'} editing={editing} onClose={attemptClose} onSave={save}>
+      <Modal open={open} title={editing ? 'Editar Categoria' : 'Nova Categoria'} editing={editing} onClose={attemptClose} onSave={confirming ? undefined : save}>
         <div style={{ display:'flex', gap:12, alignItems:'flex-end', flexWrap:'wrap' }}>
 
           <div style={{ flex:'0 0 30px' }}>

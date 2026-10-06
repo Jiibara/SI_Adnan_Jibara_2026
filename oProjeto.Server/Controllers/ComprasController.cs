@@ -19,8 +19,8 @@ namespace oProjeto.Server.Controllers
         public async Task<IActionResult> GetPendentesPorFornecedor(int codForn) =>
             Ok(await repo.GetPendentesAsync(codForn));
 
-        [HttpGet("{numero:int}/{serie:int}/{modelo:int}/{codForn:int}")]
-        public async Task<IActionResult> Get(int numero, int serie, int modelo, int codForn)
+        [HttpGet("{numero}/{serie}/{modelo}/{codForn:int}")]
+        public async Task<IActionResult> Get(string numero, string serie, string modelo, int codForn)
         {
             var r = await repo.GetByIdAsync(numero, serie, modelo, codForn);
             return r is null ? NotFound() : Ok(r);
@@ -48,8 +48,8 @@ namespace oProjeto.Server.Controllers
             }
         }
 
-        [HttpPut("{numero:int}/{serie:int}/{modelo:int}/{codForn:int}")]
-        public async Task<IActionResult> Update(int numero, int serie, int modelo, int codForn, Compras body)
+        [HttpPut("{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Update(string numero, string serie, string modelo, int codForn, Compras body)
         {
             if (numero != body.Numero ||
                 serie != body.Serie ||
@@ -64,8 +64,8 @@ namespace oProjeto.Server.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{numero:int}/{serie:int}/{modelo:int}/{codForn:int}")]
-        public async Task<IActionResult> Delete(int numero, int serie, int modelo, int codForn)
+        [HttpDelete("{numero}/{modelo}/{serie}/{codForn:int}")]
+        public async Task<IActionResult> Delete(string numero, string serie, string modelo, int codForn)
         {
             var r = await repo.GetByIdAsync(numero, serie, modelo, codForn);
             if (r is null) return NotFound();

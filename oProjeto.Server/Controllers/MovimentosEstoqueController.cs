@@ -15,11 +15,12 @@ namespace oProjeto.Server.Controllers
         public async Task<IActionResult> GetByProduto(int codProd) =>
             Ok(await repo.GetByProdutoAsync(codProd));
 
-        [HttpGet("entrada/{numero:int}/{modelo:int}/{serie:int}/{codForn:int}")]        public async Task<IActionResult> GetByNotaEntrada(int numero, int modelo, int serie, int codForn) =>
+        [HttpGet("entrada/{numero}/{modelo}/{serie}/{codForn:int}")]       
+        public async Task<IActionResult> GetByNotaEntrada(string numero, string modelo, string serie, int codForn) =>
             Ok(await repo.GetByNotaEntradaAsync(numero, modelo, serie, codForn));
 
-        [HttpGet("saida/{numero:int}/{modelo:int}/{serie:int}/{codCliente:int}")]
-        public async Task<IActionResult> GetByNotaSaida(int numero, int modelo, int serie, int codCliente) =>
+        [HttpGet("saida/{numero}/{modelo}/{serie}/{codCliente:int}")]
+        public async Task<IActionResult> GetByNotaSaida(string numero, string modelo, string serie, int codCliente) =>
             Ok(await repo.GetByNotaSaidaAsync(numero, modelo, serie, codCliente));
     }
 }

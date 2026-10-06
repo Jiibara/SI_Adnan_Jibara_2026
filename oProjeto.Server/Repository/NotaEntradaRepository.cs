@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
 using oProjeto.Server.Models;
 
 namespace oProjeto.Server.Repository
@@ -53,7 +54,7 @@ namespace oProjeto.Server.Repository
             return list;
         }
 
-        public async Task<NotasEntradas?> GetByIdAsync(int numero, int modelo, int serie, int codForn)
+        public async Task<NotasEntradas?> GetByIdAsync(string numero, string modelo, string serie, int codForn)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -79,7 +80,7 @@ namespace oProjeto.Server.Repository
         }
 
         private static async Task<IEnumerable<ProdutosNotaEntrada>> GetItensAsync(
-            MySqlConnection con, int numero, int modelo, int serie, int codForn)
+            MySqlConnection con, string numero, string modelo, string serie, int codForn)
         {
             var list = new List<ProdutosNotaEntrada>();
             await using var cmd = new MySqlCommand(SelectItens, con);
@@ -123,10 +124,12 @@ namespace oProjeto.Server.Repository
                 foreach (var item in body.Produtos)
                     await InserirItemAsync(con, tx, body.Numero, body.Modelo, body.Serie, body.CodForn, item);
 
-                if (body.PedidoNumero.HasValue && body.PedidoSerie.HasValue && body.PedidoModelo.HasValue)
+                if (!string.IsNullOrWhiteSpace(body.PedidoNumero) &&
+                    !string.IsNullOrWhiteSpace(body.PedidoSerie) &&
+                    !string.IsNullOrWhiteSpace(body.PedidoModelo))
                 {
                     await AtualizarRecebimentoPedidoAsync(con, tx,
-                        body.PedidoNumero.Value, body.PedidoSerie.Value, body.PedidoModelo.Value,
+                        body.PedidoNumero, body.PedidoSerie, body.PedidoModelo,
                         body.CodForn, body.Produtos);
                 }
 
@@ -138,7 +141,7 @@ namespace oProjeto.Server.Repository
                 throw;
             }
 
-            var descVinculo = body.PedidoNumero.HasValue
+            var descVinculo = !string.IsNullOrWhiteSpace(body.PedidoNumero)
                 ? $" - Vinculada ao Pedido {body.PedidoNumero}/{body.PedidoSerie} (Modelo {body.PedidoModelo})"
                 : "";
 
@@ -195,10 +198,12 @@ namespace oProjeto.Server.Repository
                     await cmd.ExecuteNonQueryAsync();
                 }
 
-                if (antes.PedidoNumero.HasValue && antes.PedidoSerie.HasValue && antes.PedidoModelo.HasValue)
+                if (!string.IsNullOrWhiteSpace(antes.PedidoNumero) &&
+                    !string.IsNullOrWhiteSpace(antes.PedidoSerie) &&
+                    !string.IsNullOrWhiteSpace(antes.PedidoModelo))
                 {
                     await ReverterRecebimentoPedidoAsync(con, tx,
-                        antes.PedidoNumero.Value, antes.PedidoSerie.Value, antes.PedidoModelo.Value,
+                        antes.PedidoNumero, antes.PedidoSerie, antes.PedidoModelo,
                         antes.CodForn, antes.Produtos);
                 }
 
@@ -217,10 +222,12 @@ namespace oProjeto.Server.Repository
                 foreach (var item in body.Produtos)
                     await InserirItemAsync(con, tx, body.Numero, body.Modelo, body.Serie, body.CodForn, item);
 
-                if (body.PedidoNumero.HasValue && body.PedidoSerie.HasValue && body.PedidoModelo.HasValue)
+                if (!string.IsNullOrWhiteSpace(body.PedidoNumero) &&
+                    !string.IsNullOrWhiteSpace(body.PedidoSerie) &&
+                    !string.IsNullOrWhiteSpace(body.PedidoModelo))
                 {
                     await AtualizarRecebimentoPedidoAsync(con, tx,
-                        body.PedidoNumero.Value, body.PedidoSerie.Value, body.PedidoModelo.Value,
+                        body.PedidoNumero, body.PedidoSerie, body.PedidoModelo,
                         body.CodForn, body.Produtos);
                 }
 
@@ -261,7 +268,7 @@ namespace oProjeto.Server.Repository
             await log.AddAsync("NotasEntrada", "EDITOU", desc);
         }
 
-        public async Task ConfirmarAsync(int numero, int modelo, int serie, int codForn)
+        public async Task ConfirmarAsync(string numero, string modelo, string serie, int codForn)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -417,7 +424,7 @@ namespace oProjeto.Server.Repository
                 $"Conferiu Nota de Entrada: Nº {numero}/{serie} (Modelo {modelo}) - Fornecedor {codForn}");
         }
 
-        public async Task DeleteAsync(int numero, int modelo, int serie, int codForn)
+        public async Task DeleteAsync(string numero, string modelo, string serie, int codForn)
         {
             var nota = await GetByIdAsync(numero, modelo, serie, codForn);
 
@@ -434,10 +441,12 @@ namespace oProjeto.Server.Repository
 
             try
             {
-                if (nota.PedidoNumero.HasValue && nota.PedidoSerie.HasValue && nota.PedidoModelo.HasValue)
+                if (!string.IsNullOrWhiteSpace(nota.PedidoNumero) &&
+                    !string.IsNullOrWhiteSpace(nota.PedidoSerie) &&
+                    !string.IsNullOrWhiteSpace(nota.PedidoModelo))
                 {
                     await ReverterRecebimentoPedidoAsync(con, tx,
-                        nota.PedidoNumero.Value, nota.PedidoSerie.Value, nota.PedidoModelo.Value,
+                        nota.PedidoNumero, nota.PedidoSerie, nota.PedidoModelo,
                         nota.CodForn, nota.Produtos);
                 }
 
@@ -465,9 +474,99 @@ namespace oProjeto.Server.Repository
                 $"Excluiu Nota de Entrada: Nº {numero}/{serie} (Modelo {modelo}) - Fornecedor {codForn}");
         }
 
+        // Cancela a nota desfazendo seus efeitos, tudo na mesma transação:
+        //  - CONFERIDA: cancela contas a pagar (bloqueia se houver paga) e restaura estoque/custo médio
+        //  - PENDENTE e CONFERIDA: desfaz o recebimento no pedido de compra vinculado
+        public async Task CancelarAsync(string numero, string modelo, string serie, int codForn, string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(motivo))
+                throw new InvalidOperationException("O motivo do cancelamento é obrigatório.");
+
+            var nota = await GetByIdAsync(numero, modelo, serie, codForn)
+                ?? throw new InvalidOperationException("Nota de entrada não encontrada.");
+
+            await using var con = Conn();
+            await con.OpenAsync();
+            await using var tx = await con.BeginTransactionAsync();
+
+            try
+            {
+                string situacao;
+                await using (var cmd = new MySqlCommand(@"
+                    SELECT situacao FROM notasEntrada
+                    WHERE numero = @numero AND modelo = @modelo
+                      AND serie = @serie AND codForn = @codForn
+                    FOR UPDATE", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@numero", numero);
+                    cmd.Parameters.AddWithValue("@modelo", modelo);
+                    cmd.Parameters.AddWithValue("@serie", serie);
+                    cmd.Parameters.AddWithValue("@codForn", codForn);
+                    situacao = (await cmd.ExecuteScalarAsync())?.ToString()
+                        ?? throw new InvalidOperationException("Nota de entrada não encontrada.");
+                }
+
+                if (situacao.Equals("CANCELADA", StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidOperationException("A nota de entrada já está cancelada.");
+
+                if (situacao.Equals("CONFERIDA", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Contas a pagar: bloqueia se alguma já foi paga, senão cancela
+                    await ContaPagarRepository.CancelarContasDaNotaAsync(
+                        con, tx, numero, modelo, serie, codForn);
+
+                    // Estoque: restaura saldo e custo médio anteriores
+                    await MovimentoEstoqueRepository.RemoverEntradaAsync(
+                        con, tx, numero, modelo, serie, codForn);
+                }
+
+                // Pedido de compra: desfaz o recebimento (PENDENTE e CONFERIDA)
+                if (!string.IsNullOrWhiteSpace(nota.PedidoNumero) &&
+                    !string.IsNullOrWhiteSpace(nota.PedidoSerie) &&
+                    !string.IsNullOrWhiteSpace(nota.PedidoModelo))
+                {
+                    await ReverterRecebimentoPedidoAsync(con, tx,
+                        nota.PedidoNumero, nota.PedidoSerie, nota.PedidoModelo,
+                        nota.CodForn, nota.Produtos);
+                }
+
+                // Marca a nota como cancelada
+                await using (var cmd = new MySqlCommand(@"
+                    UPDATE notasEntrada
+                    SET situacao = 'CANCELADA',
+                        motivoCancelamento = @motivo
+                    WHERE numero = @numero AND modelo = @modelo
+                      AND serie = @serie AND codForn = @codForn
+                      AND situacao = @situacaoAtual", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@motivo", motivo.Trim());
+                    cmd.Parameters.AddWithValue("@situacaoAtual", situacao);
+                    cmd.Parameters.AddWithValue("@numero", numero);
+                    cmd.Parameters.AddWithValue("@modelo", modelo);
+                    cmd.Parameters.AddWithValue("@serie", serie);
+                    cmd.Parameters.AddWithValue("@codForn", codForn);
+
+                    if (await cmd.ExecuteNonQueryAsync() != 1)
+                        throw new InvalidOperationException(
+                            $"Não foi possível cancelar a nota de entrada. Situação atual: {situacao}.");
+                }
+
+                await tx.CommitAsync();
+            }
+            catch
+            {
+                await tx.RollbackAsync();
+                throw;
+            }
+
+            await log.AddAsync("NotasEntrada", "CANCELOU",
+                $"Cancelou Nota de Entrada: Nº {numero}/{serie} (Modelo {modelo}) - " +
+                $"Fornecedor {codForn}. Motivo: {motivo.Trim()}");
+        }
+
         private static async Task AtualizarRecebimentoPedidoAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int pedidoNumero, int pedidoSerie, int pedidoModelo, int codForn,
+            string pedidoNumero, string pedidoSerie, string pedidoModelo, int codForn,
             List<ProdutosNotaEntrada> itensRecebidos)
         {
             foreach (var item in itensRecebidos)
@@ -493,7 +592,7 @@ namespace oProjeto.Server.Repository
 
         private static async Task ReverterRecebimentoPedidoAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int pedidoNumero, int pedidoSerie, int pedidoModelo, int codForn,
+            string pedidoNumero, string pedidoSerie, string pedidoModelo, int codForn,
             List<ProdutosNotaEntrada> itensRecebidosAnteriormente)
         {
             foreach (var item in itensRecebidosAnteriormente)
@@ -519,7 +618,7 @@ namespace oProjeto.Server.Repository
 
         private static async Task RecalcularSituacaoPedidoAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int pedidoNumero, int pedidoSerie, int pedidoModelo, int codForn)
+            string pedidoNumero, string pedidoSerie, string pedidoModelo, int codForn)
         {
             await using var checkCmd = new MySqlCommand(@"
                 SELECT
@@ -540,9 +639,9 @@ namespace oProjeto.Server.Repository
             await using (var rd = await checkCmd.ExecuteReaderAsync())
             {
                 await rd.ReadAsync();
-                completos = rd.IsDBNull(rd.GetOrdinal("completos")) ? 0 : rd.GetInt32("completos");
-                total = rd.GetInt32("total");
-                comAlgo = rd.IsDBNull(rd.GetOrdinal("comAlgo")) ? 0 : rd.GetInt32("comAlgo");
+                completos = rd.IsDBNull(rd.GetOrdinal("completos")) ? 0 : Convert.ToInt32(rd["completos"]);
+                total = Convert.ToInt32(rd["total"]);
+                comAlgo = rd.IsDBNull(rd.GetOrdinal("comAlgo")) ? 0 : Convert.ToInt32(rd["comAlgo"]);
             }
 
             if (total == 0) return;
@@ -565,7 +664,7 @@ namespace oProjeto.Server.Repository
 
         private static async Task InserirItemAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codForn, ProdutosNotaEntrada item)
+            string numero, string modelo, string serie, int codForn, ProdutosNotaEntrada item)
         {
             await using var cmd = new MySqlCommand(@"
                 INSERT INTO produtosNotaEntrada
@@ -621,9 +720,9 @@ namespace oProjeto.Server.Repository
 
         static NotasEntradas Map(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Serie = rd.GetInt32("serie"),
-            Modelo = rd.GetInt32("modelo"),
+            Numero = rd.GetString("numero"),
+            Serie = rd.GetString("serie"),
+            Modelo = rd.GetString("modelo"),
             CodForn = rd.GetInt32("codForn"),
             DataEmissao = rd.GetDateTime("dataEmissao"),
             DataChegada = rd.IsDBNull(rd.GetOrdinal("dataChegada")) ? null : rd.GetDateTime("dataChegada"),
@@ -640,9 +739,9 @@ namespace oProjeto.Server.Repository
             Observacoes = rd.IsDBNull(rd.GetOrdinal("observacoes")) ? null : rd.GetString("observacoes"),
             Situacao = rd.GetString("situacao"),
 
-            PedidoNumero = rd.IsDBNull(rd.GetOrdinal("pedidoNumero")) ? null : rd.GetInt32("pedidoNumero"),
-            PedidoSerie = rd.IsDBNull(rd.GetOrdinal("pedidoSerie")) ? null : rd.GetInt32("pedidoSerie"),
-            PedidoModelo = rd.IsDBNull(rd.GetOrdinal("pedidoModelo")) ? null : rd.GetInt32("pedidoModelo"),
+            PedidoNumero = rd.IsDBNull(rd.GetOrdinal("pedidoNumero")) ? null : rd.GetString("pedidoNumero"),
+            PedidoSerie = rd.IsDBNull(rd.GetOrdinal("pedidoSerie")) ? null : rd.GetString("pedidoSerie"),
+            PedidoModelo = rd.IsDBNull(rd.GetOrdinal("pedidoModelo")) ? null : rd.GetString("pedidoModelo"),
 
             Fornecedor = rd.IsDBNull(rd.GetOrdinal("Fornecedor")) ? null : new Fornecedores
             {
@@ -671,9 +770,9 @@ namespace oProjeto.Server.Repository
 
         static ProdutosNotaEntrada MapItem(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Modelo = rd.GetInt32("modelo"),
-            Serie = rd.GetInt32("serie"),
+            Numero = rd.GetString("numero"),
+            Modelo = rd.GetString("modelo"),
+            Serie = rd.GetString("serie"),
             CodForn = rd.GetInt32("codForn"),
             CodProd = rd.GetInt32("codProd"),
             Quantidade = rd.GetInt32("quantidade"),
@@ -714,3 +813,4 @@ namespace oProjeto.Server.Repository
         };
     }
 }
+

@@ -30,7 +30,7 @@ namespace oProjeto.Server.Controllers
         }
 
         [HttpGet("{numero}/{serie}/{modelo}/{codForn}")]
-        public async Task<IActionResult> GetById(int numero, int serie, int modelo, int codForn)
+        public async Task<IActionResult> GetById(string numero, string serie, string modelo, int codForn)
         {
             var nfe = await repo.GetByIdAsync(numero, serie, modelo, codForn);
             if (nfe == null) return NotFound();
@@ -46,7 +46,7 @@ namespace oProjeto.Server.Controllers
         }
 
         [HttpPut("{numero}/{serie}/{modelo}")]
-        public async Task<IActionResult> Update(int numero, int serie, int modelo, [FromBody] Nfes body)
+        public async Task<IActionResult> Update(string numero, string serie, string modelo, [FromBody] Nfes body)
         {
             if (numero != body.Numero || serie != body.Serie || modelo != body.Modelo)
                 return BadRequest("Chaves primárias divergentes.");
@@ -56,7 +56,7 @@ namespace oProjeto.Server.Controllers
         }
 
         [HttpDelete("{numero}/{serie}/{modelo}/{codForn}")]
-        public async Task<IActionResult> Delete(int numero, int serie, int modelo, int codForn)
+        public async Task<IActionResult> Delete(string numero, string serie, string modelo, int codForn)
         {
             var nfe = await repo.GetByIdAsync(numero, serie, modelo, codForn);
             if (nfe == null) return NotFound();

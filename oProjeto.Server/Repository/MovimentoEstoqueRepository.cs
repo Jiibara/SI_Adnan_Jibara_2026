@@ -43,7 +43,7 @@ namespace oProjeto.Server.Repository
         }
 
         public async Task<IEnumerable<MovimentosEstoque>> GetByNotaEntradaAsync(
-            int numero, int modelo, int serie, int codForn)
+            string numero, string modelo, string serie, int codForn)
         {
             var list = new List<MovimentosEstoque>();
             await using var con = Conn();
@@ -64,7 +64,7 @@ namespace oProjeto.Server.Repository
         }
 
         public async Task<IEnumerable<MovimentosEstoque>> GetByNotaSaidaAsync(
-            int numero, int modelo, int serie, int codCliente)
+            string numero, string modelo, string serie, int codCliente)
         {
             var list = new List<MovimentosEstoque>();
             await using var con = Conn();
@@ -87,7 +87,7 @@ namespace oProjeto.Server.Repository
         // Registro de entrada
         public static async Task RegistrarEntradaAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codForn,
+            string numero, string modelo, string serie, int codForn,
             int codProd, decimal quantidade, decimal custoUnitario, string? observacao = null)
         {
             if (quantidade <= 0)
@@ -150,7 +150,7 @@ namespace oProjeto.Server.Repository
         // Registro de saída
         public static async Task RegistrarSaidaAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codCliente,
+            string numero, string modelo, string serie, int codCliente,
             int codProd, decimal quantidade, string? observacao = null)
         {
             if (quantidade <= 0)
@@ -205,7 +205,7 @@ namespace oProjeto.Server.Repository
 
         public static Task RemoverEntradaAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codForn) =>
+            string numero, string modelo, string serie, int codForn) =>
             DesfazerAsync(
                 con,
                 tx,
@@ -218,7 +218,7 @@ namespace oProjeto.Server.Repository
 
         public static Task RemoverSaidaAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codCliente) =>
+            string numero, string modelo, string serie, int codCliente) =>
             DesfazerAsync(
                 con,
                 tx,
@@ -306,7 +306,7 @@ namespace oProjeto.Server.Repository
         private static async Task DesfazerAsync(
             MySqlConnection con, MySqlTransaction tx,
             string tabela, string colParceiro,
-            int numero, int modelo, int serie, int codParceiro)
+            string numero, string modelo, string serie, int codParceiro)
         {
             var movimentos =
                 new List<(int CodProd, DateTime Data, decimal SaldoAnterior, decimal CustoMedioAnterior)>();
@@ -387,9 +387,9 @@ namespace oProjeto.Server.Repository
         static MovimentosEstoque Map(MySqlDataReader rd) => new()
         {
             Tipo = rd.GetString("tipo"),
-            Numero = rd.GetInt32("numero"),
-            Modelo = rd.GetInt32("modelo"),
-            Serie = rd.GetInt32("serie"),
+            Numero = rd.GetString("numero"),
+            Modelo = rd.GetString("modelo"),
+            Serie = rd.GetString("serie"),
             CodParceiro = rd.GetInt32("codParceiro"),
             CodProd = rd.GetInt32("codProd"),
             Quantidade = rd.GetDecimal("quantidade"),

@@ -33,7 +33,7 @@ namespace oProjeto.Server.Repository
             return lista;
         }
 
-        public async Task<List<ContasReceber>> GetByNotaAsync(int numero, int modelo, int serie, int codCliente)
+        public async Task<List<ContasReceber>> GetByNotaAsync(string numero, string modelo, string serie, int codCliente)
         {
             var lista = new List<ContasReceber>();
 
@@ -68,7 +68,7 @@ namespace oProjeto.Server.Repository
             return lista;
         }
 
-        public async Task<ContasReceber?> GetByIdAsync(int numero, int modelo, int serie, int codCliente, int numeroParcela)
+        public async Task<ContasReceber?> GetByIdAsync(string numero, string modelo, string serie, int codCliente, int numeroParcela)
         {
             await using var con = new MySqlConnection(_cs);
             await con.OpenAsync();
@@ -102,7 +102,7 @@ namespace oProjeto.Server.Repository
             return Map(rd);
         }
 
-        public async Task ReceberAsync(int numero, int modelo, int serie, int codCliente, int numeroParcela, ContasReceber pagamento)
+        public async Task ReceberAsync(string numero, string modelo, string serie, int codCliente, int numeroParcela, ContasReceber pagamento)
         {
             if (!pagamento.DataRecebimento.HasValue)
                 throw new InvalidOperationException("A data do recebimento é obrigatória.");
@@ -206,9 +206,9 @@ namespace oProjeto.Server.Repository
         public static async Task GerarContasDaNotaAsync(
             MySqlConnection con,
             MySqlTransaction tx,
-            int numero,
-            int modelo,
-            int serie,
+            string numero,
+            string modelo,
+            string serie,
             int codCliente,
             int? codCondicao,
             decimal valorTotal,
@@ -370,9 +370,9 @@ namespace oProjeto.Server.Repository
         {
             var conta = new ContasReceber
             {
-                NotaNumero = rd.GetInt32(rd.GetOrdinal("notaNumero")),
-                NotaModelo = rd.GetInt32(rd.GetOrdinal("notaModelo")),
-                NotaSerie = rd.GetInt32(rd.GetOrdinal("notaSerie")),
+                NotaNumero = rd.GetString(rd.GetOrdinal("notaNumero")),
+                NotaModelo = rd.GetString(rd.GetOrdinal("notaModelo")),
+                NotaSerie = rd.GetString(rd.GetOrdinal("notaSerie")),
                 CodCliente = rd.GetInt32(rd.GetOrdinal("codCliente")),
                 NumeroParcela = rd.GetInt32(rd.GetOrdinal("numeroParcela")),
                 TotalParcelas = rd.GetInt32(rd.GetOrdinal("totalParcelas")),

@@ -53,7 +53,7 @@ namespace oProjeto.Server.Repository
             return list;
         }
 
-        public async Task<NotasSaidas?> GetByIdAsync(int numero, int modelo, int serie, int codCliente)
+        public async Task<NotasSaidas?> GetByIdAsync(string numero, string modelo, string serie, int codCliente)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -79,7 +79,7 @@ namespace oProjeto.Server.Repository
         }
 
         private static async Task<IEnumerable<ProdutosNotaSaida>> GetItensAsync(
-            MySqlConnection con, int numero, int modelo, int serie, int codCliente)
+            MySqlConnection con, string numero, string modelo, string serie, int codCliente)
         {
             var list = new List<ProdutosNotaSaida>();
             await using var cmd = new MySqlCommand(SelectItens, con);
@@ -231,7 +231,7 @@ namespace oProjeto.Server.Repository
             await log.AddAsync("NotasSaida", "EDITOU", desc);
         }
 
-        public async Task ConfirmarAsync(int numero, int modelo, int serie, int codCliente)
+        public async Task ConfirmarAsync(string numero, string modelo, string serie, int codCliente)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -386,7 +386,7 @@ namespace oProjeto.Server.Repository
                 $"Conferiu Nota de Saida: Nº {numero}/{serie} (Modelo {modelo}) - Cliente {codCliente}");
         }
 
-        public async Task DeleteAsync(int numero, int modelo, int serie, int codCliente)
+        public async Task DeleteAsync(string numero, string modelo, string serie, int codCliente)
         {
             var nota = await GetByIdAsync(numero, modelo, serie, codCliente);
 
@@ -429,7 +429,7 @@ namespace oProjeto.Server.Repository
 
         private static async Task InserirItemAsync(
             MySqlConnection con, MySqlTransaction tx,
-            int numero, int modelo, int serie, int codCliente, ProdutosNotaSaida item)
+            string numero, string modelo, string serie, int codCliente, ProdutosNotaSaida item)
         {
             await using var cmd = new MySqlCommand(@"
                 INSERT INTO produtosNotaSaida
@@ -482,9 +482,9 @@ namespace oProjeto.Server.Repository
 
         static NotasSaidas Map(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Serie = rd.GetInt32("serie"),
-            Modelo = rd.GetInt32("modelo"),
+            Numero = rd.GetString("numero"),
+            Serie = rd.GetString("serie"),
+            Modelo = rd.GetString("modelo"),
             CodCliente = rd.GetInt32("codCliente"),
             DataEmissao = rd.GetDateTime("dataEmissao"),
             DataSaida = rd.IsDBNull(rd.GetOrdinal("dataSaida")) ? null : rd.GetDateTime("dataSaida"),
@@ -528,9 +528,9 @@ namespace oProjeto.Server.Repository
 
         static ProdutosNotaSaida MapItem(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Modelo = rd.GetInt32("modelo"),
-            Serie = rd.GetInt32("serie"),
+            Numero = rd.GetString("numero"),
+            Modelo = rd.GetString("modelo"),
+            Serie = rd.GetString("serie"),
             CodCliente = rd.GetInt32("codCliente"),
             CodProd = rd.GetInt32("codProd"),
             Quantidade = rd.GetInt32("quantidade"),

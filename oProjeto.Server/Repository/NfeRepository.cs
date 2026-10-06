@@ -43,7 +43,7 @@ namespace oProjeto.Server.Repositories
         }
 
         // 2. GET BY ID
-        public async Task<Nfes?> GetByIdAsync(int numero, int serie, int modelo, int codForn)
+        public async Task<Nfes?> GetByIdAsync(string numero, string serie, string modelo, int codForn)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -153,7 +153,7 @@ namespace oProjeto.Server.Repositories
         }
 
         // 5. DELETE
-        public async Task DeleteAsync(int numero, int serie, int modelo, int codForn)
+        public async Task DeleteAsync(string numero, string serie, string modelo, int codForn)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -185,7 +185,7 @@ namespace oProjeto.Server.Repositories
 
         #region MÉTODOS AUXILIARES DE ITENS (prodnfes)
 
-        private async Task<List<ProdNfes>> GetItensAsync(MySqlConnection con, int numero, int serie, int modelo, int codForn)
+        private async Task<List<ProdNfes>> GetItensAsync(MySqlConnection con, string numero, string serie, string modelo, int codForn)
         {
             var itens = new List<ProdNfes>();
 
@@ -210,7 +210,7 @@ namespace oProjeto.Server.Repositories
             return itens;
         }
 
-        private static async Task SaveItensAsync(MySqlConnection con, MySqlTransaction trans, int numero, int serie, int modelo, int codForn, IEnumerable<ProdNfes> itens)
+        private static async Task SaveItensAsync(MySqlConnection con, MySqlTransaction trans, string numero, string serie, string modelo, int codForn, IEnumerable<ProdNfes> itens)
         {
             foreach (var item in itens)
             {
@@ -244,7 +244,7 @@ namespace oProjeto.Server.Repositories
             }
         }
 
-        private static async Task DeleteItensAsync(MySqlConnection con, MySqlTransaction trans, int numero, int serie, int modelo, int codForn)
+        private static async Task DeleteItensAsync(MySqlConnection con, MySqlTransaction trans, string numero, string serie, string modelo, int codForn)
         {
             string query = @"
                 DELETE FROM prodnfes 
@@ -301,9 +301,9 @@ namespace oProjeto.Server.Repositories
 
         private static Nfes MapNfeHeader(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32(rd.GetOrdinal("Numero")),
-            Serie = rd.GetInt32(rd.GetOrdinal("Serie")),
-            Modelo = rd.GetInt32(rd.GetOrdinal("Modelo")),
+            Numero = rd.GetString(rd.GetOrdinal("Numero")),
+            Serie = rd.GetString(rd.GetOrdinal("Serie")),
+            Modelo = rd.GetString(rd.GetOrdinal("Modelo")),
             CodForn = rd.GetInt32(rd.GetOrdinal("CodForn")),
             Pagina = rd.IsDBNull(rd.GetOrdinal("Pagina")) ? null : rd.GetInt32(rd.GetOrdinal("Pagina")),
             NatOper = rd.IsDBNull(rd.GetOrdinal("NatOper")) ? null : rd.GetString(rd.GetOrdinal("NatOper")),
@@ -347,9 +347,9 @@ namespace oProjeto.Server.Repositories
 
         private static ProdNfes MapProdNfesItem(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32(rd.GetOrdinal("Numero")),
-            Serie = rd.GetInt32(rd.GetOrdinal("Serie")),
-            Modelo = rd.GetInt32(rd.GetOrdinal("Modelo")),
+            Numero = rd.GetString(rd.GetOrdinal("Numero")),
+            Serie = rd.GetString(rd.GetOrdinal("Serie")),
+            Modelo = rd.GetString(rd.GetOrdinal("Modelo")),
             CodForn = rd.GetInt32(rd.GetOrdinal("CodForn")),
             CodProd = rd.GetInt32(rd.GetOrdinal("CodProd")),
             CSOSN = rd.IsDBNull(rd.GetOrdinal("CSOSN")) ? null : rd.GetString(rd.GetOrdinal("CSOSN")),

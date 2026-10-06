@@ -50,7 +50,10 @@ const dataBRParaISO = v => {
   return `${ano}-${mes}-${dia}`
 }
 
-const chaveNota = (numero, modelo, serie, codForn) => `${numero}/${modelo}/${serie}/${codForn}`
+const chaveNota = (numero, modelo, serie, codForn) =>
+  [numero, modelo, serie, codForn]
+    .map(v => encodeURIComponent(String(v ?? '')))
+    .join('/')
 
 const Overlay = ({ children, onClose, zIndex = 50 }) => (
   <div onClick={e => e.target === e.currentTarget && onClose()}
@@ -332,7 +335,7 @@ const ParcelasGridEditavel = ({ parcelas, valorTotalNota, onChangeParcela, condi
                         }
                       }
                     }}
-                    style={{ ...inp, padding: '6px 8px', fontSize: 13, fontFamily: 'JetBrains Mono, monospace' }}
+                    style={{ ...inp, padding: '6px 8px', fontSize: 13, fontFamily: 'JetBrains Mono, monospace', background: disabled ? '#f1f4f8' : inp.background, color: disabled ? '#94a3b8' : inp.color }}
                   />
                 </td>
                 <td style={tdStyle}>{p.formaNome || `#${p.codFormaPagamento}`}</td>
@@ -345,7 +348,7 @@ const ParcelasGridEditavel = ({ parcelas, valorTotalNota, onChangeParcela, condi
   </div>
 )
 
-const ItemsList = ({ items, onRemove, onChangeQuantidade, disabled }) => (
+const ItemsList = ({ items, onRemove, onChangeQuantidade, disabledQuantidade, disabledRemover }) => (
   <div style={{ padding: '0 0px 20px' }}>
     <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflowX: 'auto' }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, whiteSpace: 'nowrap' }}>
@@ -385,8 +388,8 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabled }) => (
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{it.quantidadeRecebidaAnterior ?? 0}</td>
                 <td style={{ ...tdStyle, padding: '6px 14px' }}>
                   <input type="number" step="0.001" min="0" max={it.quantidadePendente ?? undefined}
-                    value={it.quantidade ?? ''} onChange={e => onChangeQuantidade(i, e.target.value)}
-                    style={{ ...inp, width: 105, padding: '6px 8px', fontFamily: 'JetBrains Mono, monospace' }}
+                    value={it.quantidade ?? ''} disabled={disabledQuantidade} onChange={e => onChangeQuantidade(i, e.target.value)}
+                    style={{ ...inp, width: 105, padding: '6px 8px', fontFamily: 'JetBrains Mono, monospace', background: disabledQuantidade ? '#f1f4f8' : inp.background, color: disabledQuantidade ? '#94a3b8' : inp.color }}
                     onFocus={e => { fo(e); e.target.select() }} onBlur={bl} />
                 </td>
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', fontWeight: 600 }}>
@@ -401,8 +404,8 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabled }) => (
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', cursor: 'help' }} title={rateioTitle}>{fmtMoney(rateioTotal)}</td>
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', fontWeight: 600 }}>{fmtMoney(it.custoFinal)}</td>
                 <td style={{ padding: '8px 14px', textAlign: 'right' }}>
-                  <button onClick={() => onRemove(i)} disabled={disabled}
-                    style={{ padding: '4px 10px', border: 'none', borderRadius: 6, background: disabled ? '#f1f4f8' : '#fee2e2', color: disabled ? '#94a3b8' : '#dc2626', cursor: disabled ? 'default' : 'pointer', fontSize: 12, fontWeight: 600 }}>
+                  <button onClick={() => onRemove(i)} disabled={disabledRemover}
+                    style={{ padding: '4px 10px', border: 'none', borderRadius: 6, background: disabledRemover ? '#f1f4f8' : '#fee2e2', color: disabledRemover ? '#94a3b8' : '#dc2626', cursor: disabledRemover ? 'default' : 'pointer', fontSize: 12, fontWeight: 600 }}>
                     Remover
                   </button>
                 </td>
@@ -703,9 +706,9 @@ export default function NotasEntradaPage() {
         ...f,
         codForn: r.codForn,
         fornecedor: r.fornecedor,
-        pedidoNumero: r.numero,
-        pedidoSerie: r.serie,
-        pedidoModelo: r.modelo,
+        pedidoNumero: r.numero != null ? String(r.numero) : null,
+        pedidoSerie: r.serie != null ? String(r.serie) : null,
+        pedidoModelo: r.modelo != null ? String(r.modelo) : null,
         produtos: itens,
         codCondicao: pedido.codCondicao ?? f.codCondicao,
         condicaoPagamento: pedido.condicao ?? f.condicaoPagamento,
@@ -743,6 +746,7 @@ export default function NotasEntradaPage() {
 
   const camposLiberados = chaveInformada
   const chaveBloqueada = (form.produtos ?? []).length > 0
+  const parcelasBloqueadas = (form.parcelasGeradas ?? []).length > 0
   const codigoNota = chavePronta ? chaveNota(form.numero, form.modelo, form.serie, form.codForn) : ''
 
   const valorProdutosCalc = (produtosList) => (produtosList ?? []).reduce((acc, it) => acc + (Number(it.valorTotal) || 0), 0)
@@ -831,14 +835,17 @@ export default function NotasEntradaPage() {
 
     const payload = {
       ...form,
-      numero: Number(form.numero),
-      serie: Number(form.serie),
-      modelo: Number(form.modelo),
+      numero: String(form.numero ?? ''),
+      serie: String(form.serie ?? ''),
+      modelo: String(form.modelo ?? ''),
       dataChegada: form.dataChegada || null,
       valorProdutos: valorProdutosAtual,
       valorDesconto: totalDescontosAtual,
       valorTotal: valorTotalAtual,
       produtos: produtosComRateio.map(it => ({
+        numero: String(form.numero ?? ''),
+        serie: String(form.serie ?? ''),
+        modelo: String(form.modelo ?? ''),
         codProd: it.codProd,
         quantidade: it.quantidade,
         valorUnitario: it.valorUnitario,
@@ -902,11 +909,21 @@ export default function NotasEntradaPage() {
 
     setSaving(true)
     try {
-      const response = await fetch(`/api/NotasEntrada/cancelar/${form.numero}/${form.modelo}/${form.serie}/${form.codForn}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ motivo: motivoCancelamento.trim() }),
-      })
+      const numero = encodeURIComponent(String(form.numero ?? ''))
+      const modelo = encodeURIComponent(String(form.modelo ?? ''))
+      const serie = encodeURIComponent(String(form.serie ?? ''))
+      const codForn = encodeURIComponent(String(form.codForn ?? ''))
+
+      const response = await fetch(
+        `/api/NotasEntrada/cancelar/${numero}/${modelo}/${serie}/${codForn}`,
+        {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            motivoCancelamento: motivoCancelamento.trim(),
+          }),
+        }
+      )
 
       if (!response.ok) {
         const mensagem = await response.text()
@@ -1250,7 +1267,17 @@ export default function NotasEntradaPage() {
   const abrirEdicaoNota = async (r, modoCancelamento = false) => {
     let completa
     try {
-      completa = await notasEntradaApi.getOne(chaveNota(r.numero, r.modelo, r.serie, r.codForn))
+      console.log('REGISTRO:', r)
+      console.log('numero:', JSON.stringify(r.numero))
+      console.log('modelo:', JSON.stringify(r.modelo))
+      console.log('serie:', JSON.stringify(r.serie))
+      console.log('codForn:', JSON.stringify(r.codForn))
+
+      const chave = chaveNota(r.numero, r.modelo, r.serie, r.codForn)
+
+      console.log('CHAVE GERADA:', JSON.stringify(chave))
+
+      completa = await notasEntradaApi.getOne(chave)
     } catch {
       toast.error('Erro ao carregar a nota.')
       return
@@ -1270,6 +1297,12 @@ export default function NotasEntradaPage() {
 
     const formCarregado = {
       ...completa,
+      numero: completa.numero != null ? String(completa.numero) : '',
+      serie: completa.serie != null ? String(completa.serie) : '',
+      modelo: completa.modelo != null ? String(completa.modelo) : '',
+      pedidoNumero: completa.pedidoNumero != null ? String(completa.pedidoNumero) : null,
+      pedidoSerie: completa.pedidoSerie != null ? String(completa.pedidoSerie) : null,
+      pedidoModelo: completa.pedidoModelo != null ? String(completa.pedidoModelo) : null,
       dataEmissao: toDateInput(completa.dataEmissao),
       dataChegada: toDateInput(completa.dataChegada),
       produtos: (completa.produtos ?? []).map(p => {
@@ -1314,88 +1347,101 @@ export default function NotasEntradaPage() {
     <div>
       <PageHeader title="Notas de Entrada" sub="Consulta de Notas de Entrada" label="Nova Nota" onNew={abrirNovaNota} disabled={open} />
 
+      {/* Somente o botão "Cancelar" (sem Editar). Oculto para notas já canceladas. */}
       <DataTable columns={cols} data={data} loading={loading}
-        onEdit={abrirEdicaoNota}
-        onDelete={r => abrirEdicaoNota(r, true)} />
+        onDelete={r => abrirEdicaoNota(r, true)} //1330
+        deleteLabel="Cancelar"
+        canDelete={r => String(r.situacao ?? '').toUpperCase() !== 'CANCELADA'} />
 
 
-      <Modal open={open} title={cancelamentoModo ? 'Cancelar Nota de Entrada' : (editing ? 'Editar Nota de Entrada' : 'Nova Nota de Entrada')} editing={editing}
-        onClose={() => { setOpen(false); setMotivoCancelamento(''); setCancelamentoModo(false) }} onSave={cancelamentoModo ? cancelarNota : save} wide maxWidth={2000}
-        isDirty={cancelamentoModo || isDirty}
+      <Modal open={open}
+        title={cancelamentoModo ? 'Cancelar Nota de Entrada' : (editing ? 'Editar Nota de Entrada' : 'Nova Nota de Entrada')}
+        editing={editing}
+        cancelMode={cancelamentoModo}
+        onClose={() => { setOpen(false); setMotivoCancelamento(''); setCancelamentoModo(false) }}
+        onSave={cancelamentoModo ? cancelarNota : save} wide maxWidth={2000}
+        isDirty={cancelamentoModo ? !!motivoCancelamento.trim() : isDirty}
         suspended={anyLookupOpen}>
 
+        {cancelamentoModo && (
+          <div style={{ padding: '0 24px 16px', borderBottom: '1px solid #e2e6ed', marginBottom: 4 }}>
+            <TextAreaField label="Motivo do Cancelamento *" value={motivoCancelamento} onChange={v => setMotivoCancelamento(v)} rows={3} />
+          </div>
+        )}
+
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end' }}>
-          <NumberField label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={cancelamentoModo || chaveBloqueada} style={{ flex: '0 0 80px' }} />
-          <NumberField label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={cancelamentoModo || chaveBloqueada} style={{ flex: '0 0 70px' }} />
-          <NumberField label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={cancelamentoModo || chaveBloqueada} style={{ flex: '0 0 110px' }} />
+          <FField label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 80px' }} />
+          <FField label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 70px' }} />
+          <FField label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 110px' }} />
           <div style={{ flex: '0 0 105px' }}>
             <label style={lbl}>Código</label>
-            <input type="text" value={form.codForn ?? ''} readOnly style={{ ...inp, background: '#eef2f7', color: '#64748b', fontFamily: 'JetBrains Mono, monospace', textAlign: 'right', }}/>
+            <input type="text" value={form.codForn ?? ''} readOnly style={{ ...inp, background: '#eef2f7', color: '#64748b', fontFamily: 'JetBrains Mono, monospace', textAlign: 'right', }} />
           </div>
 
           <div style={{ flex: '1 1 320px', minWidth: 280 }}>
-            <LookupField label="Fornecedor *" value={fornecedorLabel} disabled={cancelamentoModo || chaveBloqueada}  onSearch={() => { setShowNovoFornecedor(false),   setOpenFornecedores(true)}}/>
+            <LookupField label="Fornecedor *" value={fornecedorLabel} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} onSearch={() => { setShowNovoFornecedor(false), setOpenFornecedores(true) }} />
           </div>
 
-          <DateField label="Data Emissão" value={form.dataEmissao} onChange={v => upd('dataEmissao', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada} max={hojeISO()} style={{ flex: '0 0 150px' }} />
-          <DateField label="Data Chegada" value={form.dataChegada} onChange={v => upd('dataChegada', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada} min={form.dataEmissao} max={hojeISO()} style={{ flex: '0 0 150px' }} />
+          <DateField label="Data Emissão" value={form.dataEmissao} onChange={v => upd('dataEmissao', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} max={hojeISO()} style={{ flex: '0 0 150px' }} />
+          <DateField label="Data Chegada" value={form.dataChegada} onChange={v => upd('dataChegada', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} min={form.dataEmissao} max={hojeISO()} style={{ flex: '0 0 150px' }} />
         </div>
 
         <div style={{ padding: '12px 24px 0', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
           <LookupField label="Pedido de Compra" value={form.pedidoNumero ? `Pedido ${form.pedidoNumero}/${form.pedidoSerie} - Modelo ${form.pedidoModelo}` : ''}
-            onSearch={abrirPedidosCompra} disabled={cancelamentoModo || !camposLiberados || editing} style={{ flex: '0 0 420px' }} />
+            onSearch={abrirPedidosCompra} disabled={cancelamentoModo || !camposLiberados || editing || parcelasBloqueadas} style={{ flex: '0 0 420px' }} />
         </div>
 
         {chavePronta && !cancelamentoModo ? (
           <InlineForm title="Adicionar Item">
             <div style={{ flex: '1 1 220px', minWidth: 200 }}>
               <LookupField label="Produto *" value={itemDraft.produtoNome}
-                onSearch={() => { setShowNovoProduto(false); setOpenProdutos(true) }} />
+                onSearch={() => { setShowNovoProduto(false); setOpenProdutos(true) }}
+                disabled={cancelamentoModo || parcelasBloqueadas} />
             </div>
             <ReadOnlyField label="Unidade" value={itemDraft.unidade || '-'} style={{ flex: '0 0 50px' }} />
-            <NumberField label="Quantidade" value={itemDraft.quantidade} onChange={updItemQuantidade} step="1" min="0" style={{ flex: '0 0 110px' }} />
-            <NumberField label="Valor Unitário" value={itemDraft.valorUnitario} onChange={updItemValorUnitario} step="0.01" min="0" style={{ flex: '0 0 140px' }} />
-            <NumberField label="Desconto (%)" value={itemDraft.descontoPercentual} onChange={updItemDescontoPercentual} step="0.01" min="0" style={{ flex: '0 0 110px' }} />
-            <NumberField label="Desconto (R$)" value={itemDraft.desconto} onChange={updItemDesconto} step="0.01" min="0" style={{ flex: '0 0 130px' }} />
+            <NumberField label="Quantidade" value={itemDraft.quantidade} onChange={updItemQuantidade} step="1" min="0" disabled={cancelamentoModo || parcelasBloqueadas} style={{ flex: '0 0 110px' }} />
+            <NumberField label="Valor Unitário" value={itemDraft.valorUnitario} onChange={updItemValorUnitario} step="0.01" min="0" disabled={cancelamentoModo || parcelasBloqueadas} style={{ flex: '0 0 140px' }} />
+            <NumberField label="Desconto (%)" value={itemDraft.descontoPercentual} onChange={updItemDescontoPercentual} step="0.01" min="0" disabled={cancelamentoModo || parcelasBloqueadas} style={{ flex: '0 0 110px' }} />
+            <NumberField label="Desconto (R$)" value={itemDraft.desconto} onChange={updItemDesconto} step="0.01" min="0" disabled={cancelamentoModo || parcelasBloqueadas} style={{ flex: '0 0 130px' }} />
             <ReadOnlyField label="Valor Total" value={fmtMoney(valorTotalItemDraft)} style={{ flex: '0 0 130px' }} />
             <ReadOnlyField label="Valor c/ Desconto" value={fmtMoney(valorLiquidoItemDraft)} style={{ flex: '0 0 140px' }} />
-            <BtnPrimary onClick={addItem} style={{ padding: '9px 20px' }}>Adicionar</BtnPrimary>
+            <BtnPrimary onClick={addItem} disabled={cancelamentoModo || parcelasBloqueadas} style={{ padding: '9px 20px' }}>Adicionar</BtnPrimary>
           </InlineForm>
-        ) : (
+        ) : cancelamentoModo ? null : (
           <AvisoChavesPendentes />
         )}
 
-        <ItemsList items={produtosComRateio} onRemove={removeItem} onChangeQuantidade={updQuantidadeReceber} disabled={cancelamentoModo} />
+        <ItemsList
+          items={produtosComRateio}
+          onRemove={removeItem}
+          onChangeQuantidade={updQuantidadeReceber}
+          disabledQuantidade={cancelamentoModo || parcelasBloqueadas}
+          disabledRemover={cancelamentoModo}
+        />
 
         <div style={{ padding: '14px 24px 0', display: 'flex', gap: 12, flexWrap: 'wrap', borderTop: '1px solid #e2e6ed', paddingTop: 16 }}>
-          <SelectField label="Tipo Frete" value={form.tipoFrete} onChange={v => upd('tipoFrete', v)} options={TIPO_FRETE_OPTIONS} disabled={cancelamentoModo || !camposLiberados} style={{ flex: '0 0 220px' }} />
-          <SelectField label="Situação" value={form.situacao} onChange={v => upd('situacao', v)} options={SITUACAO_OPTIONS} disabled={cancelamentoModo || !camposLiberados} style={{ flex: '0 0 180px' }} />
+          <SelectField label="Tipo Frete" value={form.tipoFrete} onChange={v => upd('tipoFrete', v)} options={TIPO_FRETE_OPTIONS} disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '0 0 220px' }} />
+          <SelectField label="Situação" value={form.situacao} onChange={v => upd('situacao', v)} options={SITUACAO_OPTIONS} disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '0 0 180px' }} />
           <div style={{ flex: '1 1 200px', minWidth: 180 }}>
-            <LookupField label="Transportadora" value={transportadorLabel} onSearch={() => setOpenTransportadoras(true)} disabled={cancelamentoModo || !camposLiberados} />
+            <LookupField label="Transportadora" value={transportadorLabel} onSearch={() => setOpenTransportadoras(true)} disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} />
           </div>
           <div style={{ flex: '0 0 140px' }}>
-            <FField label="Placa Veículo" value={form.placaVeiculo ?? ''} onChange={v => upd('placaVeiculo', v)} disabled={cancelamentoModo || !camposLiberados} />
+            <FField label="Placa Veículo" value={form.placaVeiculo ?? ''} onChange={v => upd('placaVeiculo', v)} disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} />
           </div>
         </div>
 
         <div style={{ padding: '14px 24px 4px' }}>
-          <TextAreaField label="Observações" value={form.observacoes} onChange={v => upd('observacoes', v)} disabled={cancelamentoModo || !camposLiberados} />
+          <TextAreaField label="Observações" value={form.observacoes} onChange={v => upd('observacoes', v)} disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} />
         </div>
 
         <div style={{ padding: '4px 24px 20px', display: 'flex', gap: 12, flexWrap: 'wrap', borderTop: '1px solid #e2e6ed', paddingTop: 16 }}>
           <ReadOnlyField label="Valor Produtos" value={fmtMoney(valorProdutosAtual)} style={{ flex: '1 1 140px' }} />
-          <NumberField label="Valor Frete" value={form.valorFrete} onChange={v => upd('valorFrete', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados} style={{ flex: '1 1 120px' }} />
-          <NumberField label="Valor Seguro" value={form.valorSeguro} onChange={v => upd('valorSeguro', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados} style={{ flex: '1 1 120px' }} />
-          <NumberField label="Outras Despesas" value={form.outrasDespesas} onChange={v => upd('outrasDespesas', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados} style={{ flex: '1 1 130px' }} />
+          <NumberField label="Valor Frete" value={form.valorFrete} onChange={v => upd('valorFrete', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 120px' }} />
+          <NumberField label="Valor Seguro" value={form.valorSeguro} onChange={v => upd('valorSeguro', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 120px' }} />
+          <NumberField label="Outras Despesas" value={form.outrasDespesas} onChange={v => upd('outrasDespesas', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 130px' }} />
           <ReadOnlyField label="Total Descontos (itens)" value={fmtMoney(totalDescontosAtual)} style={{ flex: '1 1 150px' }} />
           <ReadOnlyField label="Valor Total da Nota" value={fmtMoney(valorTotalAtual)} bold style={{ flex: '1 1 160px' }} />
         </div>
-
-        {cancelamentoModo && (
-          <div style={{ padding: '4px 24px 20px', borderTop: '1px solid #e2e6ed', paddingTop: 16 }}>
-            <TextAreaField label="Motivo do Cancelamento *" value={motivoCancelamento} onChange={v => setMotivoCancelamento(v)} rows={4} />
-          </div>
-        )}
 
         <ParcelasGridEditavel
           parcelas={form.parcelasGeradas ?? []}
@@ -1427,7 +1473,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openFornecedores && (
         <Overlay onClose={fornecedoresGuard.attemptClose} zIndex={60}>
           <ModalBox maxWidth={640}>
@@ -1453,7 +1499,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openCidadesForn && (
         <Overlay onClose={cidadesFornGuard.attemptClose} zIndex={70}>
           <ModalBox maxWidth={680}>
@@ -1476,7 +1522,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openEstadosForn && (
         <Overlay onClose={estadosFornGuard.attemptClose} zIndex={80}>
           <ModalBox maxWidth={680}>
@@ -1499,7 +1545,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openPaisesForn && (
         <Overlay onClose={paisesFornGuard.attemptClose} zIndex={90}>
           <ModalBox maxWidth={680}>
@@ -1523,7 +1569,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openCondicoes && (
         <Overlay onClose={closeCondicoes} zIndex={60}>
           <ModalBox maxWidth={560}>
@@ -1533,7 +1579,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openTransportadoras && (
         <Overlay onClose={closeTransportadoras} zIndex={60}>
           <ModalBox maxWidth={620}>
@@ -1543,7 +1589,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openProdutos && (
         <Overlay onClose={produtosGuard.attemptClose} zIndex={70}>
           <ModalBox maxWidth={640}>
@@ -1571,7 +1617,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openCategoriasNota && (
         <Overlay onClose={categoriasNotaGuard.attemptClose} zIndex={80}>
           <ModalBox maxWidth={560}>
@@ -1593,7 +1639,7 @@ export default function NotasEntradaPage() {
         </Overlay>
       )}
 
-      
+
       {openMarcasNota && (
         <Overlay onClose={marcasNotaGuard.attemptClose} zIndex={80}>
           <ModalBox maxWidth={560}>

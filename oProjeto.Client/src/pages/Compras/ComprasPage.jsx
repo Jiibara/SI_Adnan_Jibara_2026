@@ -550,15 +550,18 @@ export default function ComprasPage() {
 
     const payload = {
       ...form,
-      numero: Number(form.numero),
-      serie: Number(form.serie),
-      modelo: Number(form.modelo),
+      numero: String(form.numero ?? ''),
+      serie: String(form.serie ?? ''),
+      modelo: String(form.modelo ?? ''),
       dataCompra: form.dataCompra || null,
       dataPrevisaoEntrega: form.dataPrevisaoEntrega || null,
       valorProdutos: arredondar2(valorProdutosBruto),
       valorDesconto: arredondar2(totalDescontos),
       valorTotal: arredondar2(valorTotal),
       produtos: produtosComRateio.map(it => ({
+        numero: String(form.numero ?? ''),
+        serie: String(form.serie ?? ''),
+        modelo: String(form.modelo ?? ''),
         codProd: it.codProd,
         quantidade: it.quantidade,
         valorUnitario: it.valorUnitario,
@@ -893,9 +896,9 @@ export default function ComprasPage() {
 
         {/* Linha única: Modelo, Série, Número, Código Fornecedor, Fornecedor, Data Compra, Previsão Entrega */}
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <NumberField label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={editing} style={{ flex: '0 0 80px' }} />
-          <NumberField label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={editing} style={{ flex: '0 0 70px' }} />
-          <NumberField label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={editing} style={{ flex: '0 0 110px' }} />
+          <Inp label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} style={{ flex: '0 0 80px' }} />
+          <Inp label="Série" value={form.serie} onChange={v => upd('serie', v)} style={{ flex: '0 0 70px' }} />
+          <Inp label="Número" value={form.numero} onChange={v => upd('numero', v)} style={{ flex: '0 0 110px' }} />
           <ReadOnlyField label="Código" value={form.codForn ?? ''} style={{ flex: '0 0 90px' }} />
 
           <div style={{ flex: '1 1 260px' }}>

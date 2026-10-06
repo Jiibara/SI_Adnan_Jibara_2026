@@ -149,7 +149,7 @@ const SaveRow = ({ onCancel, onSave, saving, label }) => (
 const cols = [
   { key: 'codVeic',       label: 'Cód.',         mono: true },
   { key: 'placaVeic',     label: 'Placa',         mono: true },
-  { key: 'placaMercoSul', label: 'Placa MercoSul',mono: true },
+  { key: 'placaMercoSul', label: 'Placa MercoSul', mono: true },
   { key: 'modelo',        label: 'Modelo' },
   { key: 'marca',         label: 'Marca',         render: r => r.marca?.marca ?? '' },
   { key: 'codANTT',       label: 'ANTT',          mono: true },
@@ -166,39 +166,39 @@ const MARCA_EMPTY  = { marca: '', ativo: true }
 
 export default function VeiculosPage() {
   const { data, loading, load } = useCrud(veiculosApi)
-  const [form, setForm]       = useState({ ativo: true })
+  const [form, setForm] = useState({ ativo: true })
   const [originalForm, setOriginalForm] = useState({ ativo: true })
   const [editing, setEditing] = useState(false)
-  const [open, setOpen]       = useState(false)
+  const [open, setOpen] = useState(false)
   const [confirm, setConfirm] = useState(null)
 
   const [estados, setEstados] = useState([])
-  const [paises,  setPaises]  = useState([])
-  const [marcas,  setMarcas]  = useState([])
+  const [paises, setPaises] = useState([])
+  const [marcas, setMarcas] = useState([])
 
   const [openEstados, setOpenEstados] = useState(false)
-  const [openPaises,  setOpenPaises]  = useState(false)
-  const [openMarcas,  setOpenMarcas]  = useState(false)
+  const [openPaises, setOpenPaises] = useState(false)
+  const [openMarcas, setOpenMarcas] = useState(false)
 
   const [novoEstado, setNovoEstado] = useState(ESTADO_EMPTY)
-  const [novoPais,   setNovoPais]   = useState(PAIS_EMPTY)
-  const [novaMarca,  setNovaMarca]  = useState(MARCA_EMPTY)
+  const [novoPais, setNovoPais] = useState(PAIS_EMPTY)
+  const [novaMarca, setNovaMarca] = useState(MARCA_EMPTY)
 
   const [showNovoEstado, setShowNovoEstado] = useState(false)
-  const [showNovoPais,   setShowNovoPais]   = useState(false)
-  const [showNovaMarca,  setShowNovaMarca]  = useState(false)
+  const [showNovoPais, setShowNovoPais] = useState(false)
+  const [showNovaMarca, setShowNovaMarca] = useState(false)
 
   const [savingEstado, setSavingEstado] = useState(false)
-  const [savingPais,   setSavingPais]   = useState(false)
-  const [savingMarca,  setSavingMarca]  = useState(false)
+  const [savingPais, setSavingPais] = useState(false)
+  const [savingMarca, setSavingMarca] = useState(false)
 
   const loadEstados = async () => setEstados(await estadosApi.getAll())
-  const loadPaises  = async () => setPaises(await paisesApi.getAll())
-  const loadMarcas  = async () => setMarcas(await marcasApi.getAll())
+  const loadPaises = async () => setPaises(await paisesApi.getAll())
+  const loadMarcas = async () => setMarcas(await marcasApi.getAll())
 
   useEffect(() => { loadEstados(); loadPaises(); loadMarcas() }, [])
 
-  const upd  = (k, v) => setForm(p => ({ ...p, [k]: v }))
+  const upd = (k, v) => setForm(p => ({ ...p, [k]: v }))
   const updE = (k, v) => setNovoEstado(p => ({ ...p, [k]: v }))
   const updP = (k, v) => setNovoPais(p => ({ ...p, [k]: v }))
   const updM = (k, v) => setNovaMarca(p => ({ ...p, [k]: v }))
@@ -207,6 +207,7 @@ export default function VeiculosPage() {
     try { editing ? await veiculosApi.update(form.codVeic, form) : await veiculosApi.create(form); toast.success('Salvo!'); setOpen(false); load() }
     catch { toast.error('Erro ao salvar.') }
   }
+
   const del = async () => {
     try { await veiculosApi.delete(confirm.codVeic); toast.success('Excluído.'); setConfirm(null); load() }
     catch { toast.error('Erro.') }
@@ -221,46 +222,46 @@ export default function VeiculosPage() {
   }
 
   const saveNovoEstado = mkSave(estadosApi, novoEstado, () => novoEstado.estado.trim(), 'Informe o estado.', loadEstados, setSavingEstado, setShowNovoEstado, () => setNovoEstado(ESTADO_EMPTY))
-  const saveNovoPais   = mkSave(paisesApi,  novoPais,   () => novoPais.pais.trim(),     'Informe o país.',   loadPaises,  setSavingPais,   setShowNovoPais,   () => setNovoPais(PAIS_EMPTY))
-  const saveNovaMarca  = mkSave(marcasApi,  novaMarca,  () => novaMarca.marca.trim(),   'Informe a marca.',  loadMarcas,  setSavingMarca,  setShowNovaMarca,  () => setNovaMarca(MARCA_EMPTY))
+  const saveNovoPais = mkSave(paisesApi, novoPais, () => novoPais.pais.trim(), 'Informe o país.', loadPaises, setSavingPais, setShowNovoPais, () => setNovoPais(PAIS_EMPTY))
+  const saveNovaMarca = mkSave(marcasApi, novaMarca, () => novaMarca.marca.trim(), 'Informe a marca.', loadMarcas, setSavingMarca, setShowNovaMarca, () => setNovaMarca(MARCA_EMPTY))
 
   const cancelE = () => { setShowNovoEstado(false); setNovoEstado(ESTADO_EMPTY) }
-  const cancelP = () => { setShowNovoPais(false);   setNovoPais(PAIS_EMPTY) }
-  const cancelM = () => { setShowNovaMarca(false);  setNovaMarca(MARCA_EMPTY) }
+  const cancelP = () => { setShowNovoPais(false); setNovoPais(PAIS_EMPTY) }
+  const cancelM = () => { setShowNovaMarca(false); setNovaMarca(MARCA_EMPTY) }
 
   const closeEstados = () => { setOpenEstados(false); cancelE() }
-  const closePaises  = () => { setOpenPaises(false);  cancelP() }
-  const closeMarcas  = () => { setOpenMarcas(false);  cancelM() }
+  const closePaises = () => { setOpenPaises(false); cancelP() }
+  const closeMarcas = () => { setOpenMarcas(false); cancelM() }
 
-  const estadoSel  = estados.find(e => e.codEstado === form.codEstado)
+  const estadoSel = estados.find(e => e.codEstado === form.codEstado)
   const estadoLabel = estadoSel ? `${estadoSel.estado} (${estadoSel.uf})` : ''
-  const marcaSel   = marcas.find(m => m.codMarca === form.codMarca)
+  const marcaSel = marcas.find(m => m.codMarca === form.codMarca)
   const marcaLabel = marcaSel?.marca ?? ''
   const paisNoEstado = paises.find(p => p.codPais === novoEstado.codPais)?.pais ?? ''
 
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
   const anyLookupOpen = openEstados || openPaises || openMarcas
+  const descartar = () => setForm(originalForm)
+
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open,
     isDirty,
     onClose: () => setOpen(false),
     onSave: save,
+    onDiscard: descartar,
     paused: anyLookupOpen,
   })
 
   const abrirNovo = () => { const f = { ativo: true }; setForm(f); setOriginalForm(f); setEditing(false); setOpen(true) }
-  const abrirEdicao = (r) => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
+  const abrirEdicao = r => { setForm(r); setOriginalForm(r); setEditing(true); setOpen(true) }
 
   return (
     <div>
-      <PageHeader title="Veículos" sub="Consulta de Veículos" label="Novo Veículo"
-        onNew={abrirNovo} />
+      <PageHeader title="Veículos" sub="Consulta de Veículos" label="Novo Veículo" onNew={abrirNovo} />
 
-      <DataTable columns={cols} data={data} loading={loading}
-        onEdit={abrirEdicao}
-        onDelete={r => setConfirm(r)} />
+      <DataTable columns={cols} data={data} loading={loading} onEdit={abrirEdicao} onDelete={r => setConfirm(r)} />
 
-      <Modal wide open={open} title={editing ? 'Editar Veículo' : 'Novo Veículo'} editing={editing} onClose={attemptClose} onSave={save}>
+      <Modal wide open={open} title={editing ? 'Editar Veículo' : 'Novo Veículo'} editing={editing} onClose={attemptClose} onSave={confirming ? undefined : save}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
@@ -277,7 +278,7 @@ export default function VeiculosPage() {
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <LookupField label="Estado" value={estadoLabel} onSearch={() => { setShowNovoEstado(false); setOpenEstados(true) }} style={{ flex: '1 1 280px' }} />
-            <LookupField label="Marca"  value={marcaLabel}  onSearch={() => { setShowNovaMarca(false);  setOpenMarcas(true)  }} style={{ flex: '1 1 280px' }} />
+            <LookupField label="Marca" value={marcaLabel} onSearch={() => { setShowNovaMarca(false); setOpenMarcas(true) }} style={{ flex: '1 1 280px' }} />
           </div>
 
         </div>

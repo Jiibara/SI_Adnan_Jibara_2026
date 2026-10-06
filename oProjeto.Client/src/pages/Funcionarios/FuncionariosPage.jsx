@@ -326,11 +326,14 @@ export default function FuncionariosPage() {
 
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
   const anyLookupOpen = openCidades || openEstados || openPaises || openFuncoes
+  const descartar = () => setForm(originalForm)
+
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open,
     isDirty,
     onClose: () => setOpen(false),
     onSave: save,
+    onDiscard: descartar,
     paused: anyLookupOpen,
   })
 
@@ -353,7 +356,7 @@ export default function FuncionariosPage() {
         onDelete={r => setConfirm(r)} />
 
       <Modal wide open={open} title={editing ? 'Editar Funcionário' : 'Novo Funcionário'} editing={editing}
-        onClose={attemptClose} onSave={save}>
+        onClose={attemptClose} onSave={confirming ? undefined : save}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>

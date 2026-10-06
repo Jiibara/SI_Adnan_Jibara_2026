@@ -340,11 +340,13 @@ export default function ClientesPage() {
 
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
   const anySubOpen = openCidades || openEstados || openPaises || openCondicao || openFormas
+  const descartar = () => setForm(originalForm)
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open,
     isDirty,
     onClose: () => setOpen(false),
     onSave: save,
+    onDiscard: descartar,
     paused: anySubOpen,
   })
 
@@ -366,7 +368,7 @@ export default function ClientesPage() {
         onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)} />
 
-      <Modal wide open={open} title={editing ? 'Editar Cliente' : 'Novo Cliente'} editing={editing} onClose={attemptClose} onSave={save}>
+      <Modal wide open={open} title={editing ? 'Editar Cliente' : 'Novo Cliente'} editing={editing} onClose={attemptClose} onSave={confirming ? undefined : save}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
             <div>

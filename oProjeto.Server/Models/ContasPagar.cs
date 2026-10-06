@@ -2,9 +2,9 @@
 {
     public class ContasPagar
     {
-        public int NotaNumero { get; set; }
-        public int NotaModelo { get; set; }
-        public int NotaSerie { get; set; }
+        public string NotaNumero { get; set; }
+        public string NotaModelo { get; set; }
+        public string NotaSerie { get; set; }
         public int CodForn { get; set; }
         public int NumeroParcela { get; set; }
         public int TotalParcelas { get; set; }

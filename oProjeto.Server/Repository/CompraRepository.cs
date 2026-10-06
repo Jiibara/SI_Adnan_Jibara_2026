@@ -76,7 +76,7 @@ namespace oProjeto.Server.Repository
             return list;
         }
 
-        public async Task<Compras?> GetByIdAsync(int numero, int serie, int modelo, int codForn)
+        public async Task<Compras?> GetByIdAsync(string numero, string serie, string modelo, int codForn)
         {
             await using var con = Conn();
             await con.OpenAsync();
@@ -206,7 +206,7 @@ namespace oProjeto.Server.Repository
             await log.AddAsync("Compras", "EDITOU", desc);
         }
 
-        public async Task DeleteAsync(int numero, int serie, int modelo, int codForn)
+        public async Task DeleteAsync(string numero, string serie, string modelo, int codForn)
         {
             var compra = await GetByIdAsync(numero, serie, modelo, codForn);
             if (compra is null) throw new KeyNotFoundException("Compra não encontrada.");
@@ -222,7 +222,7 @@ namespace oProjeto.Server.Repository
             await log.AddAsync("Compras", "EXCLUIU", $"Excluiu Compra: Nº {numero}/{serie}, Modelo {modelo}, Fornecedor {codForn}");
         }
 
-        private static async Task<List<ProdutosCompras>> GetProdutosAsync(MySqlConnection con, int numero, int serie, int modelo, int codForn)
+        private static async Task<List<ProdutosCompras>> GetProdutosAsync(MySqlConnection con, string numero, string serie, string modelo, int codForn)
         {
             var list = new List<ProdutosCompras>();
             await using var cmd = new MySqlCommand(@"
@@ -238,7 +238,7 @@ namespace oProjeto.Server.Repository
             return list;
         }
 
-        private static async Task InserirItemAsync(MySqlConnection con, MySqlTransaction tx, int numero, int serie, int modelo, int codForn, ProdutosCompras item)
+        private static async Task InserirItemAsync(MySqlConnection con, MySqlTransaction tx, string numero, string serie, string modelo, int codForn, ProdutosCompras item)
         {
             await using var cmd = new MySqlCommand(@"
                 INSERT INTO produtosCompras (numero, serie, modelo, codForn, codProd, quantidade,
@@ -262,7 +262,7 @@ namespace oProjeto.Server.Repository
             await cmd.ExecuteNonQueryAsync();
         }
 
-        private static void AddKeyParams(MySqlCommand cmd, int numero, int serie, int modelo, int codForn)
+        private static void AddKeyParams(MySqlCommand cmd, string numero, string serie, string modelo, int codForn)
         {
             cmd.Parameters.AddWithValue("@numero", numero);
             cmd.Parameters.AddWithValue("@serie", serie);
@@ -288,9 +288,9 @@ namespace oProjeto.Server.Repository
 
         static Compras Map(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Serie = rd.GetInt32("serie"),
-            Modelo = rd.GetInt32("modelo"),
+            Numero = rd.GetString("numero"),
+            Serie = rd.GetString("serie"),
+            Modelo = rd.GetString("modelo"),
             CodForn = rd.GetInt32("codForn"),
             DataCompra = rd.GetDateTime("dataCompra"),
             DataPrevisaoEntrega = rd.IsDBNull(rd.GetOrdinal("dataPrevisaoEntrega")) ? null : rd.GetDateTime("dataPrevisaoEntrega"),
@@ -318,9 +318,9 @@ namespace oProjeto.Server.Repository
 
         static ProdutosCompras MapItem(MySqlDataReader rd) => new()
         {
-            Numero = rd.GetInt32("numero"),
-            Serie = rd.GetInt32("serie"),
-            Modelo = rd.GetInt32("modelo"),
+            Numero = rd.GetString("numero"),
+            Serie = rd.GetString("serie"),
+            Modelo = rd.GetString("modelo"),
             CodForn = rd.GetInt32("codForn"),
             CodProd = rd.GetInt32("codProd"),
             Quantidade = rd.GetDecimal("quantidade"),

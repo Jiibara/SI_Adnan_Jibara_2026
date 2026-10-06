@@ -169,7 +169,7 @@ const MARCA_EMPTY   = { marca: '', ativo: true }
 export default function TransportadoresPage() {
   const { data, loading, load } = useCrud(transportadoresApi)
   const [form, setForm]       = useState({ tipoPessoa: 'PJ', ativo: true })
-    const [originalForm, setOriginalForm] = useState({ tipoPessoa: 'PJ', ativo: true })
+  const [originalForm, setOriginalForm] = useState({ tipoPessoa: 'PJ', ativo: true })
   const [editing, setEditing] = useState(false)
   const [open, setOpen]       = useState(false)
   const [confirm, setConfirm] = useState(null)
@@ -296,11 +296,14 @@ export default function TransportadoresPage() {
 
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
   const anyLookupOpen = openCidades || openEstados || openPaises || openVeiculos || openEstadosV || openPaisesV || openMarcas
+  const descartar = () => setForm(originalForm)
+
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open,
     isDirty,
     onClose: () => setOpen(false),
     onSave: save,
+    onDiscard: descartar,
     paused: anyLookupOpen,
   })
 
@@ -316,7 +319,7 @@ export default function TransportadoresPage() {
         onEdit={abrirEdicao}
         onDelete={r => setConfirm(r)} />
 
-      <Modal wide open={open} title={editing ? 'Editar Transportador' : 'Novo Transportador'} editing={editing} onClose={attemptClose} onSave={save}>
+      <Modal wide open={open} title={editing ? 'Editar Transportador' : 'Novo Transportador'} editing={editing} onClose={attemptClose} onSave={confirming ? undefined : save}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>

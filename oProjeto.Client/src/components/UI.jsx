@@ -125,7 +125,9 @@ export function FTextarea({ label, value, onChange, full, disabled }) {
 
 // ── Modal ─────────────────────────────────────────────────────────────
 // isDirty:    quando true, fechar pede confirmação antes de descartar os dados digitados
-export function Modal({ open, title, editing, onClose, onSave, children, wide, maxWidth, hideFooter, isDirty = false, suspended = false }) {
+// cancelMode: quando true, o modal fica em modo "cancelar" (botão vermelho "Cancelar Nota").
+//             Por compatibilidade, continua ativando também se o título contiver "cancelar nota".
+export function Modal({ open, title, editing, onClose, onSave, children, wide, maxWidth, hideFooter, isDirty = false, suspended = false, cancelMode = false }) {
   const { confirming, attemptClose, confirmClose, cancelClose } = useModalGuard({
     isOpen: open, isDirty, onClose, onSave, paused: suspended,
   })
@@ -133,7 +135,7 @@ export function Modal({ open, title, editing, onClose, onSave, children, wide, m
   if (!open) return null
 
   const computedMaxWidth = maxWidth || (wide ? 760 : 520)
-  const isCancelMode = String(title ?? '').toLowerCase().includes('cancelar nota')
+  const isCancelMode = cancelMode || String(title ?? '').toLowerCase().includes('cancelar nota')
   const actionLabel = isCancelMode ? 'Cancelar Nota' : 'Salvar'
   const actionColor = isCancelMode ? '#dc2626' : '#2563eb'
 
@@ -278,10 +280,8 @@ export function ConfirmDialog({
 // ── PageHeader ────────────────────────────────────────────────────────
 export function PageHeader({ title, sub, onNew, label = 'Novo', disabled = false }) {
   useEffect(() => {
-    console.log('[PageHeader] listener montado. onNew existe?', !!onNew, 'disabled?', disabled)
     if (!onNew || disabled) return
     const handler = (e) => {
-      console.log('[PageHeader] tecla:', e.key)
       if (e.key === '+') {
         e.preventDefault()
         onNew()

@@ -2,9 +2,9 @@
 {
     public class NotasSaidas
     {
-        public int Numero { get; set; }
-        public int Serie { get; set; }
-        public int Modelo { get; set; }
+        public string Numero { get; set; }
+        public string Serie { get; set; }
+        public string Modelo { get; set; }
         public int CodCliente { get; set; }
         public DateTime DataEmissao { get; set; }
         public DateTime? DataSaida { get; set; }

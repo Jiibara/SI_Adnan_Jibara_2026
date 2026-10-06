@@ -3,9 +3,9 @@
 public class MovimentosEstoque
 {
     public string Tipo { get; set; } = string.Empty; 
-    public int Numero { get; set; }
-    public int Modelo { get; set; }
-    public int Serie { get; set; }
+    public string Numero { get; set; }
+    public string Modelo { get; set; }
+    public string Serie { get; set; }
     public int CodParceiro { get; set; } 
     public int CodProd { get; set; }
     public decimal Quantidade { get; set; }

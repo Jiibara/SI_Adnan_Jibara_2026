@@ -2,9 +2,9 @@
 
 public class NotasEntradas
 {
-    public int Numero { get; set; }
-    public int Serie { get; set; }
-    public int Modelo { get; set; }
+    public string Numero { get; set; }
+    public string Serie { get; set; }
+    public string Modelo { get; set; }
     public int CodForn { get; set; }
     public DateTime DataEmissao { get; set; }
     public DateTime? DataChegada { get; set; }
@@ -21,9 +21,11 @@ public class NotasEntradas
     public string? Observacoes { get; set; }
     public string Situacao { get; set; } = "PENDENTE";
 
-    public int? PedidoNumero { get; set; }
-    public int? PedidoSerie { get; set; }
-    public int? PedidoModelo { get; set; }
+    public string? PedidoNumero { get; set; }
+    public string? PedidoSerie { get; set; }
+    public string? PedidoModelo { get; set; }
+
+    public string? MotivoCancelamento { get; set; }
 
     public Fornecedores? Fornecedor { get; set; }
     public CondicaoPagamentos? CondicaoPagamento { get; set; }

@@ -37,7 +37,7 @@ namespace oProjeto.Server.Repository
             return lista;
         }
 
-        public async Task<List<ContasPagar>> GetByNotaAsync(int numero, int modelo, int serie, int codForn)
+        public async Task<List<ContasPagar>> GetByNotaAsync(string numero, string modelo, string serie, int codForn)
         {
             var lista = new List<ContasPagar>();
 
@@ -73,9 +73,9 @@ namespace oProjeto.Server.Repository
         }
 
         public async Task<ContasPagar?> GetByIdAsync(
-            int numero,
-            int modelo,
-            int serie,
+            string numero,
+            string modelo,
+            string serie,
             int codForn,
             int numeroParcela)
         {
@@ -113,9 +113,9 @@ namespace oProjeto.Server.Repository
         }
 
         public async Task PagarAsync(
-            int numero,
-            int modelo,
-            int serie,
+            string numero,
+            string modelo,
+            string serie,
             int codForn,
             int numeroParcela,
             ContasPagar pagamento)
@@ -222,9 +222,9 @@ namespace oProjeto.Server.Repository
         public static async Task GerarContasDaNotaAsync(
             MySqlConnection con,
             MySqlTransaction tx,
-            int numero,
-            int modelo,
-            int serie,
+            string numero,
+            string modelo,
+            string serie,
             int codForn,
             int? codCondicao,
             decimal valorTotal,
@@ -383,13 +383,67 @@ namespace oProjeto.Server.Repository
             }
         }
 
+        // Cancela as contas a pagar de uma nota. Bloqueia se alguma já foi paga.
+        // Requer que contasPagar.situacao aceite 'CANCELADA' (se for ENUM/CHECK, ajustar o schema).
+        public static async Task CancelarContasDaNotaAsync(
+            MySqlConnection con,
+            MySqlTransaction tx,
+            string numero,
+            string modelo,
+            string serie,
+            int codForn)
+        {
+            var situacoes = new List<string>();
+
+            await using (var cmd = new MySqlCommand(@"
+                SELECT situacao
+                FROM contasPagar
+                WHERE notaNumero = @numero
+                  AND notaModelo = @modelo
+                  AND notaSerie = @serie
+                  AND codForn = @codForn
+                FOR UPDATE", con, tx))
+            {
+                cmd.Parameters.AddWithValue("@numero", numero);
+                cmd.Parameters.AddWithValue("@modelo", modelo);
+                cmd.Parameters.AddWithValue("@serie", serie);
+                cmd.Parameters.AddWithValue("@codForn", codForn);
+
+                await using var rd = await cmd.ExecuteReaderAsync();
+                while (await rd.ReadAsync())
+                    situacoes.Add(rd.GetString(0));
+            }
+
+            if (situacoes.Any(s =>
+                    !s.Equals("PENDENTE", StringComparison.OrdinalIgnoreCase) &&
+                    !s.Equals("CANCELADA", StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException(
+                    "Há contas a pagar já baixadas para esta nota. Estorne os pagamentos antes de cancelar.");
+
+            await using var upd = new MySqlCommand(@"
+                UPDATE contasPagar
+                SET situacao = 'CANCELADA'
+                WHERE notaNumero = @numero
+                  AND notaModelo = @modelo
+                  AND notaSerie = @serie
+                  AND codForn = @codForn
+                  AND situacao = 'PENDENTE'", con, tx);
+
+            upd.Parameters.AddWithValue("@numero", numero);
+            upd.Parameters.AddWithValue("@modelo", modelo);
+            upd.Parameters.AddWithValue("@serie", serie);
+            upd.Parameters.AddWithValue("@codForn", codForn);
+
+            await upd.ExecuteNonQueryAsync();
+        }
+
         private static ContasPagar Map(MySqlDataReader rd)
         {
             var conta = new ContasPagar
             {
-                NotaNumero = rd.GetInt32(rd.GetOrdinal("notaNumero")),
-                NotaModelo = rd.GetInt32(rd.GetOrdinal("notaModelo")),
-                NotaSerie = rd.GetInt32(rd.GetOrdinal("notaSerie")),
+                NotaNumero = rd.GetString(rd.GetOrdinal("notaNumero")),
+                NotaModelo = rd.GetString(rd.GetOrdinal("notaModelo")),
+                NotaSerie = rd.GetString(rd.GetOrdinal("notaSerie")),
                 CodForn = rd.GetInt32(rd.GetOrdinal("codForn")),
                 NumeroParcela = rd.GetInt32(rd.GetOrdinal("numeroParcela")),
                 TotalParcelas = rd.GetInt32(rd.GetOrdinal("totalParcelas")),

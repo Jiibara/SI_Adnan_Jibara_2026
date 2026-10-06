@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 public class Nfes
 {
-    public int Numero { get; set; }
-    public int Serie { get; set; }
-    public int Modelo { get; set; }
+    public string Numero { get; set; }
+    public string Serie { get; set; }
+    public string Modelo { get; set; }
     public int CodForn { get; set; }
     public int? Pagina { get; set; }
     public string? NatOper { get; set; }
