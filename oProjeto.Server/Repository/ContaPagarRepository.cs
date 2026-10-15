@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using oProjeto.Server.DTOs;
 using oProjeto.Server.Models;
 
 namespace oProjeto.Server.Repository
@@ -118,7 +119,7 @@ namespace oProjeto.Server.Repository
             string serie,
             int codForn,
             int numeroParcela,
-            ContasPagar pagamento)
+            PagarContaRequest pagamento)
         {
             if (!pagamento.DataPagamento.HasValue)
                 throw new InvalidOperationException("A data do pagamento é obrigatória.");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using oProjeto.Server.DTOs;
 using oProjeto.Server.Models;
 using oProjeto.Server.Repository;
 
@@ -37,25 +38,19 @@ namespace oProjeto.Server.Controllers
             int codForn) =>
             Ok(await repo.GetByNotaAsync(numero, modelo, serie, codForn));
 
+
         [HttpPut("pagar/{numero}/{modelo}/{serie}/{codForn:int}/{numeroParcela:int}")]
         public async Task<IActionResult> Pagar(
-            string numero,
-            string modelo,
-            string serie,
-            int codForn,
-            int numeroParcela,
-            ContasPagar body)
+        string numero,
+        string modelo,
+        string serie,
+        int codForn,
+        int numeroParcela,
+        PagarContaRequest body)
         {
             try
             {
-                await repo.PagarAsync(
-                    numero,
-                    modelo,
-                    serie,
-                    codForn,
-                    numeroParcela,
-                    body);
-
+                await repo.PagarAsync(numero, modelo, serie, codForn, numeroParcela, body);
                 return NoContent();
             }
             catch (InvalidOperationException ex)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using oProjeto.Server.Models;
 using oProjeto.Server.Repository;
+using oProjeto.Server.DTOs;
 
 namespace oProjeto.Server.Controllers
 {
@@ -125,11 +126,6 @@ namespace oProjeto.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        }
-
-        public class CancelarNotaRequest
-        {
-            public string? MotivoCancelamento { get; set; }
         }
     }
 }

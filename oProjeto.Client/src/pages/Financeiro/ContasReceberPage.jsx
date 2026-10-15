@@ -51,6 +51,13 @@ const fmtDate = v => {
   return ano && mes && dia ? `${dia}/${mes}/${ano}` : value
 }
 
+// Origem da conta: produto (contasReceber) ou serviço (contasReceberServico)
+const TIPOS = { PRODUTO: 'Produto', SERVICO: 'Serviço' }
+
+// A mesma nota/parcela pode existir nas duas tabelas, então o tipo faz parte da chave
+const chaveConta = r =>
+  `${r.tipoNota}-${r.notaNumero}-${r.notaSerie}-${r.notaModelo}-${r.codCliente}-${r.numeroParcela}`
+
 const dataHoje = () => {
   const d = new Date()
   const ano = d.getFullYear()
@@ -191,6 +198,7 @@ export default function ContasReceberPage() {
   const [search, setSearch] = useState('')
   const [filtroCliente, setFiltroCliente] = useState('')
   const [filtroSituacao, setFiltroSituacao] = useState('')
+  const [filtroTipo, setFiltroTipo] = useState('')
   const [filtroVencimentoInicial, setFiltroVencimentoInicial] = useState('')
   const [filtroVencimentoFinal, setFiltroVencimentoFinal] = useState('')
 
@@ -204,6 +212,7 @@ export default function ContasReceberPage() {
   const load = async () => {
     setLoading(true)
     try {
+      // Sem ?tipo, o servidor devolve produto e serviço juntos, já com o campo tipoNota
       const response = await fetch('/api/ContasReceber')
       if (!response.ok) throw new Error()
       const rows = await response.json()
@@ -338,10 +347,16 @@ export default function ContasReceberPage() {
       return
     }
 
+    if (!contaRecebimento.tipoNota) {
+      toast.error('Não foi possível identificar o tipo da conta (produto ou serviço).')
+      return
+    }
+
     setSaving(true)
 
     try {
-      const response = await fetch(`/api/ContasReceber/receber/${contaRecebimento.notaNumero}/${contaRecebimento.notaModelo}/${contaRecebimento.notaSerie}/${contaRecebimento.codCliente}/${contaRecebimento.numeroParcela}`, {
+      // O ?tipo= diz ao servidor em qual tabela baixar a parcela
+      const response = await fetch(`/api/ContasReceber/receber/${contaRecebimento.notaNumero}/${contaRecebimento.notaModelo}/${contaRecebimento.notaSerie}/${contaRecebimento.codCliente}/${contaRecebimento.numeroParcela}?tipo=${encodeURIComponent(contaRecebimento.tipoNota)}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -411,6 +426,7 @@ export default function ContasReceberPage() {
     setSearch('')
     setFiltroCliente('')
     setFiltroSituacao('')
+    setFiltroTipo('')
     setFiltroVencimentoInicial('')
     setFiltroVencimentoFinal('')
   }
@@ -420,6 +436,7 @@ export default function ContasReceberPage() {
 
     return data.filter(r => {
       const texto = [
+        TIPOS[r.tipoNota],
         r.notaNumero,
         r.notaModelo,
         r.notaSerie,
@@ -433,6 +450,7 @@ export default function ContasReceberPage() {
       if (termo && !texto.includes(termo)) return false
       if (filtroCliente && String(r.codCliente) !== String(filtroCliente)) return false
       if (filtroSituacao && situacaoFiltro(r) !== filtroSituacao) return false
+      if (filtroTipo && r.tipoNota !== filtroTipo) return false
 
       const vencimento = String(r.dataVencimento ?? '').slice(0, 10)
 
@@ -441,9 +459,9 @@ export default function ContasReceberPage() {
 
       return true
     })
-  }, [data, search, filtroCliente, filtroSituacao, filtroVencimentoInicial, filtroVencimentoFinal])
+  }, [data, search, filtroCliente, filtroSituacao, filtroTipo, filtroVencimentoInicial, filtroVencimentoFinal])
 
-  const filtrosAtivos = Boolean(search || filtroCliente || filtroSituacao || filtroVencimentoInicial || filtroVencimentoFinal)
+  const filtrosAtivos = Boolean(search || filtroCliente || filtroSituacao || filtroTipo || filtroVencimentoInicial || filtroVencimentoFinal)
 
   return (
     <div>
@@ -484,6 +502,15 @@ export default function ContasReceberPage() {
               </select>
             </div>
 
+            <div style={{ flex: '1 1 150px', minWidth: 140 }}>
+              <label style={lbl}>Tipo</label>
+              <select value={filtroTipo} onChange={e => setFiltroTipo(e.target.value)} style={inp}>
+                <option value="">Todos</option>
+                <option value="PRODUTO">Produto</option>
+                <option value="SERVICO">Serviço</option>
+              </select>
+            </div>
+
             <div style={{ flex: '0 1 150px', minWidth: 140 }}>
               <label style={lbl}>Vencimento inicial</label>
               <input type="date" value={filtroVencimentoInicial} onChange={e => setFiltroVencimentoInicial(e.target.value)} style={inp} />
@@ -514,7 +541,7 @@ export default function ContasReceberPage() {
           </div>
 
           <div style={{ marginTop: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-            <span style={{ color: '#64748b', fontSize: 11 }}>Filtre por cliente, situação ou período de vencimento.</span>
+            <span style={{ color: '#64748b', fontSize: 11 }}>Filtre por cliente, situação, tipo ou período de vencimento.</span>
             <span style={{ color: '#94a3b8', fontSize: 12, fontFamily: 'JetBrains Mono, monospace' }}>
               {dataFiltrada.length} de {data.length} registro(s)
             </span>
@@ -525,6 +552,7 @@ export default function ContasReceberPage() {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, whiteSpace: 'nowrap' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
+                <th style={thStyle}>Tipo</th>
                 <th style={thStyle}>Modelo</th>
                 <th style={thStyle}>Série</th>
                 <th style={thStyle}>Número</th>
@@ -541,11 +569,11 @@ export default function ContasReceberPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="10" style={{ padding: 30, textAlign: 'center', color: '#94a3b8' }}>Carregando...</td>
+                  <td colSpan="11" style={{ padding: 30, textAlign: 'center', color: '#94a3b8' }}>Carregando...</td>
                 </tr>
               ) : dataFiltrada.length === 0 ? (
                 <tr>
-                  <td colSpan="10" style={{ padding: 30, textAlign: 'center', color: '#94a3b8' }}>Nenhuma conta a receber encontrada.</td>
+                  <td colSpan="11" style={{ padding: 30, textAlign: 'center', color: '#94a3b8' }}>Nenhuma conta a receber encontrada.</td>
                 </tr>
               ) : (
                 dataFiltrada.map(r => {
@@ -554,7 +582,8 @@ export default function ContasReceberPage() {
                   const cancelada = situacao === 'CANCELADA'
 
                   return (
-                    <tr key={`${r.notaNumero}-${r.notaSerie}-${r.notaModelo}-${r.codCliente}-${r.numeroParcela}`} style={{ borderBottom: '1px solid #f1f4f8' }}>
+                    <tr key={chaveConta(r)} style={{ borderBottom: '1px solid #f1f4f8' }}>
+                      <td style={tdStyle}>{TIPOS[r.tipoNota] ?? r.tipoNota ?? '-'}</td>
                       <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{r.notaModelo}</td>
                       <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{r.notaSerie}</td>
                       <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{r.notaNumero}</td>
@@ -604,6 +633,13 @@ export default function ContasReceberPage() {
             <div style={{ padding: '18px 24px', overflowY: 'auto' }}>
               <div style={{ background: '#f8f9fb', border: '1px solid #e2e6ed', borderRadius: 9, padding: 14, marginBottom: 18 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
+                  <div>
+                    <div style={lbl}>Tipo</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>
+                      {TIPOS[contaRecebimento.tipoNota] ?? contaRecebimento.tipoNota ?? '-'}
+                    </div>
+                  </div>
+
                   <div>
                     <div style={lbl}>Cliente</div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>

@@ -30,6 +30,9 @@ export const clientesApi = crud('/Clientes')
 export const nfeApi = crud('/Nfe')
 export const notasEntradaApi = crud('/notasentrada')
 export const notasSaidaApi = crud('/notasSaida')
+export const contasAvsApi = crud('/contasPagarAvulsa')
+export const servicosApi = crud('/servicos')
+export const notasServicoApi = crud('/notasServico')
 
 export const comprasApi = {
   ...crud('/Compras'),

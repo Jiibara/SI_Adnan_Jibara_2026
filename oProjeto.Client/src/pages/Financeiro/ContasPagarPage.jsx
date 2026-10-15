@@ -80,6 +80,7 @@ const SituacaoBadge = ({ situacao }) => {
   const paga = valor === 'PAGA'
   const vencida = valor === 'VENCIDA'
   const parcial = valor === 'PARCIAL'
+  const cancelada = valor === 'CANCELADA'
 
   return (
     <span style={{
@@ -87,12 +88,13 @@ const SituacaoBadge = ({ situacao }) => {
       alignItems: 'center',
       padding: '5px 10px',
       borderRadius: 7,
-      background: paga ? '#ecfdf5' : vencida ? '#fef2f2' : parcial ? '#eff6ff' : '#fff7ed',
-      color: paga ? '#047857' : vencida ? '#b91c1c' : parcial ? '#2563eb' : '#c2410c',
+      background: paga ? '#ecfdf5' : vencida ? '#fef2f2' : parcial ? '#eff6ff' : cancelada ? '#f1f5f9' : '#fff7ed',
+      color: paga ? '#047857' : vencida ? '#b91c1c' : parcial ? '#2563eb' : cancelada ? '#64748b' : '#c2410c',
       fontSize: 12,
       fontWeight: 600
     }}>
-      {paga ? 'Paga' : vencida ? 'Vencida' : parcial ? 'Parcial' : 'Pendente'} </span>
+      {paga ? 'Paga' : vencida ? 'Vencida' : parcial ? 'Parcial' : cancelada ? 'Cancelada' : 'Pendente'}
+    </span>
   )
 }
 
@@ -154,9 +156,13 @@ export default function ContasPagarPage() {
   const abrirPagamento = conta => {
     const situacao = situacaoFiltro(conta)
 
-
     if (situacao === 'PAGA') {
       toast.error('Esta conta já foi paga.')
+      return
+    }
+
+    if (situacao === 'CANCELADA') {
+      toast.error('Esta conta está cancelada.')
       return
     }
 
@@ -166,18 +172,13 @@ export default function ContasPagarPage() {
       dataPagamento: dataHoje(),
       codFormaPagamento: conta.codFormaPagamento ?? '',
     })
-
-
   }
 
   const fecharPagamento = () => {
     if (saving)
       return
 
-
     setContaPagamento(null)
-
-
   }
 
   const updPagamento = (campo, valor) => {
@@ -200,7 +201,6 @@ export default function ContasPagarPage() {
         percentualMulta: 0,
       }
     }
-
 
     const original = Number(contaPagamento.valorOriginal ?? contaPagamento.valorTotal ?? 0) || 0
 
@@ -251,13 +251,11 @@ export default function ContasPagarPage() {
       percentualMulta,
     }
 
-
   }, [contaPagamento, pagamento.dataPagamento])
 
   const confirmarPagamento = async () => {
     if (!contaPagamento)
       return
-
 
     const valorFinal = Number(valoresPagamento.valorFinal)
 
@@ -302,13 +300,10 @@ export default function ContasPagarPage() {
     } finally {
       setSaving(false)
     }
-
-
   }
 
   const fornecedoresFiltro = useMemo(() => {
     const mapa = new Map()
-
 
     data.forEach(r => {
       if (r.codForn && !mapa.has(r.codForn))
@@ -318,8 +313,6 @@ export default function ContasPagarPage() {
     return [...mapa.entries()].sort((a, b) =>
       String(a[1]).localeCompare(String(b[1]), 'pt-BR')
     )
-
-
   }, [data])
 
   const situacaoFiltro = r => {
@@ -327,15 +320,14 @@ export default function ContasPagarPage() {
     const valorOriginal = Number(r.valorOriginal) || 0
     const valorPago = Number(r.valorPago) || 0
 
+    if (situacao === 'CANCELADA')
+      return 'CANCELADA'
 
     if (situacao === 'PAGA' || valorOriginal > 0 && valorPago >= valorOriginal)
       return 'PAGA'
 
     if (situacao === 'PARCIAL' || valorPago > 0 && valorPago < valorOriginal)
       return 'PARCIAL'
-
-    if (situacao === 'CANCELADA')
-      return 'CANCELADA'
 
     if (situacao === 'VENCIDA')
       return 'VENCIDA'
@@ -348,8 +340,6 @@ export default function ContasPagarPage() {
     }
 
     return 'PENDENTE'
-
-
   }
 
   const limparFiltros = () => {
@@ -362,7 +352,6 @@ export default function ContasPagarPage() {
 
   const dataFiltrada = useMemo(() => {
     const termo = search.trim().toLowerCase()
-
 
     return data.filter(r => {
       const texto = [
@@ -395,8 +384,6 @@ export default function ContasPagarPage() {
 
       return true
     })
-
-
   }, [
     data,
     search,
@@ -415,7 +402,6 @@ export default function ContasPagarPage() {
   )
 
   return (<div> <PageHeader title="Contas a Pagar" sub="Controle de contas e pagamentos" />
-
 
     <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,.06)' }}>
       <div style={{ padding: '14px 16px', borderBottom: '1px solid #e2e6ed' }}>
@@ -522,6 +508,7 @@ export default function ContasPagarPage() {
               const situacao = situacaoFiltro(r)
               const paga = situacao === 'PAGA'
               const cancelada = situacao === 'CANCELADA'
+              const vencida = situacao === 'VENCIDA'
 
               return (
                 <tr key={`${r.notaNumero}-${r.notaSerie}-${r.notaModelo}-${r.codForn}-${r.numeroParcela}`} style={{ borderBottom: '1px solid #f1f4f8' }}>
@@ -571,6 +558,10 @@ export default function ContasPagarPage() {
                     ) : paga ? (
                       <span style={{ color: '#94a3b8', fontSize: 12 }}>
                         Pago em {fmtDate(r.dataPagamento)}
+                      </span>
+                    ) : vencida ? (
+                      <span style={{ color: '#94a3b8', fontSize: 12 }}>
+                        Pago com Atraso {fmtDate(r.dataPagamento)}
                       </span>
                     ) : (
                       <span style={{ color: '#94a3b8', fontSize: 12 }}>

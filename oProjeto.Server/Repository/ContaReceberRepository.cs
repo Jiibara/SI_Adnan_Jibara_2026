@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using oProjeto.Server.Models;
+using oProjeto.Server.DTOs;
 
 namespace oProjeto.Server.Repository
 {
@@ -102,7 +103,7 @@ namespace oProjeto.Server.Repository
             return Map(rd);
         }
 
-        public async Task ReceberAsync(string numero, string modelo, string serie, int codCliente, int numeroParcela, ContasReceber pagamento)
+        public async Task ReceberAsync(string numero, string modelo, string serie, int codCliente, int numeroParcela, ReceberContaRequest pagamento)
         {
             if (!pagamento.DataRecebimento.HasValue)
                 throw new InvalidOperationException("A data do recebimento é obrigatória.");
@@ -364,6 +365,60 @@ namespace oProjeto.Server.Repository
 
                 await cmdInsert.ExecuteNonQueryAsync();
             }
+        }
+
+        // Cancela as contas a pagar de uma nota. Bloqueia se alguma já foi paga.
+        // Requer que contasPagar.situacao aceite 'CANCELADA' (se for ENUM/CHECK, ajustar o schema).
+        public static async Task CancelarContasDaNotaAsync(
+            MySqlConnection con,
+            MySqlTransaction tx,
+            string numero,
+            string modelo,
+            string serie,
+            int codCliente)
+        {
+            var situacoes = new List<string>();
+
+            await using (var cmd = new MySqlCommand(@"
+                SELECT situacao
+                FROM contasReceber
+                WHERE notaNumero = @numero
+                  AND notaModelo = @modelo
+                  AND notaSerie = @serie
+                  AND codCliente = @codCliente
+                FOR UPDATE", con, tx))
+            {
+                cmd.Parameters.AddWithValue("@numero", numero);
+                cmd.Parameters.AddWithValue("@modelo", modelo);
+                cmd.Parameters.AddWithValue("@serie", serie);
+                cmd.Parameters.AddWithValue("@codCliente", codCliente);
+
+                await using var rd = await cmd.ExecuteReaderAsync();
+                while (await rd.ReadAsync())
+                    situacoes.Add(rd.GetString(0));
+            }
+
+            if (situacoes.Any(s =>
+                    !s.Equals("PENDENTE", StringComparison.OrdinalIgnoreCase) &&
+                    !s.Equals("CANCELADA", StringComparison.OrdinalIgnoreCase)))
+                throw new InvalidOperationException(
+                    "Há contas a receber já baixadas para esta nota. Estorne os pagamentos antes de cancelar.");
+
+            await using var upd = new MySqlCommand(@"
+                UPDATE contasReceber
+                SET situacao = 'CANCELADA'
+                WHERE notaNumero = @numero
+                  AND notaModelo = @modelo
+                  AND notaSerie = @serie
+                  AND codCliente = @codCliente
+                  AND situacao = 'PENDENTE'", con, tx);
+
+            upd.Parameters.AddWithValue("@numero", numero);
+            upd.Parameters.AddWithValue("@modelo", modelo);
+            upd.Parameters.AddWithValue("@serie", serie);
+            upd.Parameters.AddWithValue("@codCliente", codCliente);
+
+            await upd.ExecuteNonQueryAsync();
         }
 
         private static ContasReceber Map(MySqlDataReader rd)

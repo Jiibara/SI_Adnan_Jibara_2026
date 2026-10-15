@@ -9,6 +9,7 @@ namespace oProjeto.Server.Models
         public string NotaSerie { get; set; }
         public int CodCliente { get; set; }
         public int NumeroParcela { get; set; }
+        public string TipoNota { get; set; } = "PRODUTO";
         public int TotalParcelas { get; set; }
         public decimal ValorOriginal { get; set; }
         public decimal ValorRecebido { get; set; }

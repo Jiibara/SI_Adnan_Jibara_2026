@@ -427,6 +427,86 @@ namespace oProjeto.Server.Repository
                 $"Excluiu Nota de Saida: Nº {numero}/{serie} (Modelo {modelo}) - Cliente {codCliente}");
         }
 
+        // Cancela a nota desfazendo seus efeitos, tudo na mesma transação:
+        //  - CONFERIDA: cancela contas a pagar (bloqueia se houver paga) e restaura estoque/custo médio
+        //  - PENDENTE e CONFERIDA: desfaz o recebimento no pedido de compra vinculado
+        public async Task CancelarAsync(string numero, string modelo, string serie, int codCliente, string motivo)
+        {
+            if (string.IsNullOrWhiteSpace(motivo))
+                throw new InvalidOperationException("O motivo do cancelamento é obrigatório.");
+
+            var nota = await GetByIdAsync(numero, modelo, serie, codCliente)
+                ?? throw new InvalidOperationException("Nota de saida não encontrada.");
+
+            await using var con = Conn();
+            await con.OpenAsync();
+            await using var tx = await con.BeginTransactionAsync();
+
+            try
+            {
+                string situacao;
+                await using (var cmd = new MySqlCommand(@"
+                    SELECT situacao FROM notasSaida
+                    WHERE numero = @numero AND modelo = @modelo
+                      AND serie = @serie AND codCliente = @codCliente
+                    FOR UPDATE", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@numero", numero);
+                    cmd.Parameters.AddWithValue("@modelo", modelo);
+                    cmd.Parameters.AddWithValue("@serie", serie);
+                    cmd.Parameters.AddWithValue("@codCliente", codCliente);
+                    situacao = (await cmd.ExecuteScalarAsync())?.ToString()
+                        ?? throw new InvalidOperationException("Nota de saida não encontrada.");
+                }
+
+                if (situacao.Equals("CANCELADA", StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidOperationException("A nota de saida já está cancelada.");
+
+                if (situacao.Equals("CONFERIDA", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Contas a pagar: bloqueia se alguma já foi paga, senão cancela
+                    await ContaReceberRepository.CancelarContasDaNotaAsync(
+                        con, tx, numero, modelo, serie, codCliente);
+
+                    // Estoque: restaura saldo e custo médio anteriores
+                    await MovimentoEstoqueRepository.RemoverEntradaAsync(
+                        con, tx, numero, modelo, serie, codCliente);
+                }
+
+                // Marca a nota como cancelada
+                await using (var cmd = new MySqlCommand(@"
+                    UPDATE notasSaida
+                    SET situacao = 'CANCELADA',
+                        motivoCancelamento = @motivo
+                    WHERE numero = @numero AND modelo = @modelo
+                      AND serie = @serie AND codCliente = @codCliente
+                      AND situacao = @situacaoAtual", con, tx))
+                {
+                    cmd.Parameters.AddWithValue("@motivo", motivo.Trim());
+                    cmd.Parameters.AddWithValue("@situacaoAtual", situacao);
+                    cmd.Parameters.AddWithValue("@numero", numero);
+                    cmd.Parameters.AddWithValue("@modelo", modelo);
+                    cmd.Parameters.AddWithValue("@serie", serie);
+                    cmd.Parameters.AddWithValue("@codCliente", codCliente);
+
+                    if (await cmd.ExecuteNonQueryAsync() != 1)
+                        throw new InvalidOperationException(
+                            $"Não foi possível cancelar a nota de saida. Situação atual: {situacao}.");
+                }
+
+                await tx.CommitAsync();
+            }
+            catch
+            {
+                await tx.RollbackAsync();
+                throw;
+            }
+
+            await log.AddAsync("NotasSaida", "CANCELOU",
+                $"Cancelou Nota de Saida: Nº {numero}/{serie} (Modelo {modelo}) - " +
+                $"Cliente {codCliente}. Motivo: {motivo.Trim()}");
+        }
+
         private static async Task InserirItemAsync(
             MySqlConnection con, MySqlTransaction tx,
             string numero, string modelo, string serie, int codCliente, ProdutosNotaSaida item)

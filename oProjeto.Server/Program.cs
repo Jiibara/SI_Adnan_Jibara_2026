@@ -44,6 +44,10 @@ builder.Services.AddScoped<MovimentoEstoqueRepository>();
 builder.Services.AddScoped<ContaPagarRepository>();
 builder.Services.AddScoped<NotaSaidaRepository>();
 builder.Services.AddScoped<ContaReceberRepository>();
+builder.Services.AddScoped<ContaPagarAvulsaRepository>();
+builder.Services.AddScoped<ServicoRepository>();
+builder.Services.AddScoped<NotaServicoRepository>();
+builder.Services.AddScoped<ContaReceberServicoRepository>();
 
 
 

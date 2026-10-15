@@ -550,13 +550,13 @@ const SITUACAO_OPTIONS = [
   { value: 'CANCELADA', label: 'Cancelada' },
 ]
 const cols = [
-  { key: 'numero', label: 'Número', mono: true },
-  { key: 'serie', label: 'Série', mono: true },
-  { key: 'modelo', label: 'Modelo', mono: true },
-  { key: 'cliente', label: 'Cliente', render: r => r.cliente?.cliente ?? r.cliente?.nome ?? `#${r.codCliente}` },
-  { key: 'dataEmissao', label: 'Emissão', render: r => r.dataEmissao ? new Date(r.dataEmissao).toLocaleDateString('pt-BR') : '' },
-  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal) },
-  { key: 'situacao', label: 'Situação' },
+  { key: 'numero', label: 'Número', mono: true, align: 'right'  },
+  { key: 'serie', label: 'Série', mono: true, align: 'right'  },
+  { key: 'modelo', label: 'Modelo', mono: true, align: 'right'  },
+  { key: 'cliente', label: 'Cliente', render: r => r.cliente?.cliente ?? r.cliente?.nome ?? `#${r.codCliente}`, align: 'right'  },
+  { key: 'dataEmissao', label: 'Emissão', render: r => r.dataEmissao ? new Date(r.dataEmissao).toLocaleDateString('pt-BR') : '', align: 'right'  },
+  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal), align: 'right'  },
+  { key: 'situacao', label: 'Situação', align: 'right'  },
 ]
 const colsClientes = [
   { key: 'codCliente', label: 'Cód.', mono: true },
@@ -632,6 +632,8 @@ export default function NotaSaidaPage() {
   const [itemDraft, setItemDraft] = useState(ITEM_EMPTY)
   const [editing, setEditing] = useState(false)
   const [open, setOpen] = useState(false)
+  const [motivoCancelamento, setMotivoCancelamento] = useState('')
+  const [cancelamentoModo, setCancelamentoModo] = useState(false)
   const [saving, setSaving] = useState(false)
   const [confirm, setConfirm] = useState(null)
   const [openClientes, setOpenClientes] = useState(false)
@@ -1282,7 +1284,7 @@ export default function NotaSaidaPage() {
     setEditing(false)
     setOpen(true)
   }
-  const abrirEdicaoNota = async r => {
+  const abrirEdicaoNota = async (r, modoCancelamento = false) => {
     try {
       const completa = await notasSaidaApi.getOne(
         chaveNota(r.numero, r.modelo, r.serie, r.codCliente)
@@ -1331,6 +1333,8 @@ export default function NotaSaidaPage() {
       setItemDraft(ITEM_EMPTY)
       setEditing(true)
       setOpen(true)
+      setMotivoCancelamento('')
+      setCancelamentoModo(modoCancelamento)
     } catch {
       toast.error('Erro ao carregar a nota.')
     }
@@ -1456,38 +1460,53 @@ export default function NotaSaidaPage() {
    setSaving(false)
   }
   }
+
   const cancelarNota = async () => {
-    if (!confirm) return
+    if (!form?.numero || !form?.modelo || !form?.serie || !form?.codCliente) return
+    if (!motivoCancelamento.trim()) { toast.error('Informe o motivo do cancelamento.'); return }
+
+    setSaving(true)
     try {
-      const motivo = confirm.motivoCancelamento || 'Cancelamento de nota de saída'
+      const numero = encodeURIComponent(String(form.numero ?? ''))
+      const modelo = encodeURIComponent(String(form.modelo ?? ''))
+      const serie = encodeURIComponent(String(form.serie ?? ''))
+      const codCliente = encodeURIComponent(String(form.codCliente ?? ''))
+
       const response = await fetch(
-        `/api/NotasSaida/cancelar/${confirm.numero}/${confirm.modelo}/${confirm.serie}/${confirm.codCliente}`,
+        `/api/NotasSaida/cancelar/${numero}/${modelo}/${serie}/${codCliente}`,
         {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ motivo })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            motivoCancelamento: motivoCancelamento.trim(),
+          }),
         }
       )
+
       if (!response.ok) {
         const mensagem = await response.text()
         throw new Error(mensagem || 'Erro ao cancelar a nota.')
       }
-      toast.success('Nota de saída cancelada.')
-      setConfirm(null)
-      await load()
+
+      toast.success('Nota cancelada.')
+      setOpen(false)
+      setMotivoCancelamento('')
+      setCancelamentoModo(false)
+      load()
     } catch (error) {
       toast.error(error?.message || 'Erro ao cancelar a nota.')
+    } finally {
+      setSaving(false)
     }
   }
+
   const chavePronta = !!form.numero && !!form.serie && !!form.modelo && !!form.codCliente
   const possuiItens = (form.produtos ?? []).length > 0
   const parcelasGeradas = (form.parcelasGeradas ?? []).length > 0
   const podeEditarNota = !editing || form.situacao === 'PENDENTE'
-  const bloquearChave = possuiItens || parcelasGeradas || !podeEditarNota
-  const bloquearPrimeiros7 = possuiItens || parcelasGeradas || !podeEditarNota
-  const bloquearTudo = parcelasGeradas || !podeEditarNota
+  const bloquearChave = cancelamentoModo || possuiItens || parcelasGeradas || !podeEditarNota
+  const bloquearPrimeiros7 = cancelamentoModo || possuiItens || parcelasGeradas || !podeEditarNota
+  const bloquearTudo = cancelamentoModo || parcelasGeradas || !podeEditarNota
   const isDirty = JSON.stringify(form) !== JSON.stringify(originalForm)
   return (
     <div>
@@ -1496,20 +1515,28 @@ export default function NotaSaidaPage() {
         columns={cols}
         data={data}
         loading={loading}
-        onEdit={abrirEdicaoNota}
-        onDelete={r => setConfirm(r)}
+        //onEdit={abrirEdicaoNota}
+        onDelete={r => abrirEdicaoNota(r, true)}
+        deleteLabel="Cancelar"
+        canDelete={r => String(r.situacao ?? '').toUpperCase() !== 'CANCELADA'}
       />
       <Modal
         open={open}
-        title={editing ? 'Editar Nota de Saída' : 'Nova Nota de Saída'}
+        title={cancelamentoModo ? 'Cancelar Nota de Saída' : (editing ? 'Editar Nota de Saída' : 'Nova Nota de Saída')}
         editing={editing}
-        onClose={() => setOpen(false)}
-        onSave={save}
+        cancelMode={cancelamentoModo}
+        onClose={() => { setOpen(false); setMotivoCancelamento(''); setCancelamentoModo(false) }}
+        onSave={cancelamentoModo ? cancelarNota : save}
         wide
         maxWidth={2000}
-        isDirty={isDirty}
+        isDirty={cancelamentoModo ? !!motivoCancelamento.trim() : isDirty}
         suspended={anyLookupOpen}
       >
+        {cancelamentoModo && (
+          <div style={{ padding: '0 24px 16px', borderBottom: '1px solid #e2e6ed', marginBottom: 4 }}>
+            <TextAreaField label="Motivo do Cancelamento *" value={motivoCancelamento} onChange={setMotivoCancelamento} rows={3} />
+          </div>
+        )}
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <Inp
             label="Modelo"
@@ -1543,8 +1570,8 @@ export default function NotaSaidaPage() {
 <DateField label="Data Emissão" value={form.dataEmissao} onChange={updDataEmissao} disabled={bloquearPrimeiros7} max={hoje()} style={{ flex: '0 0 150px' }} />
 <DateField label="Data Saída" value={form.dataSaida} onChange={updDataSaida} disabled={bloquearPrimeiros7} min={form.dataEmissao || undefined} max={hoje()} style={{ flex: '0 0 150px' }} />
         </div>
-        {!chavePronta && <AvisoChavesPendentes />}
-        {chavePronta && podeEditarNota && !parcelasGeradas && (
+        {!chavePronta && !cancelamentoModo && <AvisoChavesPendentes />}
+        {chavePronta && podeEditarNota && !parcelasGeradas && !cancelamentoModo && (
           <InlineForm title="Adicionar Item">
             <div style={{ flex: '1 1 260px', minWidth: 220 }}>
 <LookupField label="Produto *" value={itemDraft.produtoNome} onSearch={() => { setShowNovoProduto(false); setOpenProdutos(true) }} />

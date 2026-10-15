@@ -12,7 +12,7 @@ const nav = [
 
   { to: '/funcionarios', label: 'Funcionários' },
   { to: '/funcoes', label: 'Funções' },
-
+  { to: 'servicos', label: 'Serviços'},
   { to: '/produtos', label: 'Produtos' },
   { to: '/categorias', label: 'Categorias' },
   { to: '/marcas', label: 'Marcas' },
@@ -21,7 +21,9 @@ const nav = [
   { to: '/nfe', label: 'NFe' },
   { to: '/notasentrada', label: ' Nota de Entrada'},
   { to: '/contasPagar', label: 'Contas a Pagar'},
-  { to: 'notassaida', label:'Notas de Saida'},
+  { to: '/contasPagarAvulsa', label: 'Contas Pagar Avulsa'},
+  { to: '/notassaida', label:'Notas de Saida'},
+  { to: '/notasServico', label:'Notas de Serviço'},
   { to: 'contasReceber', label:'Contas a Receber'},
 
   { to: '/formapagamento', label: 'Forma de Pagamento' },

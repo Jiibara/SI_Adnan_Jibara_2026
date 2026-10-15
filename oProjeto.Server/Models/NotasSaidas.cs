@@ -20,6 +20,7 @@
         public string? PlacaVeiculo { get; set; }
         public string? Observacoes { get; set; }
         public string Situacao { get; set; } = "PENDENTE";
+        public string? MotivoCancelamento { get; set; }
         public Clientes? Cliente { get; set; }
         public CondicaoPagamentos? CondicaoPagamento { get; set; }
         public Transportadores? Transportador { get; set; }

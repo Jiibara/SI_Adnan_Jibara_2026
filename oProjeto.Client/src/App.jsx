@@ -25,6 +25,9 @@ import ComprasPage from './pages/Compras/ComprasPage'
 import MovimentoEstoquePage from './pages/Produtos/MovimentoEstoquePage'
 import NotaSaidaPage from './pages/Fiscal/NotasSaidaPage'
 import ContasReceberPage from './pages/Financeiro/ContasReceberPage'
+import ContasPagarAvulsaPage from './pages/Financeiro/ContasPagarAvulsa'
+import ServicosPage from './pages/Servicos/ServicosPage'
+import NotasServicoPage from './pages/Fiscal/NotasServicoPage'
 
 
 export default function App() {
@@ -58,6 +61,9 @@ export default function App() {
           <Route path='/contasPagar' element={<ContasPagarPage/>}/>
           <Route path='/notassaida' element={<NotaSaidaPage/>}/>
           <Route path='/contasReceber' element={<ContasReceberPage/>}/>
+          <Route path='/contasPagarAvulsa' element={<ContasPagarAvulsaPage/>}/>
+          <Route path ='/servicos' element={<ServicosPage/>}/>
+          <Route path ='/notasServico' element={<NotasServicoPage/>}/>
         </Routes>
       </main>
       <Toaster position="bottom-right" toastOptions={{

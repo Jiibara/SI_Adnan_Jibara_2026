@@ -284,13 +284,13 @@ const SITUACAO_OPTIONS = [
 ]
 
 const cols = [
-  { key: 'numero', label: 'Número', mono: true },
-  { key: 'serie', label: 'Série', mono: true },
-  { key: 'modelo', label: 'Modelo', mono: true },
-  { key: 'fornecedor', label: 'Fornecedor', render: r => r.fornecedor?.fornecedor ?? `#${r.codForn}` },
-  { key: 'dataCompra', label: 'Data', render: r => r.dataCompra ? new Date(r.dataCompra).toLocaleDateString('pt-BR') : '' },
-  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal) },
-  { key: 'situacao', label: 'Situação' },
+  { key: 'numero', label: 'Número', mono: true, align: 'right'},
+  { key: 'serie', label: 'Série', mono: true, align: 'right'},
+  { key: 'modelo', label: 'Modelo', mono: true, align: 'right' },
+  { key: 'fornecedor', label: 'Fornecedor', render: r => r.fornecedor?.fornecedor ?? `#${r.codForn}`, align: 'right' },
+  { key: 'dataCompra', label: 'Data', render: r => r.dataCompra ? new Date(r.dataCompra).toLocaleDateString('pt-BR') : '', align: 'right'  },
+  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal), align: 'right'  },
+  { key: 'situacao', label: 'Situação', align: 'right'  },
 ]
 
 const colsFornecedores = [

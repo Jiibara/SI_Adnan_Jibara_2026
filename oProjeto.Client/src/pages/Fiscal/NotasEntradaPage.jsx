@@ -449,12 +449,12 @@ const SITUACAO_OPTIONS = [
 ]
 
 const cols = [
-  { key: 'numero', label: 'Número', mono: true },
-  { key: 'serie', label: 'Série', mono: true },
-  { key: 'modelo', label: 'Modelo', mono: true },
+  { key: 'numero', label: 'Número', mono: true, align: 'right' },
+  { key: 'serie', label: 'Série', mono: true, align: 'right' },
+  { key: 'modelo', label: 'Modelo', mono: true, align: 'right' },
   { key: 'fornecedor', label: 'Fornecedor', render: r => r.fornecedor?.fornecedor ?? `#${r.codForn}` },
   { key: 'dataEmissao', label: 'Emissão', render: r => r.dataEmissao ? new Date(r.dataEmissao).toLocaleDateString('pt-BR') : '' },
-  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal) },
+  { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal), align: 'right' },
   { key: 'situacao', label: 'Situação' },
 ]
 

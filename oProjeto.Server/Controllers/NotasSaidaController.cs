@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using oProjeto.Server.Models;
 using oProjeto.Server.Repository;
+using oProjeto.Server.DTOs;
 
 namespace oProjeto.Server.Controllers
 {
@@ -11,7 +12,7 @@ namespace oProjeto.Server.Controllers
         public async Task<IActionResult> GetAll() =>
             Ok(await repo.GetAllAsync());
 
-        [HttpGet("fornecedor/{codCliente:int}")]
+        [HttpGet("cliente/{codCliente:int}")]
         public async Task<IActionResult> GetByCliente(int codCliente) =>
             Ok(await repo.GetByClienteAsync(codCliente));
 
@@ -74,6 +75,34 @@ namespace oProjeto.Server.Controllers
             try
             {
                 await repo.DeleteAsync(numero, modelo, serie, codCliente);
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("cancelar/{numero}/{modelo}/{serie}/{codCliente:int}")]
+        public async Task<IActionResult> Cancelar(
+            string numero,
+            string modelo,
+            string serie,
+            int codCliente,
+            CancelarNotaSRequest body)
+        {
+            if (string.IsNullOrWhiteSpace(body.MotivoCancelamento))
+                return BadRequest("Informe o motivo do cancelamento.");
+
+            try
+            {
+                await repo.CancelarAsync(
+                    numero,
+                    modelo,
+                    serie,
+                    codCliente,
+                    body.MotivoCancelamento.Trim());
+
                 return NoContent();
             }
             catch (InvalidOperationException ex)
