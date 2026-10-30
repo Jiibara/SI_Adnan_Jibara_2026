@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
@@ -15,10 +15,21 @@ const fo = e => e.target.style.borderColor = '#2563eb'
 const bl = e => e.target.style.borderColor = '#e2e6ed'
 const thStyle = { padding: '10px 14px', textAlign: 'left', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', color: '#94a3b8' }
 const tdStyle = { padding: '11px 14px', color: '#0f172a' }
+const thRight = { ...thStyle, textAlign: 'right' }
+const tdRight = { ...tdStyle, textAlign: 'right', fontFamily: 'JetBrains Mono, monospace', fontVariantNumeric: 'tabular-nums' }
 
 const fmtMoney = v => (Number(v) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 const arredondar2 = v => Math.round((Number(v) + Number.EPSILON) * 100) / 100
 const getDescontoItem = it => Number(it?.descontoValor ?? it?.desconto ?? 0) || 0
+// Valor unitário JÁ com o desconto abatido (o desconto sai do valor unitário)
+const getUnitarioLiquido = it => {
+  const unit = Number(it?.valorUnitario) || 0
+  const perc = Number(it?.descontoPercentual) || 0
+  if (perc > 0) return Math.max(unit * (1 - perc / 100), 0)
+  const qtd = Number(it?.quantidade) || 0
+  const desc = getDescontoItem(it)
+  return qtd > 0 ? Math.max(unit - desc / qtd, 0) : unit
+}
 const toDateInput = v => v ? String(v).slice(0, 10) : ''
 const hojeISO = () => {
   const d = new Date()
@@ -147,43 +158,98 @@ const NumberField = ({ label, value, onChange, step = '1', min, disabled, style,
   </div>
 )
 
-const DateField = ({ label, value, onChange, disabled, style }) => {
-  const [display, setDisplay] = useState(formatarDataBR(value))
+const DateField = ({ label, value, onChange, disabled, style, min, max, required = false, hideLabel = false, inputStyle }) => {
+  const inputRef = useRef(null)
+  const valorInvalido = !!value && ((min && value < min) || (max && value > max))
+  const obrigatorioVazio = required && !value
+  const erro = valorInvalido
+    ? (min && value < min
+        ? `A data não pode ser anterior a ${formatarDataBR(min)}.`
+        : `A data não pode ser posterior a ${formatarDataBR(max)}.`)
+    : obrigatorioVazio
+      ? 'Informe uma data.'
+      : ''
 
-  useEffect(() => {
-    setDisplay(formatarDataBR(value))
-  }, [value])
+  const abrirCalendario = () => {
+    if (disabled || !inputRef.current) return
+    if (typeof inputRef.current.showPicker === 'function') {
+      inputRef.current.showPicker()
+    } else {
+      inputRef.current.focus()
+      inputRef.current.click()
+    }
+  }
 
   return (
     <div style={style}>
-      <label style={lbl}>{label}</label>
-      <input
-        type="text"
-        inputMode="numeric"
-        placeholder="dd/mm/aaaa"
-        value={display}
-        disabled={disabled}
-        maxLength={10}
-        onChange={e => {
-          const digitado = parseDataBR(e.target.value)
-          setDisplay(digitado)
-          const iso = dataBRParaISO(digitado)
-          if (iso) onChange(iso)
-          if (!digitado) onChange('')
-        }}
-        onBlur={e => {
-          bl(e)
-          const iso = dataBRParaISO(e.target.value)
-          if (iso) {
-            setDisplay(formatarDataBR(iso))
-            onChange(iso)
-          } else if (!e.target.value) {
-            onChange('')
-          }
-        }}
-        onFocus={fo}
-        style={{ ...inp, background: disabled ? '#f1f4f8' : inp.background, color: disabled ? '#94a3b8' : inp.color }}
-      />
+      {!hideLabel && <label style={lbl}>{label}{required ? ' *' : ''}</label>}
+      <div style={{ position: 'relative', width: '100%' }}>
+        <input
+          type="text"
+          value={formatarDataBR(value)}
+          placeholder="dd/mm/aaaa"
+          readOnly
+          required={required}
+          disabled={disabled}
+          onClick={abrirCalendario}
+          onFocus={fo}
+          onBlur={bl}
+          style={{
+            ...inp,
+            paddingRight: 38,
+            background: disabled ? '#f1f4f8' : inp.background,
+            color: disabled ? '#94a3b8' : inp.color,
+            borderColor: erro ? '#dc2626' : inp.border,
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            ...inputStyle,
+          }}
+        />
+        <button
+          type="button"
+          aria-label={`Abrir calendário de ${label}`}
+          title="Abrir calendário"
+          onClick={abrirCalendario}
+          disabled={disabled}
+          style={{
+            position: 'absolute', right: 7, top: '50%', transform: 'translateY(-50%)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: 25, height: 25, padding: 0, border: 0, borderRadius: 5,
+            background: 'transparent', color: disabled ? '#94a3b8' : '#475569',
+            cursor: disabled ? 'not-allowed' : 'pointer',
+          }}
+        >
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M16 3v4M8 3v4M3 10h18" />
+          </svg>
+        </button>
+        <input
+          ref={inputRef}
+          type="date"
+          lang="pt-BR"
+          value={toDateInput(value)}
+          min={min || undefined}
+          max={max || undefined}
+          disabled={disabled}
+          tabIndex={-1}
+          aria-hidden="true"
+          onChange={e => {
+            const novaData = e.target.value
+            if (novaData && ((min && novaData < min) || (max && novaData > max))) return
+            onChange(novaData)
+          }}
+          style={{
+            position: 'absolute', right: 5, top: '50%', transform: 'translateY(-50%)',
+            width: 29, height: 29, opacity: 0, cursor: disabled ? 'not-allowed' : 'pointer',
+            pointerEvents: 'none',
+          }}
+        />
+      </div>
+      {erro && (
+        <div style={{ fontSize: 11, color: '#dc2626', marginTop: 4, fontFamily: 'Outfit, sans-serif' }}>
+          {erro}
+        </div>
+      )}
     </div>
   )
 }
@@ -306,14 +372,22 @@ const ParcelasGridEditavel = ({ parcelas, valorTotalNota, onChangeParcela, condi
             </td></tr>
           )}
           {parcelas.map((p, i) => {
-            const percentual = Number(valorTotalNota) > 0 ? (Number(p.valor) || 0) / Number(valorTotalNota) * 100 : 0
+            const total = Number(valorTotalNota) || 0
+            const valorParcela = Number(p.valor) || 0
+            const derivado = total > 0 ? valorParcela / total * 100 : 0
+            // Parcela que só difere por ajuste de centavos mantém o percentual da condição (ex.: 25%);
+            // se o usuário editar o valor, passa a mostrar o percentual real.
+            const esperado = arredondar2(total * (Number(p.percentual) || 0) / 100)
+            const usaConfigurado = p.percentual != null && Math.abs(valorParcela - esperado) <= 0.011
+            const percentual = usaConfigurado ? Number(p.percentual) : derivado
             return (
               <tr key={i} style={{ borderBottom: '1px solid #f1f4f8' }}>
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{p.numeroParcela}</td>
                 <td style={{ ...tdStyle, padding: '6px 14px' }}>
-                  <input type="date" value={toDateInput(p.vencimento)}
-                    onChange={e => onChangeParcela(i, 'vencimento', e.target.value)}
-                    style={{ ...inp, padding: '6px 8px', fontSize: 13 }} onFocus={fo} onBlur={bl} />
+                  <DateField label="Vencimento" hideLabel value={toDateInput(p.vencimento)}
+                    onChange={v => onChangeParcela(i, 'vencimento', v)}
+                    inputStyle={{ padding: '6px 38px 6px 8px', fontSize: 13 }}
+                    style={{ minWidth: 150 }} />
                 </td>
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>
                   {percentual.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%
@@ -356,15 +430,15 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabledQuantidade, di
           <tr style={{ borderBottom: '1px solid #e2e6ed', background: '#f8f9fb' }}>
             <th style={thStyle}>Produto</th>
             <th style={thStyle}>Unid.</th>
-            <th style={thStyle}>Comprada</th>
-            <th style={thStyle}>Já Recebida</th>
-            <th style={thStyle}>Recebida</th>
-            <th style={thStyle}>Falta</th>
-            <th style={thStyle}>Vlr. Unit.</th>
-            <th style={thStyle}>Vlr. Total</th>
-            <th style={thStyle}>Desconto</th>
-            <th style={thStyle}>Rateio</th>
-            <th style={thStyle}>Custo Final (unit.)</th>
+            <th style={thRight}>Comprada</th>
+            <th style={thRight}>Já Recebida</th>
+            <th style={thRight}>Recebida</th>
+            <th style={thRight}>Falta</th>
+            <th style={thRight}>Vlr. Unit.</th>
+            <th style={thRight}>Vlr. Total</th>
+            <th style={thRight}>Desconto</th>
+            <th style={thRight}>Rateio</th>
+            <th style={thRight}>Custo Final (unit.)</th>
             <th />
           </tr>
         </thead>
@@ -376,7 +450,7 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabledQuantidade, di
             const rateioTotal = (Number(it.rateioFrete) || 0) + (Number(it.rateioSeguro) || 0) + (Number(it.rateioOutras) || 0)
             const rateioTitle = `Frete: ${fmtMoney(it.rateioFrete)} · Seguro: ${fmtMoney(it.rateioSeguro)} · Outras: ${fmtMoney(it.rateioOutras)}`
             const descontoItem = getDescontoItem(it)
-            const descontoExcede = Number(it.valorTotal) > 0 && descontoItem >= Number(it.valorTotal)
+            const descontoExcede = descontoItem > 0 && descontoItem >= (Number(it.valorTotal) || 0) + descontoItem
             const falta = it.quantidadePendente != null
               ? Math.max((Number(it.quantidadePendente) || 0) - (Number(it.quantidade) || 0), 0)
               : null
@@ -384,25 +458,25 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabledQuantidade, di
               <tr key={i} style={{ borderBottom: '1px solid #f1f4f8' }}>
                 <td style={tdStyle}>{it.produtoNome || `Produto #${it.codProd}`}</td>
                 <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{it.unidade || '-'}</td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{it.quantidadeComprada ?? '-'}</td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{it.quantidadeRecebidaAnterior ?? 0}</td>
-                <td style={{ ...tdStyle, padding: '6px 14px' }}>
+                <td style={tdRight}>{it.quantidadeComprada ?? '-'}</td>
+                <td style={tdRight}>{it.quantidadeRecebidaAnterior ?? 0}</td>
+                <td style={{ ...tdRight, padding: '6px 14px' }}>
                   <input type="number" step="0.001" min="0" max={it.quantidadePendente ?? undefined}
                     value={it.quantidade ?? ''} disabled={disabledQuantidade} onChange={e => onChangeQuantidade(i, e.target.value)}
-                    style={{ ...inp, width: 105, padding: '6px 8px', fontFamily: 'JetBrains Mono, monospace', background: disabledQuantidade ? '#f1f4f8' : inp.background, color: disabledQuantidade ? '#94a3b8' : inp.color }}
+                    style={{ ...inp, width: 105, padding: '6px 8px', textAlign: 'right', fontFamily: 'JetBrains Mono, monospace', background: disabledQuantidade ? '#f1f4f8' : inp.background, color: disabledQuantidade ? '#94a3b8' : inp.color }}
                     onFocus={e => { fo(e); e.target.select() }} onBlur={bl} />
                 </td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', fontWeight: 600 }}>
+                <td style={{ ...tdRight, fontWeight: 600 }}>
                   {falta != null ? falta : '-'}
                 </td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{fmtMoney(it.valorUnitario)}</td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace' }}>{fmtMoney(it.valorTotal)}</td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', color: descontoExcede ? '#b45309' : '#0f172a', fontWeight: descontoExcede ? 700 : 400 }}
+                <td style={tdRight} title={descontoItem > 0 ? `Valor unitário original: ${fmtMoney(it.valorUnitario)}` : undefined}>{fmtMoney(it.valorUnitarioLiquido)}</td>
+                <td style={tdRight}>{fmtMoney(it.valorTotal)}</td>
+                <td style={{ ...tdRight, color: descontoExcede ? '#b45309' : '#0f172a', fontWeight: descontoExcede ? 700 : 400 }}
                   title={descontoExcede ? 'Desconto ≥ valor do item' : undefined}>
                   {fmtMoney(descontoItem)}
                 </td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', cursor: 'help' }} title={rateioTitle}>{fmtMoney(rateioTotal)}</td>
-                <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', fontWeight: 600 }}>{fmtMoney(it.custoFinal)}</td>
+                <td style={{ ...tdRight, cursor: 'help' }} title={rateioTitle}>{fmtMoney(rateioTotal)}</td>
+                <td style={{ ...tdRight, fontWeight: 600 }}>{fmtMoney(it.custoFinal)}</td>
                 <td style={{ padding: '8px 14px', textAlign: 'right' }}>
                   <button onClick={() => onRemove(i)} disabled={disabledRemover}
                     style={{ padding: '4px 10px', border: 'none', borderRadius: 6, background: disabledRemover ? '#f1f4f8' : '#fee2e2', color: disabledRemover ? '#94a3b8' : '#dc2626', cursor: disabledRemover ? 'default' : 'pointer', fontSize: 12, fontWeight: 600 }}>
@@ -416,7 +490,7 @@ const ItemsList = ({ items, onRemove, onChangeQuantidade, disabledQuantidade, di
         <tfoot>
           <tr style={{ borderTop: '2px solid #e2e6ed', background: '#f8f9fb' }}>
             <td colSpan={7} style={{ ...tdStyle, fontWeight: 700, textAlign: 'right' }}>VALOR TOTAL DOS PRODUTOS</td>
-            <td style={{ ...tdStyle, fontFamily: 'JetBrains Mono, monospace', fontWeight: 700 }}>{fmtMoney(items.reduce((s, it) => s + (Number(it.valorTotal) || 0), 0))}</td>
+            <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMoney(items.reduce((s, it) => s + (Number(it.valorTotal) || 0), 0))}</td>
             <td colSpan={4} />
           </tr>
         </tfoot>
@@ -449,9 +523,10 @@ const SITUACAO_OPTIONS = [
 ]
 
 const cols = [
-  { key: 'numero', label: 'Número', mono: true, align: 'right' },
-  { key: 'serie', label: 'Série', mono: true, align: 'right' },
   { key: 'modelo', label: 'Modelo', mono: true, align: 'right' },
+  { key: 'serie', label: 'Série', mono: true, align: 'right' },
+  { key: 'numero', label: 'Número', mono: true, align: 'right' },
+  { key: 'codForn', label: 'ID', render: r => r.fornecedor?.codForn ?? `#${r.codForn}`, align: 'right'},
   { key: 'fornecedor', label: 'Fornecedor', render: r => r.fornecedor?.fornecedor ?? `#${r.codForn}` },
   { key: 'dataEmissao', label: 'Emissão', render: r => r.dataEmissao ? new Date(r.dataEmissao).toLocaleDateString('pt-BR') : '' },
   { key: 'valorTotal', label: 'Valor Total', render: r => fmtMoney(r.valorTotal), align: 'right' },
@@ -751,7 +826,8 @@ export default function NotasEntradaPage() {
 
   const valorProdutosCalc = (produtosList) => (produtosList ?? []).reduce((acc, it) => acc + (Number(it.valorTotal) || 0), 0)
   const somaDescontosItens = (produtosList) => (produtosList ?? []).reduce((acc, it) => acc + getDescontoItem(it), 0)
-  const valorTotalCalc = (vp, vf, vs, od, totalDesconto) => vp + (Number(vf) || 0) + (Number(vs) || 0) + (Number(od) || 0) - totalDesconto
+  // vp (soma dos itens) já vem com os descontos abatidos do valor unitário; não subtrair de novo
+  const valorTotalCalc = (vp, vf, vs, od) => arredondar2(vp + (Number(vf) || 0) + (Number(vs) || 0) + (Number(od) || 0))
 
   const comRateio = (produtosList, valorFrete, valorSeguro, outrasDespesas) => {
     const totalProdutos = valorProdutosCalc(produtosList)
@@ -760,18 +836,18 @@ export default function NotasEntradaPage() {
       const rateioFrete = (Number(valorFrete) || 0) * proporcao
       const rateioSeguro = (Number(valorSeguro) || 0) * proporcao
       const rateioOutras = (Number(outrasDespesas) || 0) * proporcao
-      const desconto = getDescontoItem(it)
+      const valorUnitarioLiquido = getUnitarioLiquido(it)
       const qtd = Number(it.quantidade) || 0
       const custoFinal = qtd > 0
-        ? (Number(it.valorUnitario) || 0) + (rateioFrete + rateioSeguro + rateioOutras - desconto) / qtd
-        : (Number(it.valorUnitario) || 0)
-      return { ...it, rateioFrete, rateioSeguro, rateioOutras, custoFinal }
+        ? valorUnitarioLiquido + (rateioFrete + rateioSeguro + rateioOutras) / qtd
+        : valorUnitarioLiquido
+      return { ...it, valorUnitarioLiquido, rateioFrete, rateioSeguro, rateioOutras, custoFinal }
     })
   }
 
   const valorProdutosAtual = valorProdutosCalc(form.produtos)
   const totalDescontosAtual = somaDescontosItens(form.produtos)
-  const valorTotalAtual = valorTotalCalc(valorProdutosAtual, form.valorFrete, form.valorSeguro, form.outrasDespesas, totalDescontosAtual)
+  const valorTotalAtual = valorTotalCalc(valorProdutosAtual, form.valorFrete, form.valorSeguro, form.outrasDespesas)
   const valorTotalItemDraft = (Number(itemDraft.quantidade) || 0) * (Number(itemDraft.valorUnitario) || 0)
   const valorLiquidoItemDraft = valorTotalItemDraft - (Number(itemDraft.desconto) || 0)
   const produtosComRateio = comRateio(form.produtos, form.valorFrete, form.valorSeguro, form.outrasDespesas)
@@ -785,6 +861,7 @@ export default function NotasEntradaPage() {
     if (!itemDraft.quantidade || Number(itemDraft.quantidade) <= 0) { toast.error('Informe a quantidade.'); return }
     if (itemDraft.valorUnitario === '' || Number(itemDraft.valorUnitario) < 0) { toast.error('Informe o valor unitário.'); return }
     if (Number(itemDraft.desconto) < 0) { toast.error('Desconto não pode ser negativo.'); return }
+    if ((Number(itemDraft.desconto) || 0) > Number(itemDraft.quantidade) * Number(itemDraft.valorUnitario)) { toast.error('O desconto não pode ser maior que o valor do item.'); return }
 
     const produtoJaAdicionado = (form.produtos ?? []).some(
       item => Number(item.codProd) === Number(itemDraft.codProd)
@@ -805,7 +882,7 @@ export default function NotasEntradaPage() {
       quantidadePendente: null,
       quantidadeFalta: null,
       valorUnitario: Number(itemDraft.valorUnitario),
-      valorTotal: Number(itemDraft.quantidade) * Number(itemDraft.valorUnitario),
+      valorTotal: arredondar2(Number(itemDraft.quantidade) * Number(itemDraft.valorUnitario) - (Number(itemDraft.descontoValor ?? itemDraft.desconto) || 0)),
       descontoPercentual: Number(itemDraft.descontoPercentual) || 0,
       descontoValor: Number(itemDraft.descontoValor ?? itemDraft.desconto) || 0,
       desconto: Number(itemDraft.descontoValor ?? itemDraft.desconto) || 0,
@@ -1006,7 +1083,7 @@ export default function NotasEntradaPage() {
       const codFormaPagamento = p.codFormaPagamento ?? p.CodFormaPagamento
       const venc = addDias(form.dataEmissao, dias)
       const formaNome = formaPagamentos.find(f => String(f.codFormaPagamento) === String(codFormaPagamento))?.formaPagamento ?? ''
-      return { numeroParcela, vencimento: venc ? venc.toISOString().slice(0, 10) : '', percentual: 0, valor, codFormaPagamento, formaNome }
+      return { numeroParcela, vencimento: venc ? venc.toISOString().slice(0, 10) : '', percentual: percentualOriginal, valor, codFormaPagamento, formaNome }
     })
 
     const totalGerado = arredondar2(geradas.reduce((s, p) => s + (Number(p.valor) || 0), 0))
@@ -1015,8 +1092,6 @@ export default function NotasEntradaPage() {
       const ultima = geradas.length - 1
       geradas[ultima] = { ...geradas[ultima], valor: arredondar2(geradas[ultima].valor + diferenca) }
     }
-
-    geradas = geradas.map(p => ({ ...p, percentual: valorTotalAtual > 0 ? arredondar2((Number(p.valor) / valorTotalAtual) * 100) : 0 }))
 
     setForm(f => ({ ...f, condicaoPagamento: condicao, parcelasGeradas: geradas }))
   }
@@ -1331,7 +1406,7 @@ export default function NotasEntradaPage() {
           quantidadeFalta,
           quantidade: p.quantidade,
           valorUnitario: p.valorUnitario,
-          valorTotal: p.valorTotal,
+          valorTotal: (Number(p.quantidade) || 0) * (Number(p.valorUnitario) || 0) - (Number(p.descontoValor ?? p.desconto) || 0),
           descontoPercentual: p.descontoPercentual ?? 0,
           descontoValor: p.descontoValor ?? p.desconto ?? 0,
           desconto: p.descontoValor ?? p.desconto ?? 0,
@@ -1382,8 +1457,8 @@ export default function NotasEntradaPage() {
             <LookupField label="Fornecedor *" value={fornecedorLabel} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} onSearch={() => { setShowNovoFornecedor(false), setOpenFornecedores(true) }} />
           </div>
 
-          <DateField label="Data Emissão" value={form.dataEmissao} onChange={v => upd('dataEmissao', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} max={hojeISO()} style={{ flex: '0 0 150px' }} />
-          <DateField label="Data Chegada" value={form.dataChegada} onChange={v => upd('dataChegada', v)} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} min={form.dataEmissao} max={hojeISO()} style={{ flex: '0 0 150px' }} />
+          <DateField label="Data Emissão" value={form.dataEmissao} onChange={v => upd('dataEmissao', v)} required max={hojeISO()} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 150px' }} />
+          <DateField label="Data Chegada" value={form.dataChegada} onChange={v => upd('dataChegada', v)} min={form.dataEmissao || undefined} max={hojeISO()} disabled={cancelamentoModo || !camposLiberados || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 150px' }} />
         </div>
 
         <div style={{ padding: '12px 24px 0', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
@@ -1439,7 +1514,7 @@ export default function NotasEntradaPage() {
           <NumberField label="Valor Frete" value={form.valorFrete} onChange={v => upd('valorFrete', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 120px' }} />
           <NumberField label="Valor Seguro" value={form.valorSeguro} onChange={v => upd('valorSeguro', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 120px' }} />
           <NumberField label="Outras Despesas" value={form.outrasDespesas} onChange={v => upd('outrasDespesas', v)} step="0.01" min="0" disabled={cancelamentoModo || !camposLiberados || parcelasBloqueadas} style={{ flex: '1 1 130px' }} />
-          <ReadOnlyField label="Total Descontos (itens)" value={fmtMoney(totalDescontosAtual)} style={{ flex: '1 1 150px' }} />
+          <ReadOnlyField label="Descontos (já abatidos)" value={fmtMoney(totalDescontosAtual)} style={{ flex: '1 1 150px' }} />
           <ReadOnlyField label="Valor Total da Nota" value={fmtMoney(valorTotalAtual)} bold style={{ flex: '1 1 160px' }} />
         </div>
 
