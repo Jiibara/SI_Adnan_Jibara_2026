@@ -103,7 +103,7 @@ namespace oProjeto.Server.Repository
 
             var saldoPosterior = saldoAnterior + quantidade;
 
-            var custoMedioPosterior = saldoPosterior <= 0
+            var custoMedioPosterior = saldoAnterior <= 0
                 ? custoUnitario
                 : Math.Round(
                     (saldoAnterior * custoMedioAnterior +
