@@ -24,6 +24,8 @@ import { FORNECEDOR_NOVO_EMPTY, colsFornecedores, colsCondicoes } from '@/consta
 import ItemsList from './compras/ItemsList'
 import { comRateioCompra } from './compras/calculos'
 import { compraVazia, ITEM_EMPTY, SITUACAO_OPTIONS, colsCompras } from './compras/constantes'
+import { REGRAS } from '@/constants/regrasCampos'
+import { somenteDigitos } from '@/utils/validacoes'
 
 const chaveCompra = (numero, modelo, serie, codForn) => `${numero}/${modelo}/${serie}/${codForn}`
 
@@ -268,9 +270,9 @@ export default function ComprasPage() {
 
         {/* Modelo, Série, Número, Código, Fornecedor, Data Compra, Previsão Entrega */}
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <Inp label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} style={{ flex: '0 0 80px' }} />
-          <Inp label="Série" value={form.serie} onChange={v => upd('serie', v)} style={{ flex: '0 0 70px' }} />
-          <Inp label="Número" value={form.numero} onChange={v => upd('numero', v)} style={{ flex: '0 0 110px' }} />
+          <Inp label="Modelo" maxLength={REGRAS.modeloNota.maxLength} value={form.modelo} onChange={v => upd('modelo', somenteDigitos(v))} style={{ flex: '0 0 80px' }} />
+          <Inp label="Série" maxLength={REGRAS.serieNota.maxLength} value={form.serie} onChange={v => upd('serie', somenteDigitos(v))} style={{ flex: '0 0 70px' }} />
+          <Inp label="Número" maxLength={REGRAS.numeroNota.maxLength} value={form.numero} onChange={v => upd('numero', somenteDigitos(v))} style={{ flex: '0 0 110px' }} />
           <ReadOnlyField label="Código" value={form.codForn ?? ''} style={{ flex: '0 0 90px' }} />
 
           <div style={{ flex: '1 1 260px' }}>
@@ -339,10 +341,10 @@ export default function ComprasPage() {
           cadastro: novoFornecedor, titulo: 'Novo Fornecedor', salvarLabel: 'Salvar Fornecedor',
           campos: (
             <>
-              <Inp label="Fornecedor *" value={novoFornecedor.form.fornecedor} onChange={v => novoFornecedor.upd('fornecedor', v)}
+              <Inp label="Fornecedor *" maxLength={REGRAS.fornecedor.maxLength} value={novoFornecedor.form.fornecedor} onChange={v => novoFornecedor.upd('fornecedor', v)}
                 placeholder="Razão social / nome" style={{ flex: '1 1 220px' }} />
-              <Inp label={novoFornecedor.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} value={novoFornecedor.form.cpfCnpj}
-                onChange={v => novoFornecedor.upd('cpfCnpj', v)} style={{ flex: '1 1 180px' }} />
+              <Inp label={novoFornecedor.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} maxLength={REGRAS.cpfCnpj.maxLength} value={novoFornecedor.form.cpfCnpj}
+                onChange={v => novoFornecedor.upd('cpfCnpj', somenteDigitos(v))} style={{ flex: '1 1 180px' }} />
               <LookupField label="Cidade *" value={endereco.cidadeLabel(novoFornecedor.form.codCidade)}
                 onSearch={endereco.abrir} style={{ flex: '1 1 200px' }} />
             </>

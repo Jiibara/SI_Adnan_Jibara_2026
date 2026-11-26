@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { validarCadastro } from '@/utils/validacoes'
 
 // Cadastro rápido dentro de um modal de consulta (ex.: "Novo Fornecedor").
 //  empty       valor inicial do formulário
@@ -20,7 +21,8 @@ export default function useCadastroRapido({ empty, api, idKey, validar, sucesso,
   const isDirty = show && JSON.stringify(form) !== JSON.stringify(empty)
 
   const salvar = async () => {
-    const msg = validar?.(form)
+    // CPF/CNPJ, e-mail, CEP e telefone são conferidos em todo cadastro rápido
+    const msg = validar?.(form) || validarCadastro(form)
     if (msg) { toast.error(msg); return }
     setSaving(true)
     try {

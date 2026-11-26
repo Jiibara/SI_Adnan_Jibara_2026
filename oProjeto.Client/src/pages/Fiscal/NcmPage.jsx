@@ -4,6 +4,7 @@ import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { ncmApi } from '@/services/api'
+import { regra } from '@/constants/regrasCampos'
 
 export default function NcmPage() {
 
@@ -103,8 +104,7 @@ export default function NcmPage() {
                 label="NCM/SH"
                 required
                 value={form.ncmSh ?? ''}
-                onChange={v => upd('ncmSh', v)}
-              />
+                onChange={v => upd('ncmSh', v)} {...regra('ncmSh')} />
             </div>
 
             <div style={{ flex:'1 1 180px' }}>

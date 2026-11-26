@@ -26,6 +26,8 @@ import { SITUACAO_OPTIONS } from '@/constants/nota'
 import { CONDICAO_NOVA_EMPTY, CLIENTE_NOVO_EMPTY, colsClientes, colsCondicoes } from '@/constants/cadastros'
 import ItemsList from './notasServico/ItemsList'
 import { notaVazia, ITEM_EMPTY, SERVICO_NOVO_EMPTY, colsNotas, colsServicos } from './notasServico/constantes'
+import { REGRAS } from '@/constants/regrasCampos'
+import { somenteDigitos } from '@/utils/validacoes'
 
 const chaveNota = (numero, modelo, serie, codCliente) => `${numero}/${modelo}/${serie}/${codCliente}`
 
@@ -396,12 +398,12 @@ export default function NotaServicoPage() {
   }
 
   // ----- regras de bloqueio
-  const chavePronta = !!form.numero && !!form.serie && !!form.modelo && !!form.codCliente
+  const chavePronta = !!form.numero?.trim() && !!form.serie?.trim() && !!form.modelo?.trim() && !!form.codCliente
   const possuiItens = (form.servicos ?? []).length > 0
   const parcelasGeradas = (form.parcelasGeradas ?? []).length > 0
   const podeEditarNota = !editing || form.situacao === 'PENDENTE'
   const bloquearChave = cancelamentoModo || possuiItens || parcelasGeradas || !podeEditarNota
-  const bloquearTudo = cancelamentoModo || parcelasGeradas || !podeEditarNota
+  const bloquearTudo = cancelamentoModo || !chavePronta || parcelasGeradas || !podeEditarNota
 
   return (
     <div>
@@ -435,9 +437,9 @@ export default function NotaServicoPage() {
         )}
 
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-          <Inp label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={bloquearChave} style={{ flex: '0 0 80px' }} />
-          <Inp label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={bloquearChave} style={{ flex: '0 0 70px' }} />
-          <Inp label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={bloquearChave} style={{ flex: '0 0 110px' }} />
+          <Inp label="Modelo" maxLength={REGRAS.modeloNota.maxLength} value={form.modelo} onChange={v => upd('modelo', somenteDigitos(v))} disabled={bloquearChave} style={{ flex: '0 0 80px' }} />
+          <Inp label="Série" maxLength={REGRAS.serieNota.maxLength} value={form.serie} onChange={v => upd('serie', somenteDigitos(v))} disabled={bloquearChave} style={{ flex: '0 0 70px' }} />
+          <Inp label="Número" maxLength={REGRAS.numeroNota.maxLength} value={form.numero} onChange={v => upd('numero', somenteDigitos(v))} disabled={bloquearChave} style={{ flex: '0 0 110px' }} />
           <div style={{ flex: '0 0 105px' }}>
             <label style={lbl}>Código</label>
             <input type="text" value={form.codCliente ?? ''} readOnly
@@ -479,7 +481,7 @@ export default function NotaServicoPage() {
         <ItemsList
           items={comUnitarioLiquido(form.servicos)}
           onRemove={removeItem}
-          podeRemover={podeEditarNota && !parcelasGeradas && !cancelamentoModo}
+          podeRemover={podeEditarNota && !cancelamentoModo}
         />
 
         <div style={{ padding: '14px 24px 0', display: 'flex', gap: 12, flexWrap: 'wrap', borderTop: '1px solid #e2e6ed', paddingTop: 16 }}>
@@ -489,7 +491,12 @@ export default function NotaServicoPage() {
         </div>
 
         <div style={{ padding: '14px 24px 4px' }}>
-          <TextAreaField label="Observações" value={form.observacoes} onChange={v => upd('observacoes', v)} disabled={bloquearTudo} />
+            <TextAreaField
+                label="Observações"
+                value={form.observacoes}
+                onChange={v => upd('observacoes', v.toUpperCase())}
+                disabled={bloquearTudo}
+            />
         </div>
 
         <div style={{ padding: '4px 24px 20px', display: 'flex', gap: 12, flexWrap: 'wrap', borderTop: '1px solid #e2e6ed', paddingTop: 16 }}>
@@ -520,10 +527,10 @@ export default function NotaServicoPage() {
           cadastro: novoCliente, titulo: 'Novo Cliente', salvarLabel: 'Salvar Cliente',
           campos: (
             <>
-              <Inp label="Cliente *" value={novoCliente.form.cliente} onChange={v => novoCliente.upd('cliente', v)}
+              <Inp label="Cliente *" maxLength={REGRAS.cliente.maxLength} value={novoCliente.form.cliente} onChange={v => novoCliente.upd('cliente', v)}
                 placeholder="Razão social / nome" style={{ flex: '1 1 220px' }} />
-              <Inp label={novoCliente.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} value={novoCliente.form.cpfCnpj}
-                onChange={v => novoCliente.upd('cpfCnpj', v)} style={{ flex: '1 1 180px' }} />
+              <Inp label={novoCliente.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} maxLength={REGRAS.cpfCnpj.maxLength} value={novoCliente.form.cpfCnpj}
+                onChange={v => novoCliente.upd('cpfCnpj', somenteDigitos(v))} style={{ flex: '1 1 180px' }} />
               <LookupField label="Cidade *" value={endereco.cidadeLabel(novoCliente.form.codCidade)}
                 onSearch={endereco.abrir} style={{ flex: '1 1 200px' }} />
             </>
@@ -535,7 +542,7 @@ export default function NotaServicoPage() {
         novo={{
           cadastro: novaCondicao, titulo: 'Nova Condição', salvarLabel: 'Salvar Condição',
           campos: (
-            <Inp label="Descrição *" value={novaCondicao.form.condicaoPagamento} onChange={v => novaCondicao.upd('condicaoPagamento', v)}
+            <Inp label="Descrição *" maxLength={REGRAS.condicaoPagamento.maxLength} value={novaCondicao.form.condicaoPagamento} onChange={v => novaCondicao.upd('condicaoPagamento', v)}
               placeholder="Ex.: 30/60/90 dias" style={{ flex: '1 1 260px' }} />
           ),
           depoisAtivo: (

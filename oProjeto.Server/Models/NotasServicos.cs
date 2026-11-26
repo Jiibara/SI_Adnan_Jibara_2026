@@ -1,9 +1,15 @@
-﻿namespace oProjeto.Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using oProjeto.Server.Validacoes;
+
+namespace oProjeto.Server.Models
 {
     public class NotasServicos
     {
+        [StringLength(2), SomenteDigitos]
         public string Modelo { get; set; }
+        [StringLength(3), SomenteDigitos]
         public string Serie { get; set; }
+        [StringLength(9), SomenteDigitos]
         public string Numero { get; set; }
         public int CodCliente { get; set; }
         public DateTime DataEmissao { get; set; }

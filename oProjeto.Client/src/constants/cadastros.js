@@ -12,6 +12,7 @@ export const MARCA_EMPTY = { marca: '', ativo: true }
 export const CATEGORIA_EMPTY = { categoria: '', ativo: true }
 export const CONDICAO_NOVA_EMPTY = { condicaoPagamento: '', ativo: true, parcelas: [] }
 export const FORMA_PAGAMENTO_NOVA_EMPTY = { formaPagamento: '', ativo: true }
+export const FUNCAO_EMPTY = { funcao: '', ativo: true }
 export const FORNECEDOR_NOVO_EMPTY = { tipoPessoa: 'PJ', fornecedor: '', cpfCnpj: '', codCidade: null, ativo: true }
 export const CLIENTE_NOVO_EMPTY = { tipoPessoa: 'PJ', cliente: '', cpfCnpj: '', codCidade: null, ativo: true }
 
@@ -78,7 +79,32 @@ export const colsMarcas = [
   { key: 'marca', label: 'Marca' },
 ]
 
+export const colsFuncoes = [
+  { key: 'codFuncao', label: 'Cód.', mono: true },
+  { key: 'funcao', label: 'Função / Cargo' },
+]
+
 export const colsCategorias = [
   { key: 'codCategoria', label: 'Cód.', mono: true },
   { key: 'categoria', label: 'Categoria' },
+]
+
+export const CONDICAO_EMPTY = {
+  condicaoPagamento: '', numeroParcelas: 1, percentualJuros: 0, percentualMultas: 0, percentualDesconto: 0,
+  ativo: true, parcelas: [],
+}
+export const VEICULO_NOVO_EMPTY = { placaVeic: '', placaMercoSul: '', modelo: '', codANTT: '', codEstado: null, codMarca: null, ativo: true }
+
+export const colsCondicoesParcelas = [
+  { key: 'codCondicao', label: 'Cód.', mono: true },
+  { key: 'condicaoPagamento', label: 'Condição' },
+  { key: 'numeroParcelas', label: 'Parcelas' },
+]
+
+export const colsVeiculos = [
+  { key: 'codVeic', label: 'Cód.', mono: true },
+  { key: 'placaVeic', label: 'Placa' },
+  { key: 'modelo', label: 'Modelo' },
+  { key: 'estado', label: 'Estado', render: r => r.estado?.uf ?? '' },
+  { key: 'marca', label: 'Marca', render: r => r.marca?.marca ?? '' },
 ]

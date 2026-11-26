@@ -1,6 +1,7 @@
 import LookupModal from './LookupModal'
 import { Inp, NumberField, LookupField } from '@/components/form'
 import { colsProdutos, colsMarcas, colsCategorias } from '@/constants/cadastros'
+import { REGRAS } from '@/constants/regrasCampos'
 
 // Modais Produto -> Categoria / Marca (use com useConsultaProduto).
 //  cols  colunas da consulta de produtos (padrão: Cód., Produto, Unidade)
@@ -18,8 +19,8 @@ export default function ConsultaProduto({ ctrl, cols = colsProdutos }) {
           cadastro: novoProduto, titulo: 'Novo Produto', salvarLabel: 'Salvar Produto',
           campos: (
             <>
-              <Inp label="Produto *" value={novoProduto.form.produto} onChange={v => novoProduto.upd('produto', v)} placeholder="Nome do produto" style={{ flex: '1 1 220px' }} />
-              <Inp label="Unidade" value={novoProduto.form.unidade} onChange={v => novoProduto.upd('unidade', v)} maxLength={6} placeholder="UN" style={{ flex: '0 0 90px' }} />
+              <Inp label="Produto *" maxLength={REGRAS.produto.maxLength} value={novoProduto.form.produto} onChange={v => novoProduto.upd('produto', v)} placeholder="Nome do produto" style={{ flex: '1 1 220px' }} />
+              <Inp label="Unidade" value={novoProduto.form.unidade} onChange={v => novoProduto.upd('unidade', v)} maxLength={REGRAS.unidade.maxLength} placeholder="UN" style={{ flex: '0 0 90px' }} />
               <LookupField label="Categoria" value={categoriaLabel} onSearch={() => { novaCategoria.setShow(false); m.abrir('categoria') }} style={{ flex: '1 1 180px' }} />
               <LookupField label="Marca" value={marcaLabel} onSearch={() => { novaMarca.setShow(false); m.abrir('marca') }} style={{ flex: '1 1 180px' }} />
               <NumberField label="Preço Venda (R$)" value={novoProduto.form.precoVenda} onChange={v => novoProduto.upd('precoVenda', v)} step="0.01" min="0" style={{ flex: '0 0 140px' }} />
@@ -32,7 +33,7 @@ export default function ConsultaProduto({ ctrl, cols = colsProdutos }) {
         onSelect={r => { novoProduto.upd('codCategoria', r.codCategoria); m.fechar('categoria') }}
         novo={{
           cadastro: novaCategoria, titulo: 'Nova Categoria', salvarLabel: 'Salvar Categoria',
-          campos: <Inp label="Categoria *" value={novaCategoria.form.categoria} onChange={v => novaCategoria.upd('categoria', v)} style={{ flex: '1 1 240px' }} />,
+          campos: <Inp label="Categoria *" maxLength={REGRAS.categoria.maxLength} value={novaCategoria.form.categoria} onChange={v => novaCategoria.upd('categoria', v)} style={{ flex: '1 1 240px' }} />,
         }} />
 
       <LookupModal {...m.modal('marca')} title="Consulta de Marcas" maxWidth={560} zIndex={80}
@@ -40,7 +41,7 @@ export default function ConsultaProduto({ ctrl, cols = colsProdutos }) {
         onSelect={r => { novoProduto.upd('codMarca', r.codMarca); m.fechar('marca') }}
         novo={{
           cadastro: novaMarca, titulo: 'Nova Marca', salvarLabel: 'Salvar Marca',
-          campos: <Inp label="Marca *" value={novaMarca.form.marca} onChange={v => novaMarca.upd('marca', v)} style={{ flex: '1 1 240px' }} />,
+          campos: <Inp label="Marca *" maxLength={REGRAS.marca.maxLength} value={novaMarca.form.marca} onChange={v => novaMarca.upd('marca', v)} style={{ flex: '1 1 240px' }} />,
         }} />
     </>
   )

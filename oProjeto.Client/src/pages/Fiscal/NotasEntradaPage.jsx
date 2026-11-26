@@ -30,6 +30,8 @@ import { comRateio } from './notasEntrada/calculos'
 import {
   notaVazia, ITEM_EMPTY, TIPO_FRETE_OPTIONS, colsNotas, colsPedidosCompra,
 } from './notasEntrada/constantes'
+import { REGRAS, regra } from '@/constants/regrasCampos'
+import { somenteDigitos } from '@/utils/validacoes'
 
 const chaveNota = (numero, modelo, serie, codForn) =>
   [numero, modelo, serie, codForn]
@@ -545,9 +547,9 @@ export default function NotasEntradaPage() {
         )}
 
         <div style={{ padding: '18px 24px 0', display: 'flex', gap: 12, alignItems: 'flex-end' }}>
-          <FField label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 80px' }} />
-          <FField label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 70px' }} />
-          <FField label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 110px' }} />
+          <FField label="Modelo" value={form.modelo} onChange={v => upd('modelo', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 80px' }} {...regra('modeloNota')} />
+          <FField label="Série" value={form.serie} onChange={v => upd('serie', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 70px' }} {...regra('serieNota')} />
+          <FField label="Número" value={form.numero} onChange={v => upd('numero', v)} disabled={cancelamentoModo || chaveBloqueada || parcelasBloqueadas} style={{ flex: '0 0 110px' }} {...regra('numeroNota')} />
           <div style={{ flex: '0 0 105px' }}>
             <label style={lbl}>Código</label>
             <input type="text" value={form.codForn ?? ''} readOnly style={{ ...inp, background: '#eef2f7', color: '#64748b', fontFamily: 'JetBrains Mono, monospace', textAlign: 'right' }} />
@@ -602,7 +604,7 @@ export default function NotasEntradaPage() {
             <LookupField label="Transportadora" value={transportadorLabel} onSearch={() => abrir('transportadora')} disabled={semCampos} />
           </div>
           <div style={{ flex: '0 0 140px' }}>
-            <FField label="Placa Veículo" value={form.placaVeiculo ?? ''} onChange={v => upd('placaVeiculo', v)} disabled={semCampos} />
+            <FField label="Placa Veículo" value={form.placaVeiculo ?? ''} onChange={v => upd('placaVeiculo', v)} disabled={semCampos} {...regra('placaVeiculo')} />
           </div>
         </div>
 
@@ -649,10 +651,10 @@ export default function NotasEntradaPage() {
           cadastro: novoFornecedor, titulo: 'Novo Fornecedor', salvarLabel: 'Salvar Fornecedor',
           campos: (
             <>
-              <Inp label="Fornecedor *" value={novoFornecedor.form.fornecedor} onChange={v => novoFornecedor.upd('fornecedor', v)}
+              <Inp label="Fornecedor *" maxLength={REGRAS.fornecedor.maxLength} value={novoFornecedor.form.fornecedor} onChange={v => novoFornecedor.upd('fornecedor', v)}
                 placeholder="Razão social / nome" style={{ flex: '1 1 220px' }} />
-              <Inp label={novoFornecedor.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} value={novoFornecedor.form.cpfCnpj}
-                onChange={v => novoFornecedor.upd('cpfCnpj', v)} style={{ flex: '1 1 180px' }} />
+              <Inp label={novoFornecedor.form.tipoPessoa === 'PF' ? 'CPF' : 'CNPJ'} maxLength={REGRAS.cpfCnpj.maxLength} value={novoFornecedor.form.cpfCnpj}
+                onChange={v => novoFornecedor.upd('cpfCnpj', somenteDigitos(v))} style={{ flex: '1 1 180px' }} />
               <LookupField label="Cidade *" value={endereco.cidadeLabel(novoFornecedor.form.codCidade)}
                 onSearch={endereco.abrir} style={{ flex: '1 1 200px' }} />
             </>

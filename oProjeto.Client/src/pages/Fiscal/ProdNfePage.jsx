@@ -4,6 +4,7 @@ import useCrud from '@/hooks/useCrud'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField, FSelect} from '@/components/UI'
 import { prodNfeApi, nfeApi, produtosApi } from '@/services/api'
+import { regra } from '@/constants/regrasCampos'
 
 export default function ProdNfePage() {
   const [data, setData]   = useState([])
@@ -70,8 +71,8 @@ export default function ProdNfePage() {
           <FSelect label="Produto" required full value={form.codProd}
             onChange={v => setForm(p => ({ ...p, codProd: Number(v) }))}
             opts={prods.map(p => ({ id: p.codProd, label: `[${p.codProd}] ${p.produto}` }))} />
-          <FField label="CSOSN" value={form.CSOSN ?? ''} onChange={v => setForm(p => ({ ...p, CSOSN: v }))} />
-          <FField label="CFOP"  value={form.CFOP ?? ''}  onChange={v => setForm(p => ({ ...p, CFOP: v }))} />
+          <FField label="CSOSN" value={form.CSOSN ?? ''} onChange={v => setForm(p => ({ ...p, CSOSN: v }))} {...regra('csosn')} />
+          <FField label="CFOP"  value={form.CFOP ?? ''}  onChange={v => setForm(p => ({ ...p, CFOP: v }))} {...regra('cfop')} />
           {ff('Quantidade', 'quantidade')}
           {ff('Valor Unitário', 'valorUnitario')}
           {ff('Desconto', 'desconto')}

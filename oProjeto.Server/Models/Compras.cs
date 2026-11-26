@@ -1,9 +1,15 @@
-﻿namespace oProjeto.Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using oProjeto.Server.Validacoes;
+
+namespace oProjeto.Server.Models
 {
     public class Compras
     {
+        [StringLength(9), SomenteDigitos]
         public string Numero { get; set; }
+        [StringLength(3), SomenteDigitos]
         public string Serie { get; set; }
+        [StringLength(2), SomenteDigitos]
         public string Modelo { get; set; }
         public int CodForn { get; set; }
         public DateTime DataCompra { get; set; }
@@ -16,6 +22,7 @@
         public decimal OutrasDespesas { get; set; }
         public decimal ValorTotal { get; set; }
         public string? Observacoes { get; set; }
+        [StringLength(20)]
         public string Situacao { get; set; } = "ABERTA";
         public List<ProdutosCompras> Produtos { get; set; } = [];
         public Fornecedores? Fornecedor { get; set; }

@@ -5,6 +5,7 @@ import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { marcasApi } from '@/services/api'
 import useCrud from '@/hooks/useCrud'
 import { useModalGuard } from '@/hooks/useModalGuard'
+import { regra } from '@/constants/regrasCampos'
 
 const empty = { marca:'', ativo:true }
 
@@ -80,7 +81,7 @@ export default function MarcaPage() {
           </div>
 
           <div style={{ flex:'1 1 320px', maxWidth:420 }}>
-            <FField label="Marca" required value={form.marca ?? ''} onChange={v => upd('marca', v)} />
+            <FField label="Marca" required value={form.marca ?? ''} onChange={v => upd('marca', v)} {...regra('marca')} />
           </div>
 
           <label style={{ display:'flex', alignItems:'center', gap:6, cursor:'pointer', paddingBottom:8, whiteSpace:'nowrap', fontSize:13, fontFamily:'Outfit, sans-serif', color:'#0f172a' }}>

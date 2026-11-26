@@ -5,6 +5,7 @@ import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { funcoesApi } from '@/services/api'
 import useCrud from '@/hooks/useCrud'
 import { useModalGuard } from '@/hooks/useModalGuard'
+import { regra } from '@/constants/regrasCampos'
 
 const empty = { funcao:'', ativo:true }
 
@@ -81,7 +82,7 @@ export default function FuncoesPage() {
           </div>
 
           <div style={{ flex:'1 1 120px', maxWidth:420 }}>
-            <FField label="Função" required value={form.funcao ?? ''} onChange={v => upd('funcao', v)} />
+            <FField label="Função" required value={form.funcao ?? ''} onChange={v => upd('funcao', v)} {...regra('funcao')} />
           </div>
 
           <div style={{ flex:'0 0 120px' }}>

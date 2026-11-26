@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { paisesApi } from '@/services/api'
+import { regra } from '@/constants/regrasCampos'
 
 const empty = { pais:'', sigla:'', ddi:'', moeda:'', ativo:true }
 
@@ -70,10 +71,10 @@ export default function PaisesPage() {
             <FField label="Código" value={editing ? String(form.codPais ?? '') : '—'} onChange={() => {}} />
           </div>
           <div style={{ flex:'1 1 auto' }}>
-            <FField label="País" required value={form.pais ?? ''} onChange={v => upd('pais', v)} />
+            <FField label="País" required value={form.pais ?? ''} onChange={v => upd('pais', v)} {...regra('pais')} />
           </div>
           <div style={{ flex:'0 0 90px' }}>
-            <FField label="Sigla" required value={form.sigla ?? ''} onChange={v => upd('sigla', v)} />
+            <FField label="Sigla" required value={form.sigla ?? ''} onChange={v => upd('sigla', v)} {...regra('sigla')} />
           </div>
           <label style={{ display:'flex', alignItems:'center', gap:6, cursor:'pointer', paddingBottom:8, whiteSpace:'nowrap', fontSize:13, fontFamily:'Outfit, sans-serif', color:'#0f172a' }}>
             <input type="checkbox" checked={form.ativo ?? true} onChange={e => upd('ativo', e.target.checked)}
@@ -84,10 +85,10 @@ export default function PaisesPage() {
 
         <div style={{ display:'flex', gap:12 }}>
           <div style={{ flex:'0 0 120px' }}>
-            <FField label="DDI" value={form.ddi ?? ''} onChange={v => upd('ddi', v)} />
+            <FField label="DDI" value={form.ddi ?? ''} onChange={v => upd('ddi', v)} {...regra('ddi')} />
           </div>
           <div style={{ flex:'0 0 150px' }}>
-            <FField label="Moeda" value={form.moeda ?? ''} onChange={v => upd('moeda', v)} />
+            <FField label="Moeda" value={form.moeda ?? ''} onChange={v => upd('moeda', v)} {...regra('moeda')} />
           </div>
         </div>
 

@@ -2,7 +2,8 @@ import { thStyle, tdStyle, MONO } from '@/styles/formStyles'
 
 // Tabela de consulta com botão "Selecionar".
 // cols: [{ key, label, mono?, align?, render?(row) }]
-export default function LookupTable({ cols, rows, onSelect }) {
+// onEdit (opcional): mostra também o botão "Editar" em cada linha
+export default function LookupTable({ cols, rows, onSelect, onEdit }) {
   return (
     <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
       <div style={{ background: '#fff', border: '1px solid #e2e6ed', borderRadius: 10, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,.06)' }}>
@@ -30,7 +31,15 @@ export default function LookupTable({ cols, rows, onSelect }) {
                     {c.render ? c.render(row) : String(row[c.key] ?? '')}
                   </td>
                 ))}
-                <td style={{ padding: '11px 14px', textAlign: 'right' }}>
+                <td style={{ padding: '11px 14px', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                  {onEdit && (
+                    <button onClick={() => onEdit(row)}
+                      style={{ padding: '4px 10px', marginRight: 8, border: '1px solid #e2e6ed', borderRadius: 6, background: '#fff', color: '#475569', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e6ed'; e.currentTarget.style.color = '#475569' }}>
+                      Editar
+                    </button>
+                  )}
                   <button onClick={() => onSelect(row)}
                     style={{ padding: '4px 12px', border: 'none', borderRadius: 6, background: '#2563eb', color: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}
                     onMouseEnter={e => e.currentTarget.style.opacity = '.85'}

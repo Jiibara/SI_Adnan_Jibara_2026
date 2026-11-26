@@ -5,6 +5,7 @@ import { Modal, ConfirmDialog, PageHeader, FField } from '@/components/UI'
 import { categoriasApi } from '@/services/api'
 import useCrud from '@/hooks/useCrud'
 import { useModalGuard } from '@/hooks/useModalGuard'
+import { regra } from '@/constants/regrasCampos'
 
 const empty = { categoria:'', ativo:true }
 
@@ -80,7 +81,7 @@ export default function CategoriasPage() {
           </div>
 
           <div style={{ flex:'1 1 320px', maxWidth:420 }}>
-            <FField label="Categoria" required value={form.categoria ?? ''} onChange={v => upd('categoria', v)} />
+            <FField label="Categoria" required value={form.categoria ?? ''} onChange={v => upd('categoria', v)} {...regra('categoria')} />
           </div>
 
           <label style={{ display:'flex', alignItems:'center', gap:6, cursor:'pointer', paddingBottom:8, whiteSpace:'nowrap', fontSize:13, fontFamily:'Outfit, sans-serif', color:'#0f172a' }}>

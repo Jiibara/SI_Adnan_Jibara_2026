@@ -1,9 +1,15 @@
-﻿namespace oProjeto.Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using oProjeto.Server.Validacoes;
+
+namespace oProjeto.Server.Models
 {
     public class ContasPagarAvulsa
     {
+        [StringLength(9), SomenteDigitos]
         public string NotaNumero { get; set; }
+        [StringLength(2), SomenteDigitos]
         public string NotaModelo { get; set; }
+        [StringLength(3), SomenteDigitos]
         public string NotaSerie { get; set; }
         public int CodForn { get; set; }
         public int NumeroParcela { get; set; }

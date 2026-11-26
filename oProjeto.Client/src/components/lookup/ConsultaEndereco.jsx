@@ -1,6 +1,8 @@
 import LookupModal from './LookupModal'
 import { Inp, LookupField } from '@/components/form'
 import { colsCidades, colsEstados, colsPaises } from '@/constants/cadastros'
+import { REGRAS } from '@/constants/regrasCampos'
+import { somenteDigitos } from '@/utils/validacoes'
 
 // Modais Cidade -> Estado -> País (use com useConsultaEndereco).
 export default function ConsultaEndereco({ ctrl }) {
@@ -18,8 +20,8 @@ export default function ConsultaEndereco({ ctrl }) {
           cadastro: novaCidade, titulo: 'Nova Cidade', salvarLabel: 'Salvar Cidade',
           campos: (
             <>
-              <Inp label="Cidade *" value={novaCidade.form.cidade} onChange={v => novaCidade.upd('cidade', v)} placeholder="Nome da cidade" style={{ flex: '1 1 200px' }} />
-              <Inp label="DDD" value={novaCidade.form.ddd} onChange={v => novaCidade.upd('ddd', v)} maxLength={3} placeholder="11" style={{ flex: '0 0 72px' }} />
+              <Inp label="Cidade *" maxLength={REGRAS.cidade.maxLength} value={novaCidade.form.cidade} onChange={v => novaCidade.upd('cidade', v)} placeholder="Nome da cidade" style={{ flex: '1 1 200px' }} />
+              <Inp label="DDD" value={novaCidade.form.ddd} onChange={v => novaCidade.upd('ddd', somenteDigitos(v))} maxLength={REGRAS.ddd.maxLength} placeholder="11" style={{ flex: '0 0 72px' }} />
               <LookupField label="Estado *" value={estadoLabel} onSearch={() => { novoEstado.setShow(false); m.abrir('estado') }} />
             </>
           ),
@@ -33,8 +35,8 @@ export default function ConsultaEndereco({ ctrl }) {
           cadastro: novoEstado, titulo: 'Novo Estado', salvarLabel: 'Salvar Estado',
           campos: (
             <>
-              <Inp label="Estado *" value={novoEstado.form.estado} onChange={v => novoEstado.upd('estado', v)} placeholder="Nome do estado" style={{ flex: '1 1 200px' }} />
-              <Inp label="UF *" value={novoEstado.form.uf} onChange={v => novoEstado.upd('uf', v.toUpperCase())} maxLength={2} placeholder="SP" style={{ flex: '0 0 72px' }} />
+              <Inp label="Estado *" maxLength={REGRAS.estado.maxLength} value={novoEstado.form.estado} onChange={v => novoEstado.upd('estado', v)} placeholder="Nome do estado" style={{ flex: '1 1 200px' }} />
+              <Inp label="UF *" value={novoEstado.form.uf} onChange={v => novoEstado.upd('uf', v.toUpperCase())} maxLength={REGRAS.uf.maxLength} placeholder="SP" style={{ flex: '0 0 72px' }} />
               <LookupField label="País *" value={paisLabel} onSearch={() => { novoPais.setShow(false); m.abrir('pais') }} />
             </>
           ),
@@ -47,10 +49,10 @@ export default function ConsultaEndereco({ ctrl }) {
           cadastro: novoPais, titulo: 'Novo País', salvarLabel: 'Salvar País',
           campos: (
             <>
-              <Inp label="País *" value={novoPais.form.pais} onChange={v => novoPais.upd('pais', v)} placeholder="Nome do país" style={{ flex: '1 1 200px' }} />
-              <Inp label="Sigla" value={novoPais.form.sigla} onChange={v => novoPais.upd('sigla', v.toUpperCase())} maxLength={3} placeholder="BR" style={{ flex: '0 0 80px' }} />
-              <Inp label="DDI" value={novoPais.form.ddi} onChange={v => novoPais.upd('ddi', v)} maxLength={6} placeholder="+55" style={{ flex: '0 0 80px' }} />
-              <Inp label="Moeda" value={novoPais.form.moeda} onChange={v => novoPais.upd('moeda', v)} maxLength={10} placeholder="BRL" style={{ flex: '1 1 120px' }} />
+              <Inp label="País *" maxLength={REGRAS.pais.maxLength} value={novoPais.form.pais} onChange={v => novoPais.upd('pais', v)} placeholder="Nome do país" style={{ flex: '1 1 200px' }} />
+              <Inp label="Sigla" value={novoPais.form.sigla} onChange={v => novoPais.upd('sigla', v.toUpperCase())} maxLength={REGRAS.sigla.maxLength} placeholder="BR" style={{ flex: '0 0 80px' }} />
+              <Inp label="DDI" value={novoPais.form.ddi} onChange={v => novoPais.upd('ddi', v)} maxLength={REGRAS.ddi.maxLength} placeholder="+55" style={{ flex: '0 0 80px' }} />
+              <Inp label="Moeda" value={novoPais.form.moeda} onChange={v => novoPais.upd('moeda', v)} maxLength={REGRAS.moeda.maxLength} placeholder="BRL" style={{ flex: '1 1 120px' }} />
             </>
           ),
         }} />

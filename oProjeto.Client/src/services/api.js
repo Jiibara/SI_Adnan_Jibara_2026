@@ -30,7 +30,16 @@ export const clientesApi = crud('/Clientes')
 export const nfeApi = crud('/Nfe')
 export const notasEntradaApi = crud('/notasentrada')
 export const notasSaidaApi = crud('/notasSaida')
-export const contasAvsApi = crud('/contasPagarAvulsa')
+// chave da parcela na URL: número/modelo/série/parceiro[/parcela]
+const chaveConta = (c, codParceiro, comParcela = true) =>
+  [c.notaNumero, c.notaModelo, c.notaSerie, codParceiro, ...(comParcela ? [c.numeroParcela] : [])]
+    .map(v => encodeURIComponent(v)).join('/')
+
+export const contasAvsApi = {
+  ...crud('/ContasPagarAvulsa'),
+  pagar: (c, body) => api.put(`/ContasPagarAvulsa/pagar/${chaveConta(c, c.codForn)}`, body),
+  cancelar: c => api.put(`/ContasPagarAvulsa/cancelar/${chaveConta(c, c.codForn, false)}`),
+}
 export const servicosApi = crud('/servicos')
 export const notasServicoApi = crud('/notasServico')
 
@@ -87,10 +96,22 @@ export const prodNfeApi = {
 }
 
 export const contasPagarApi = {
-  getAll:  ()                        => api.get('/ContasPagar').then(r => r.data),
-  create:  (body)                    => api.post('/ContasPagar', body).then(r => r.data),
-  update:  (n, s, m, cf, np, body)   => api.put(`/ContasPagar/${n}/${s}/${m}/${cf}/${np}`, body),
-  delete:  (n, s, m, cf, np)         => api.delete(`/ContasPagar/${n}/${s}/${m}/${cf}/${np}`),
+  getAll: ()        => api.get('/ContasPagar').then(r => r.data),
+  pagar:  (c, body) => api.put(`/ContasPagar/pagar/${chaveConta(c, c.codForn)}`, body),
+}
+
+// sem ?tipo, o getAll devolve produto e serviço juntos (campo tipoNota);
+// na baixa, o tipo diz em qual tabela baixar a parcela
+export const contasReceberApi = {
+  getAll:  ()        => api.get('/ContasReceber').then(r => r.data),
+  receber: (c, body) => api.put(`/ContasReceber/receber/${chaveConta(c, c.codCliente)}`, body, { params: { tipo: c.tipoNota } }),
+}
+
+// mensagem de erro devolvida pelo servidor (texto) ou a mensagem padrão
+export const mensagemErro = (error, padrao) => {
+  const d = error?.response?.data
+  if (typeof d === 'string' && d.trim()) return d
+  return d?.message || d?.title || padrao
 }
 
 export const logsApi = {

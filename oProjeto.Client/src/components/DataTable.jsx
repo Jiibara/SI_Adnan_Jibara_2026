@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-export default function DataTable({ columns, data, onEdit, onDelete, loading, deleteLabel = 'Excluir', canDelete }) {
+// editLabel/deleteLabel trocam o texto dos botões; canEdit/canDelete(row) escondem o botão na linha.
+export default function DataTable({ columns, data, onEdit, onDelete, loading, editLabel = 'Editar', deleteLabel = 'Excluir', canEdit, canDelete }) {
   const [search, setSearch] = useState('')
 
   const filtered = (data || []).filter(row =>
@@ -90,7 +91,7 @@ export default function DataTable({ columns, data, onEdit, onDelete, loading, de
                   ))}
                   <td style={{ padding: '11px 14px' }}>
                     <div style={{ display: 'flex', gap: 6, justifyContent: 'flex-end' }}>
-                      {onEdit && (
+                      {onEdit && (!canEdit || canEdit(row)) && (
                         <button
                           onClick={() => onEdit(row)}
                           style={{
@@ -109,7 +110,7 @@ export default function DataTable({ columns, data, onEdit, onDelete, loading, de
                             e.target.style.background = 'transparent'
                           }}
                         >
-                          Editar
+                          {editLabel}
                         </button>
                       )}
                       {onDelete && (!canDelete || canDelete(row)) && (

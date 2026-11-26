@@ -3,6 +3,10 @@ import toast from 'react-hot-toast'
 import DataTable from '@/components/DataTable'
 import { Modal, ConfirmDialog, PageHeader, FField, FTextarea } from '@/components/UI'
 import { nfeApi, fornecedoresApi, transportadoresApi, veiculosApi, produtosApi } from '@/services/api'
+import { regra } from '@/constants/regrasCampos'
+
+// campo do formulário -> regra de tamanho (constants/regrasCampos)
+const REGRA_NFE = { numero: 'numeroNota', serie: 'serieNota', modelo: 'modeloNota', natOper: 'naturezaOperacao' }
 
 const lbl = { fontSize: 11, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1.2px', fontFamily: 'JetBrains Mono, monospace', display: 'block', marginBottom: 5 }
 const inp = { background: '#f8f9fb', border: '1px solid #e2e6ed', borderRadius: 8, padding: '9px 12px', fontSize: 13, color: '#0f172a', fontFamily: 'Outfit, sans-serif', outline: 'none', width: '100%', boxSizing: 'border-box' }
@@ -186,7 +190,8 @@ export default function NfePage() {
   const F = (label, key, numField = false, type = 'text') => (
     <FField label={label} type={type} step={numField ? '0.01' : undefined}
       value={form[key] ?? ''}
-      onChange={v => numField && type === 'number' ? num(key, v) : upd(key, v)} />
+      onChange={v => numField && type === 'number' ? num(key, v) : upd(key, v)}
+      {...regra(REGRA_NFE[key] ?? key)} />
   )
 
   return (

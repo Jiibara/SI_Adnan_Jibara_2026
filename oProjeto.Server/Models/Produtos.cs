@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using oProjeto.Server.Validacoes;
+
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace oProjeto.Server.Models
 {
     public class Produtos
     {
         public int CodProd { get; set; }
+        [StringLength(25)]
         public string Produto { get; set; }
+        [StringLength(4)]
         public string Unidade { get; set; }
         //public string NcmSh { get; set; }
         public decimal PesoBruto { get; set; }

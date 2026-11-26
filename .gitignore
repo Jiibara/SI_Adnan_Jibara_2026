@@ -11,7 +11,7 @@ dist/
 .env
 
 # Segredos locais
-appsettings.Development.local.json
+oProjeto.Server/appsettings.json
 
 # outros
 *.log
