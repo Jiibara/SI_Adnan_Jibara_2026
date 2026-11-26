@@ -15,3 +15,4 @@ oProjeto.Server/appsettings.json
 
 # outros
 *.log
+.client-build.tgz
