@@ -464,12 +464,12 @@ namespace oProjeto.Server.Repository
 
                 if (situacao.Equals("CONFERIDA", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Contas a pagar: bloqueia se alguma já foi paga, senão cancela
+                    // Contas a receber: bloqueia se alguma já foi recebida, senão cancela
                     await ContaReceberRepository.CancelarContasDaNotaAsync(
                         con, tx, numero, modelo, serie, codCliente);
 
                     // Estoque: restaura saldo e custo médio anteriores
-                    await MovimentoEstoqueRepository.RemoverEntradaAsync(
+                    await MovimentoEstoqueRepository.RemoverSaidaAsync(
                         con, tx, numero, modelo, serie, codCliente);
                 }
 
